@@ -1,4 +1,6 @@
-package com.lunchtime.apiservices.models;
+package com.lunchtime.apiservices.wrappers;
+
+import com.lunchtime.apiservices.models.User;
 
 public class UserWrapper {
     private User user;

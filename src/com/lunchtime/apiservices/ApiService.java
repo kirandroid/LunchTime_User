@@ -1,19 +1,11 @@
 package com.lunchtime.apiservices;
-import com.lunchtime.apiservices.models.UserWrapper;
+import com.lunchtime.apiservices.requests.LoginRequest;
+import com.lunchtime.apiservices.wrappers.UserWrapper;
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
+import retrofit2.http.*;
 
 public interface ApiService {
 
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://localhost:3000/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-    ApiService apiService = retrofit.create(ApiService.class);
-
-    @GET("user")
-    Call<ApiBaseResponse<UserWrapper>> getUser();
+    @POST("api/login")
+    Call<ApiBaseResponse<UserWrapper>> login(@Body LoginRequest loginRequest);
 }
