@@ -7,13 +7,13 @@ public class ApiBaseResponse<T> {
     private T data;
     @SerializedName("message")
     private String message;
-    @SerializedName("status_code")
-    private Integer status_code;
+    @SerializedName("success")
+    private boolean success;
 
-    public ApiBaseResponse(T data, String message, Integer status_code) {
+    public ApiBaseResponse(T data, String message, boolean status_code) {
         this.data = data;
         this.message = message;
-        this.status_code = status_code;
+        this.success = status_code;
     }
 
     public T getData() {
@@ -24,7 +24,7 @@ public class ApiBaseResponse<T> {
         return message;
     }
 
-    public Integer getStatus_code() {
-        return status_code;
+    public boolean isSuccess() {
+        return success;
     }
 }
