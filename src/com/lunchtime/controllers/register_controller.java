@@ -47,25 +47,24 @@ public class register_controller {
 
     @FXML
     void register_button_clicked(ActionEvent event) {
-        RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), password_field.getText() , "google");
+        RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), password_field.getText(), "google");
         Call<ApiBaseResponse> call = Network.apiService.register(registerRequest);
         call.enqueue(new Callback<ApiBaseResponse>() {
             @Override
             public void onResponse(Call<ApiBaseResponse> call, Response<ApiBaseResponse> response) {
                 ApiBaseResponse baseResponse = response.body();
-                if (baseResponse.isSuccess()){
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
-                                register_pane.getChildren().setAll(pane);
-                            }catch (IOException e){
-                                e.printStackTrace();
+                if (baseResponse.isSuccess()) {
+                    Platform.runLater(
+                            () -> {
+                                try {
+                                    AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
+                                    register_pane.getChildren().setAll(pane);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    });
-                }else{
+                    );
+                } else {
                     System.out.println("Registration Failed because " + baseResponse.getMessage());
                 }
             }

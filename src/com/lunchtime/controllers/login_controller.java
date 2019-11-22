@@ -37,20 +37,19 @@ public class login_controller {
             public void onResponse(Call<ApiBaseResponse<UserWrapper>> call, Response<ApiBaseResponse<UserWrapper>> response) {
 
                 ApiBaseResponse<UserWrapper> user = response.body();
-                if (user.isSuccess()){
+                if (user.isSuccess()) {
 
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
-                                login_pane.getChildren().setAll(pane);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    Platform.runLater(
+                            () -> {
+                                try {
+                                    AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
+                                    login_pane.getChildren().setAll(pane);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    });
-                }else{
+                    );
+                } else {
                     System.out.println("Login Failed because " + user.getMessage());
                 }
 

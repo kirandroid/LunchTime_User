@@ -1,4 +1,5 @@
 package com.lunchtime.apiservices;
+
 import com.lunchtime.apiservices.requests.LoginRequest;
 import com.lunchtime.apiservices.requests.RegisterRequest;
 import com.lunchtime.apiservices.wrappers.UserWrapper;
