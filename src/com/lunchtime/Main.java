@@ -5,16 +5,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Main extends Application {
     private double x, y;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("views/login_view.fxml"));
-        primaryStage.setScene(new Scene(root, 1000, 600));
+        Scene scene = new Scene(root);
+        String css = Main.class.getResource("assets/css/main.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        primaryStage.setScene(scene);
 //        primaryStage.initStyle(StageStyle.UNDECORATED); //Borderless window
         primaryStage.show();
+
 
         //To make window draggable
         root.setOnMousePressed(event -> {
@@ -22,10 +25,8 @@ public class Main extends Application {
             y = event.getSceneY();
         });
         root.setOnMouseDragged(event -> {
-
             primaryStage.setX(event.getScreenX() - x);
             primaryStage.setY(event.getScreenY() - y);
-
         });
     }
 

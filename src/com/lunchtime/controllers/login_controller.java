@@ -1,6 +1,5 @@
 package com.lunchtime.controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.lunchtime.apiservices.ApiBaseResponse;
@@ -17,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class login_controller {
     @FXML
@@ -38,6 +38,9 @@ public class login_controller {
 
                 ApiBaseResponse<UserWrapper> user = response.body();
                 if (user.isSuccess()) {
+
+                    Preferences userPreferences = Preferences.userRoot();
+                    userPreferences.put("Name", user.getData().getUser().getFirst_name());
 
                     Platform.runLater(
                             () -> {
@@ -69,5 +72,5 @@ public class login_controller {
     }
 
 
-//    public void initialize(){}
+
 }
