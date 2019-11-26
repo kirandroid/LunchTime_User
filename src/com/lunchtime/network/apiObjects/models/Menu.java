@@ -1,4 +1,4 @@
-package com.lunchtime.apiservices.models;
+package com.lunchtime.network.apiObjects.models;
 
 import com.google.gson.annotations.SerializedName;
 

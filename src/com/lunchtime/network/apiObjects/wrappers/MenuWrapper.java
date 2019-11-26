@@ -1,6 +1,6 @@
-package com.lunchtime.apiservices.wrappers;
+package com.lunchtime.network.apiObjects.wrappers;
 
-import com.lunchtime.apiservices.models.Menu;
+import com.lunchtime.network.apiObjects.models.Menu;
 
 public class MenuWrapper {
     private Menu menu;

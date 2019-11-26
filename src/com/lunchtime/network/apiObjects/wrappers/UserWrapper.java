@@ -1,6 +1,6 @@
-package com.lunchtime.apiservices.wrappers;
+package com.lunchtime.network.apiObjects.wrappers;
 
-import com.lunchtime.apiservices.models.User;
+import com.lunchtime.network.apiObjects.models.User;
 
 public class UserWrapper {
 

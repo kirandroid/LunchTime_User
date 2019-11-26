@@ -2,17 +2,15 @@ package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.lunchtime.apiservices.ApiBaseResponse;
-import com.lunchtime.apiservices.Network;
-import com.lunchtime.apiservices.requests.RegisterRequest;
+import com.lunchtime.network.NetworkManager;
+import com.lunchtime.network.NetworkResponseListener;
+import com.lunchtime.network.apiObjects.ApiBaseResponse;
+import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.io.IOException;
 
@@ -48,13 +46,11 @@ public class register_controller {
     @FXML
     void register_button_clicked(ActionEvent event) {
         RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), password_field.getText(), "google");
-        Call<ApiBaseResponse> call = Network.apiService.register(registerRequest);
-        call.enqueue(new Callback<ApiBaseResponse>() {
+
+        NetworkManager.getInstance().Register(registerRequest, new NetworkResponseListener<ApiBaseResponse>() {
             @Override
-            public void onResponse(Call<ApiBaseResponse> call, Response<ApiBaseResponse> response) {
-                ApiBaseResponse baseResponse = response.body();
-                if (baseResponse.isSuccess()) {
-                    Platform.runLater(
+            public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                Platform.runLater(
                             () -> {
                                 try {
                                     AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
@@ -64,16 +60,12 @@ public class register_controller {
                                 }
                             }
                     );
-                } else {
-                    System.out.println("Registration Failed because " + baseResponse.getMessage());
-                }
             }
 
             @Override
-            public void onFailure(Call<ApiBaseResponse> call, Throwable throwable) {
-
+            public void onError() {
+                System.out.println("Register Error!");
             }
         });
-
     }
 }

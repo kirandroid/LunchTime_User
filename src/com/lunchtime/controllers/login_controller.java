@@ -2,21 +2,17 @@ package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.lunchtime.apiservices.ApiBaseResponse;
-import com.lunchtime.apiservices.Network;
-import com.lunchtime.apiservices.requests.LoginRequest;
-import com.lunchtime.apiservices.wrappers.UserWrapper;
+import com.lunchtime.network.NetworkManager;
+import com.lunchtime.network.NetworkResponseListener;
+import com.lunchtime.network.apiObjects.ApiBaseResponse;
+import com.lunchtime.network.apiObjects.requests.LoginRequest;
+import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import java.io.IOException;
-import java.util.prefs.Preferences;
 
 public class login_controller {
     @FXML
@@ -31,18 +27,12 @@ public class login_controller {
     @FXML
     void login_button_clicked(ActionEvent event) {
         LoginRequest loginRequest = new LoginRequest(email_field.getText(), password_field.getText());
-        Call<ApiBaseResponse<UserWrapper>> call = Network.apiService.login(loginRequest);
-        call.enqueue(new Callback<ApiBaseResponse<UserWrapper>>() {
+
+        NetworkManager.getInstance().Login(loginRequest, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
             @Override
-            public void onResponse(Call<ApiBaseResponse<UserWrapper>> call, Response<ApiBaseResponse<UserWrapper>> response) {
+            public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
 
-                ApiBaseResponse<UserWrapper> user = response.body();
-                if (user.isSuccess()) {
-
-                    Preferences userPreferences = Preferences.userRoot();
-                    userPreferences.put("Name", user.getData().getUser().getFirst_name());
-
-                    Platform.runLater(
+                Platform.runLater(
                             () -> {
                                 try {
                                     AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
@@ -52,15 +42,12 @@ public class login_controller {
                                 }
                             }
                     );
-                } else {
-                    System.out.println("Login Failed because " + user.getMessage());
-                }
 
             }
 
             @Override
-            public void onFailure(Call<ApiBaseResponse<UserWrapper>> call, Throwable throwable) {
-                throwable.printStackTrace();
+            public void onError() {
+                System.out.println("Login Error");
             }
         });
     }
