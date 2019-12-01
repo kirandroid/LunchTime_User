@@ -43,7 +43,6 @@ public class login_controller {
         NetworkManager.getInstance().Login(loginRequest, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
-//                User user = new User();
                 User userResponse = userWrapperApiBaseResponse.getData().getUser();
                 Platform.runLater(
                             () -> {
@@ -51,7 +50,7 @@ public class login_controller {
                                     user = new ArrayList<>();
                                     user.add(userResponse);
                                     System.out.println("sd");
-                                    BorderPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
+                                    AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
                                     login_pane.getChildren().setAll(pane);
                                 } catch (IOException e) {
                                     e.printStackTrace();
