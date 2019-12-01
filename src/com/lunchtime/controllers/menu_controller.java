@@ -1,6 +1,8 @@
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.svg.SVGGlyph;
@@ -14,6 +16,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,6 +30,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,11 @@ public class menu_controller {
 
     @FXML
     private ScrollPane scrollPane;
+
+
+    @FXML
+    private StackPane menuPane;
+
 
     @FXML
     void refresh(ActionEvent event) {
@@ -93,6 +102,7 @@ public class menu_controller {
                         int finalI = i;
                         button.setOnAction(param -> {
                             System.out.println("Clicked"+menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name());
+                            loadDialog(menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_price());
                         });
                         SVGGlyph glyph = new SVGGlyph(-1,
                                 "test",
@@ -129,5 +139,18 @@ public class menu_controller {
             }
         });
 
+    }
+
+    private void loadDialog(String foodName, Integer foodPrice){
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Would you like to order?"));
+        content.setBody(new Text(foodName+" for Rs. "+foodPrice));
+        JFXButton button = new JFXButton("Okay");
+        JFXDialog dialog = new JFXDialog(menuPane, content, JFXDialog.DialogTransition.CENTER);
+
+        button.setOnAction(event -> dialog.close());
+        content.setActions(button);
+
+        dialog.show();
     }
 }

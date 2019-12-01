@@ -10,14 +10,25 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class register_controller {
+public class register_controller implements Initializable {
 
     @FXML
-    private AnchorPane register_pane;
+    private AnchorPane registerPane;
+
+    @FXML
+    private MediaView registerVideoPlayer;
 
     @FXML
     private JFXTextField phone_field;
@@ -39,8 +50,8 @@ public class register_controller {
 
     @FXML
     void login_button_clicked(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
-        register_pane.getChildren().setAll(pane);
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
+        registerPane.getChildren().setAll(pane);
     }
 
     @FXML
@@ -53,8 +64,8 @@ public class register_controller {
                 Platform.runLater(
                             () -> {
                                 try {
-                                    AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
-                                    register_pane.getChildren().setAll(pane);
+                                    StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
+                                    registerPane.getChildren().setAll(pane);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -67,5 +78,14 @@ public class register_controller {
                 System.out.println("Register Error!");
             }
         });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/registerVideo.mp4").toURI().toString()));
+        video.setMute(true);
+        video.setCycleCount(MediaPlayer.INDEFINITE);
+        video.play();
+        registerVideoPlayer.setMediaPlayer(video);
     }
 }

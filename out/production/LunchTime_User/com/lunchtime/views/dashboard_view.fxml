@@ -9,10 +9,13 @@
    <JFXTabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
       <tabs>
          <Tab fx:id="menuTab" text="Menu">
-            <fx:include fx:id="test2" source="menu_view.fxml" />
+            <fx:include fx:id="test1" source="menu_view.fxml" />
+         </Tab>
+         <Tab fx:id="orderTab" text="My Order">
+            <fx:include fx:id="test2" source="order_view.fxml" />
          </Tab>
          <Tab fx:id="expenseTab" text="Expenses">
-            <fx:include fx:id="test1" source="profile_view.fxml" />
+            <fx:include fx:id="test3" source="expense_view.fxml" />
          </Tab>
       </tabs>
    </JFXTabPane>

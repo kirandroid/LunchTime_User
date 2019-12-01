@@ -3,20 +3,29 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.media.MediaView?>
 
-<AnchorPane fx:id="login_pane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.login_controller">
+<StackPane fx:id="login_pane" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.login_controller">
    <children>
-      <JFXTextField fx:id="email_field" labelFloat="true" layoutX="359.0" layoutY="177.0" prefHeight="42.0" prefWidth="283.0" promptText="Email" />
-      <Label layoutX="436.0" layoutY="75.0" prefHeight="66.0" prefWidth="129.0" text="LOGIN">
-         <font>
-            <Font size="38.0" />
-         </font>
-      </Label>
-      <JFXPasswordField fx:id="password_field" labelFloat="true" layoutX="359.0" layoutY="258.0" prefHeight="42.0" prefWidth="283.0" promptText="Password" />
-      <JFXButton buttonType="RAISED" cancelButton="true" layoutX="436.0" layoutY="361.0" onAction="#login_button_clicked" prefHeight="42.0" prefWidth="129.0" ripplerFill="#d03f3f" style="-fx-background-color: blue;" text="LOGIN" textFill="WHITE" />
-      <JFXButton buttonType="RAISED" cancelButton="true" layoutX="436.0" layoutY="422.0" onAction="#register_button_clicked" prefHeight="42.0" prefWidth="129.0" ripplerFill="#d03f3f" style="-fx-background-color: red;" text="REGISTER" textFill="WHITE" />
+      <MediaView fx:id="loginVideoPlayer" fitHeight="600.0" fitWidth="500.0" preserveRatio="false" StackPane.alignment="CENTER_LEFT" />
+      <AnchorPane prefHeight="600.0" prefWidth="1000.0">
+         <children>
+            <Pane layoutX="576.0" layoutY="132.0" prefHeight="367.0" prefWidth="357.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+               <children>
+                  <JFXButton cancelButton="true" layoutX="37.0" layoutY="261.0" onAction="#register_button_clicked" prefHeight="42.0" prefWidth="129.0" ripplerFill="#e7d400" style="-fx-background-color: red;" text="REGISTER" textFill="WHITE" />
+                  <JFXTextField fx:id="email_field" focusColor="#b8a900" labelFloat="true" layoutX="37.0" layoutY="87.0" prefHeight="42.0" prefWidth="283.0" promptText="Email" unFocusColor="BLACK" />
+                  <JFXPasswordField fx:id="password_field" focusColor="#b8a900" labelFloat="true" layoutX="37.0" layoutY="163.0" prefHeight="42.0" prefWidth="283.0" promptText="Password" unFocusColor="BLACK" />
+                  <JFXButton cancelButton="true" layoutX="191.0" layoutY="261.0" onAction="#login_button_clicked" prefHeight="42.0" prefWidth="129.0" ripplerFill="#d03f3f" style="-fx-background-color: blue;" text="LOGIN" textFill="WHITE" />
+               </children>
+               <effect>
+                  <DropShadow color="#ddddddcc" height="38.55" radius="21.0" spread="0.63" width="47.45" />
+               </effect>
+            </Pane>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

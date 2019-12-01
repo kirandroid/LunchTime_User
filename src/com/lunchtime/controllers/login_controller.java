@@ -12,18 +12,28 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class login_controller {
+public class login_controller  implements Initializable {
     @FXML
-    private AnchorPane login_pane;
+    private StackPane login_pane;
 
     @FXML
     private JFXTextField email_field;
@@ -31,11 +41,34 @@ public class login_controller {
     @FXML
     private JFXPasswordField password_field;
 
-    private List<User> user;
 
-    public List<User> getUser() {
-        return user;
+    @FXML
+    private MediaView loginVideoPlayer;
+
+    //---------------For making the screen draggable-------------
+    double x, y;
+
+    @FXML
+    void windowDragged(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+        stage.setOpacity(0.7f);
     }
+
+    @FXML
+    void windowDraggedDone(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setOpacity(1.0f);
+    }
+
+    @FXML
+    void windowPressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+    //---------------For making the screen draggable-------------
+
 
     @FXML
     void login_button_clicked(ActionEvent event) {
@@ -48,11 +81,8 @@ public class login_controller {
                 Platform.runLater(
                             () -> {
                                 try {
-                                    user = new ArrayList<>();
-                                    user.add(userResponse);
-                                    System.out.println("sd");
 //                                    AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
-//                                    StackPane pane = FXMLLoader.load(getClass().getResource("../views/menu_view.fxml"));
+//                                    StackPane pane = FXMLLoader.load(getClass().getResource("../views/testVideo.fxml"));
                                     BorderPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
                                     login_pane.getChildren().setAll(pane);
                                 } catch (IOException e) {
@@ -77,5 +107,12 @@ public class login_controller {
     }
 
 
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/loginVideoCustom.mp4").toURI().toString()));
+        video.setMute(true);
+        video.setCycleCount(MediaPlayer.INDEFINITE);
+        video.play();
+        loginVideoPlayer.setMediaPlayer(video);
+    }
 }
