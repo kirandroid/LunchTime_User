@@ -41,14 +41,14 @@ public class dashboard_controller {
 
 
                 Platform.runLater(() -> {
-                    final List menu = menuWrapperApiBaseResponse.getData().getMenu();
-                    for (int i = 0; i < menu.size(); i++) {
-
-                        Label label = new Label(menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_name());
-                        label.setGraphic(new ImageView(new Image(menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture(), 100, 100, false, true,true)));
-                        menuListview.getItems().add(label);
-
-                    }
+//                    final List menu = menuWrapperApiBaseResponse.getData().getMenu();
+//                    for (int i = 0; i < menu.size(); i++) {
+//
+//                        Label label = new Label(menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_name());
+//                        label.setGraphic(new ImageView(new Image(menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture(), 100, 100, false, true,true)));
+//                        menuListview.getItems().add(label);
+//
+//                    }
                 });
             }
 

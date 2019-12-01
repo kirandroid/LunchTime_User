@@ -11,12 +11,15 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class profile_controller {
+public class profile_controller implements Initializable {
     @FXML
     private AnchorPane profilePane;
 
@@ -64,16 +67,8 @@ public class profile_controller {
         });
     }
 
-    public void initialize(){
-//        User user = new User();
-//        first_name_field.setText(user.getFirst_name());
-//        last_name_field.setText(user.getLast_name());
-//        phone_field.setText(user.getPhone_number());
-//        email_field.setText(user.getEmail());
-//        password_field.setText(user.getPassword());
-        login_controller loginController = new login_controller();
-        List<User> userResponse = loginController.getUser();
-        System.out.println(userResponse);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Test");
     }
-
 }

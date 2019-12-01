@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -50,7 +51,9 @@ public class login_controller {
                                     user = new ArrayList<>();
                                     user.add(userResponse);
                                     System.out.println("sd");
-                                    AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
+//                                    AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
+//                                    StackPane pane = FXMLLoader.load(getClass().getResource("../views/menu_view.fxml"));
+                                    BorderPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
                                     login_pane.getChildren().setAll(pane);
                                 } catch (IOException e) {
                                     e.printStackTrace();
