@@ -3,6 +3,7 @@ package com.lunchtime.network;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.requests.LoginRequest;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
+import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import com.lunchtime.network.apiServices.ApiService;
@@ -44,6 +45,10 @@ public class NetworkManager {
 
     public void GetMenu(NetworkResponseListener<ApiBaseResponse<MenuWrapper>> listener){
         apiService.fetchMenuApi(listener, api);
+    }
+
+    public void Update(UpdateProfileRequest updateProfileRequest, NetworkResponseListener<ApiBaseResponse> listener){
+        apiService.updateApi(listener, api, updateProfileRequest);
     }
 
 

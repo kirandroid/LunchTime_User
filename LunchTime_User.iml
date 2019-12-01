@@ -12,5 +12,6 @@
     <orderEntry type="library" name="gson-2.8.6" level="project" />
     <orderEntry type="library" name="io.reactivex.rxjava2:rxjava:2.2.14" level="project" />
     <orderEntry type="library" name="jfoenix-8.0.8" level="project" />
+    <orderEntry type="library" name="controlsfx-8.40.15" level="project" />
   </component>
 </module>

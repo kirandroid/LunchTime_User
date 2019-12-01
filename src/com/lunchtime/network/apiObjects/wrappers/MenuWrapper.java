@@ -2,14 +2,16 @@ package com.lunchtime.network.apiObjects.wrappers;
 
 import com.lunchtime.network.apiObjects.models.Menu;
 
-public class MenuWrapper {
-    private Menu menu;
+import java.util.List;
 
-    public Menu getMenu() {
+public class MenuWrapper {
+    private List<Menu> menu;
+
+    public List<Menu> getMenu() {
         return menu;
     }
 
-    public MenuWrapper(Menu menu) {
+    public MenuWrapper(List<Menu> menu) {
         this.menu = menu;
     }
 }

@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="dashboardPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
-   <children>
-      <Label layoutX="421.0" layoutY="14.0" text="DASHBOARD">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="testImage" fitHeight="190.0" fitWidth="233.0" layoutX="53.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" />
-   </children>
-</AnchorPane>
+<BorderPane fx:id="dashboardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
+   <top>
+      <AnchorPane prefHeight="72.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" layoutX="273.0" layoutY="-8.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="92.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <JFXButton onAction="#profileClicked" text="Profile" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <JFXListView fx:id="menuListview" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

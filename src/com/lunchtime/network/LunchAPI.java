@@ -3,6 +3,7 @@ package com.lunchtime.network;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.requests.LoginRequest;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
+import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import retrofit2.Call;
@@ -18,4 +19,7 @@ public interface LunchAPI {
 
     @GET("menu")
     Call<ApiBaseResponse<MenuWrapper>> getMenu();
+
+    @POST("update")
+    Call<ApiBaseResponse> update(@Body UpdateProfileRequest updateProfileRequest);
 }
