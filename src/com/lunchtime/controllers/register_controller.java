@@ -20,9 +20,13 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class register_controller implements Initializable {
@@ -65,9 +69,14 @@ public class register_controller implements Initializable {
     }
 
     @FXML
-    void register_button_clicked(ActionEvent event) {
+    void register_button_clicked(ActionEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !passwordIsEmpty && !phoneIsEmpty && emailIsValid && passwordIsValid && phoneIsValid){
-            RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), password_field.getText(), "google");
+
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            messageDigest.update(password_field.getText().getBytes("UTF-8"), 0, password_field.getText().length());
+            String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
+
+            RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), encriptedPassword, "google");
 
             NetworkManager.getInstance().Register(registerRequest, new NetworkResponseListener<ApiBaseResponse>() {
                 @Override

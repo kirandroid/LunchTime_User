@@ -23,9 +23,13 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class login_controller implements Initializable {
@@ -75,10 +79,15 @@ public class login_controller implements Initializable {
     private MediaView loginVideoPlayer;
 
     @FXML
-    void login_button_clicked(ActionEvent event) {
+    void login_button_clicked(ActionEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
         if (emailIsValid && !emailIsEmpty && passwordIsValid && !passwordIsEmpty) {
-            LoginRequest loginRequest = new LoginRequest(email_field.getText(), password_field.getText());
+
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            messageDigest.update(password_field.getText().getBytes("UTF-8"), 0, password_field.getText().length());
+            String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
+
+            LoginRequest loginRequest = new LoginRequest(email_field.getText(), encriptedPassword);
             NetworkManager.getInstance().Login(loginRequest, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
                 @Override
                 public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
