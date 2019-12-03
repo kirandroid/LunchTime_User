@@ -2,6 +2,7 @@ package com.lunchtime.network;
 
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.requests.LoginRequest;
+import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
@@ -22,4 +23,7 @@ public interface LunchAPI {
 
     @POST("update")
     Call<ApiBaseResponse> update(@Body UpdateProfileRequest updateProfileRequest);
+
+    @POST("order")
+    Call<ApiBaseResponse> order(@Body OrderRequest orderRequest);
 }

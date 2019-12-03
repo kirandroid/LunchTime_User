@@ -3,29 +3,26 @@ package com.lunchtime.controllers;
 import com.jfoenix.controls.*;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.svg.SVGGlyph;
+import com.jfoenix.validation.NumberValidator;
+import com.jfoenix.validation.RequiredFieldValidator;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
+import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -34,14 +31,18 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
 public class menu_controller {
-    int quantity = 1;
+    private boolean quantityFieldIsEmpty = true;
+    private boolean quantityFieldIsValid = false;
+
+    private Integer coins = 500;
+    private Integer userId = 16;
+
     @FXML
     private JFXMasonryPane testMasonryPane;
 
@@ -77,8 +78,6 @@ public class menu_controller {
     //---------------For making the screen draggable-------------
 
 
-
-
     @FXML
     void refresh(ActionEvent event) {
         testMasonryPane.getChildren().clear();
@@ -87,11 +86,9 @@ public class menu_controller {
 
 
     public void initialize() {
-        System.out.println("Hello");
         NetworkManager.getInstance().GetMenu(new NetworkResponseListener<ApiBaseResponse<MenuWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<MenuWrapper> menuWrapperApiBaseResponse) {
-                System.out.println("Response");
                 Platform.runLater(() -> {
                     final List menu = menuWrapperApiBaseResponse.getData().getMenu();
                     ArrayList<Node> children = new ArrayList<>();
@@ -108,7 +105,7 @@ public class menu_controller {
                         VBox bodyContent = new VBox();
                         Label foodName = new Label();
                         String headerColor = "#4E6A9C";
-                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" +" -fx-background-color:  "+ headerColor+ "; -fx-background-image: url( "+menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture()+");");
+                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture() + ");");
                         VBox.setVgrow(header, Priority.ALWAYS);
 
 
@@ -132,8 +129,8 @@ public class menu_controller {
                         button.setScaleY(0);
                         int finalI = i;
                         button.setOnAction(param -> {
-                            System.out.println("Clicked"+menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name());
-                            loadDialog(menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_price());
+                            System.out.println("Clicked" + menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name());
+                            loadDialog(menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_price(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_id());
                         });
                         SVGGlyph glyph = new SVGGlyph(-1,
                                 "test",
@@ -172,36 +169,140 @@ public class menu_controller {
 
     }
 
-    private void loadDialog(String foodName, Integer foodPrice){
-        JFXSlider priceSlider = new JFXSlider();
-        priceSlider.setValue(1);
-        Label message = new Label();
-
-        priceSlider.setMin(1);
-        priceSlider.setMax(100);
-        priceSlider.setMinorTickCount(0);
-        priceSlider.setMajorTickUnit(1);
-        DecimalFormat df = new DecimalFormat("0.##");
-        priceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                message.setText("Would you like to order "+ df.format(newValue) + " plate "+ foodName+" for Rs. "+foodPrice);
-            }
-        });
-
-//        message.textProperty().bind(Bindings.concat("Would you like to order ", priceSlider.valueProperty().asString("%.0f"), " plate ", foodName, " for Rs. ",  foodPrice));
+    private void loadDialog(String foodName, Integer foodPrice, Integer foodId) {
+//        JFXSlider priceSlider = new JFXSlider();
+//        priceSlider.setValue(1);
+//        Label message = new Label();
+//
+//        priceSlider.setMin(1);
+//        priceSlider.setMax(100);
+//        priceSlider.setMinorTickCount(0);
+//        priceSlider.setMajorTickUnit(1);
+//        DecimalFormat df = new DecimalFormat("0.##");
+//        priceSlider.valueProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                message.setText("Would you like to order "+ df.format(newValue) + " plate "+ foodName+" for Rs. "+foodPrice);
+//            }
+//        });
+//
+////        message.textProperty().bind(Bindings.concat("Would you like to order ", priceSlider.valueProperty().asString("%.0f"), " plate ", foodName, " for Rs. ",  foodPrice));
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(message, priceSlider);
+        Label message = new Label();
+        message.setText("Please specify the quantity of the order.");
+        JFXTextField quantityField = new JFXTextField();
+        quantityField.setLabelFloat(true);
+        quantityField.setPromptText("Enter quantity");
+        quantityField.setPadding(new Insets(15, 0, 0, 0));
+        vBox.getChildren().addAll(message, quantityField);
         JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Order "+foodName));
+        content.setHeading(new Text("Order " + foodName));
         content.setBody(vBox);
-        JFXButton button = new JFXButton("Okay");
+        JFXButton orderButton = new JFXButton("Place Order");
+        JFXButton cancelButton = new JFXButton("Cancel");
         JFXDialog dialog = new JFXDialog(menuPane, content, JFXDialog.DialogTransition.CENTER);
+        content.setActions(cancelButton, orderButton);
+        cancelButton.setOnAction(event -> dialog.close());
+        orderButton.setOnAction(event -> {
+            if (quantityFieldIsValid && !quantityFieldIsEmpty){
+                dialog.close();
+                int quantity = Integer.parseInt(quantityField.getText());
+                int totalPrice = quantity * foodPrice;
 
-        button.setOnAction(event -> dialog.close());
-        content.setActions(button);
+                if (totalPrice > coins) {
+                    JFXDialogLayout errorContent = new JFXDialogLayout();
+                    errorContent.setHeading(new Text("Error"));
+                    errorContent.setBody(new Text("Insufficient Coins"));
+                    JFXDialog errorDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
+                    JFXButton errorCancelButton = new JFXButton("Cancel");
+                    errorContent.setActions(errorCancelButton);
 
+                    errorCancelButton.setOnAction(closeEvent -> errorDialog.close());
+                    errorDialog.show();
+                } else {
+                    JFXDialogLayout confirmContent = new JFXDialogLayout();
+                    confirmContent.setHeading(new Text("Place Order"));
+                    confirmContent.setBody(new Text("The total price is Rs. " + totalPrice + " for quantity: " + quantity + ". Place the order?"));
+                    JFXDialog confirmDialog = new JFXDialog(menuPane, confirmContent, JFXDialog.DialogTransition.CENTER);
+                    JFXButton confirmOrderButton = new JFXButton("Place Order");
+                    JFXButton confirmCancelButton = new JFXButton("Cancel");
+                    confirmContent.setActions(confirmCancelButton, confirmOrderButton);
+
+                    confirmCancelButton.setOnAction(closeEvent -> confirmDialog.close());
+                    confirmOrderButton.setOnAction(confirmEvent -> {
+                        OrderRequest orderRequest = new OrderRequest(userId, foodId, quantity, totalPrice);
+                        NetworkManager.getInstance().Order(orderRequest, new NetworkResponseListener<ApiBaseResponse>() {
+                            @Override
+                            public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                                confirmDialog.close();
+                                Platform.runLater(() -> {
+                                    JFXDialogLayout orderContent = new JFXDialogLayout();
+                                    orderContent.setHeading(new Text("Success"));
+                                    orderContent.setBody(new Text("Order Placed!"));
+                                    JFXDialog orderDialog = new JFXDialog(menuPane, orderContent, JFXDialog.DialogTransition.CENTER);
+                                    JFXButton orderCancelButton = new JFXButton("Cancel");
+                                    orderContent.setActions(orderCancelButton);
+
+                                    orderCancelButton.setOnAction(closeEvent -> orderDialog.close());
+                                    orderDialog.show();
+                                });
+
+                            }
+
+                            @Override
+                            public void onError() {
+                                System.out.println("Some Error");
+                            }
+                        });
+                    });
+                    confirmDialog.show();
+                }
+            }
+
+        });
         dialog.show();
+
+
+        //-----------------------------------------------------------------------------------------------------------------//
+        //--------Validators-----------//
+
+        //Field Required validator for quantity
+        RequiredFieldValidator quantityRequiredFieldValidator = new RequiredFieldValidator();
+        quantityField.getValidators().add(quantityRequiredFieldValidator);
+        quantityRequiredFieldValidator.setMessage("Please a quantity");
+        quantityField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (quantityField.validate()) {
+                    System.out.println("Quantity not empty");
+                    quantityFieldIsEmpty = false;
+                } else {
+                    System.out.println("Quantity empty");
+                    quantityFieldIsEmpty = true;
+                }
+
+            }
+        });
+        quantityField.textProperty().addListener((observable, oldValue, newValue) -> quantityField.validate());
+
+//Number Validator
+        NumberValidator quantityFieldValidator = new NumberValidator();
+        quantityField.getValidators().add(quantityFieldValidator);
+        quantityFieldValidator.setMessage("Only numbers accepted!");
+        quantityField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (quantityField.validate()) {
+                    System.out.println("Quantity valid");
+                    quantityFieldIsValid = true;
+                } else {
+                    System.out.println("Quantity not valid");
+                    quantityFieldIsValid = false;
+                }
+            }
+        });
+        quantityField.textProperty().addListener((observable, oldValue, newValue) -> quantityField.validate());
+        //--------Validators-----------//
+        //-----------------------------------------------------------------------------------------------------------------//
+
     }
 }

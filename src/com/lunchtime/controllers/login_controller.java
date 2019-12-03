@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -76,7 +78,16 @@ public class login_controller implements Initializable {
 
 
     @FXML
+    private JFXButton closeButton;
+
+    @FXML
     private MediaView loginVideoPlayer;
+
+
+    @FXML
+    void closeButtonClicked(ActionEvent event) {
+        System.exit(0);
+    }
 
     @FXML
     void login_button_clicked(ActionEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -212,7 +223,7 @@ public class login_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        closeButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/close.png").toURI().toString(), 15, 15, false, true, true)));
         Platform.runLater(() -> {
             email_field.requestFocus();
         });

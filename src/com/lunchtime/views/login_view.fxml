@@ -27,6 +27,7 @@
                   <DropShadow color="#ddddddcc" height="38.55" radius="21.0" spread="0.63" width="47.45" />
                </effect>
             </Pane>
+            <JFXButton fx:id="closeButton" buttonType="RAISED" layoutX="972.0" onAction="#closeButtonClicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: red;" />
          </children>
       </AnchorPane>
    </children>

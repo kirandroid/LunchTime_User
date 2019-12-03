@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -60,6 +62,14 @@ public class register_controller implements Initializable {
 
     @FXML
     private JFXTextField first_name_field;
+
+    @FXML
+    private JFXButton closeButton;
+
+    @FXML
+    void closeButtonClicked(ActionEvent event) {
+        System.exit(0);
+    }
 
 
     @FXML
@@ -115,6 +125,7 @@ public class register_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        closeButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/close.png").toURI().toString(), 15, 15, false, true, true)));
         fieldValidators();
         final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/registerVideo.mp4").toURI().toString()));
         video.setMute(true);
