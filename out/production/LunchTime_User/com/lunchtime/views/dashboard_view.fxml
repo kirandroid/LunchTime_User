@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <?import javafx.scene.control.Tab?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
+<BorderPane maxHeight="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone"  maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
 <center>
    <JFXTabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
       <tabs>

@@ -9,12 +9,15 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +29,33 @@ public class dashboard_controller {
 
     @FXML
     private JFXListView<Label> menuListview;
+
+
+
+    //---------------For making the screen draggable-------------
+    double x, y;
+
+    @FXML
+    void windowDragged(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+        stage.setOpacity(0.7f);
+    }
+
+    @FXML
+    void windowDraggedDone(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setOpacity(1.0f);
+    }
+
+    @FXML
+    void windowPressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+    //---------------For making the screen draggable-------------
+
 
     @FXML
     void profileClicked(ActionEvent event) throws IOException {

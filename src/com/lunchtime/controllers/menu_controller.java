@@ -1,9 +1,6 @@
 package com.lunchtime.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXMasonryPane;
+import com.jfoenix.controls.*;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.svg.SVGGlyph;
 import com.lunchtime.network.NetworkManager;
@@ -15,6 +12,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,20 +24,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
 public class menu_controller {
-
+    int quantity = 1;
     @FXML
     private JFXMasonryPane testMasonryPane;
 
@@ -48,6 +51,32 @@ public class menu_controller {
 
     @FXML
     private StackPane menuPane;
+
+    //---------------For making the screen draggable-------------
+    double x, y;
+
+    @FXML
+    void windowDragged(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+        stage.setOpacity(0.7f);
+    }
+
+    @FXML
+    void windowDraggedDone(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setOpacity(1.0f);
+    }
+
+    @FXML
+    void windowPressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+    //---------------For making the screen draggable-------------
+
+
 
 
     @FXML
@@ -81,6 +110,8 @@ public class menu_controller {
                         String headerColor = "#4E6A9C";
                         header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" +" -fx-background-color:  "+ headerColor+ "; -fx-background-image: url( "+menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture()+");");
                         VBox.setVgrow(header, Priority.ALWAYS);
+
+
                         StackPane body = new StackPane();
                         body.setPrefHeight(100);
                         foodName.setText(menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_name());
@@ -142,9 +173,29 @@ public class menu_controller {
     }
 
     private void loadDialog(String foodName, Integer foodPrice){
+        JFXSlider priceSlider = new JFXSlider();
+        priceSlider.setValue(1);
+        Label message = new Label();
+
+        priceSlider.setMin(1);
+        priceSlider.setMax(100);
+        priceSlider.setMinorTickCount(0);
+        priceSlider.setMajorTickUnit(1);
+        DecimalFormat df = new DecimalFormat("0.##");
+        priceSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                message.setText("Would you like to order "+ df.format(newValue) + " plate "+ foodName+" for Rs. "+foodPrice);
+            }
+        });
+
+//        message.textProperty().bind(Bindings.concat("Would you like to order ", priceSlider.valueProperty().asString("%.0f"), " plate ", foodName, " for Rs. ",  foodPrice));
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(message, priceSlider);
         JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Would you like to order?"));
-        content.setBody(new Text(foodName+" for Rs. "+foodPrice));
+        content.setHeading(new Text("Order "+foodName));
+        content.setBody(vBox);
         JFXButton button = new JFXButton("Okay");
         JFXDialog dialog = new JFXDialog(menuPane, content, JFXDialog.DialogTransition.CENTER);
 
