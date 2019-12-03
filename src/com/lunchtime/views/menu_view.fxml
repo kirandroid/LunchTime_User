@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="menuPane" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.menu_controller">
    <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -22,7 +24,13 @@
       <top>
          <Pane prefHeight="47.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
             <children>
-               <Button layoutX="871.0" layoutY="11.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+               <TextField layoutX="68.0" layoutY="4.0" prefHeight="40.0" prefWidth="739.0" promptText="Search">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </TextField>
+               <JFXButton fx:id="searchButton" layoutX="814.0" layoutY="7.0" prefHeight="36.0" prefWidth="52.0" ripplerFill="#c0cd13" style="-fx-border-color: black; -fx-border-width: 0.5;" />
+               <JFXButton fx:id="refreshButton" buttonType="RAISED" layoutX="934.0" layoutY="6.0" onAction="#refresh" prefHeight="36.0" prefWidth="52.0" ripplerFill="#c0cd13" style="-fx-background-color: blue;" />
             </children>
          </Pane>
       </top>

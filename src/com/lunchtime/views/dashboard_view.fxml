@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import javafx.scene.layout.BorderPane?>
-
 <?import javafx.scene.control.Tab?>
-<BorderPane maxHeight="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone"  maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<!--        stylesheets="@../assets/css/main.css"-->
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
 <center>
    <JFXTabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
       <tabs>
@@ -20,4 +24,10 @@
       </tabs>
    </JFXTabPane>
 </center>
+   <top>
+      <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="1000.0" style="-fx-background-color: orange;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="closeButton" buttonType="RAISED" onAction="#closeButtonClicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: red;" />
+         </children></HBox>
+   </top>
 </BorderPane>

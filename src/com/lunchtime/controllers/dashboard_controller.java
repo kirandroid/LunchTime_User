@@ -1,5 +1,6 @@
 package com.lunchtime.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -56,6 +58,13 @@ public class dashboard_controller {
     }
     //---------------For making the screen draggable-------------
 
+    @FXML
+    private JFXButton closeButton;
+
+    @FXML
+    void closeButtonClicked(ActionEvent event) {
+        System.exit(0);
+    }
 
     @FXML
     void profileClicked(ActionEvent event) throws IOException {
@@ -64,6 +73,7 @@ public class dashboard_controller {
     }
 
     public void initialize() {
+        closeButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/close.png").toURI().toString(), 15, 15, false, true, true)));
 
         NetworkManager.getInstance().GetMenu(new NetworkResponseListener<ApiBaseResponse<MenuWrapper>>() {
             @Override

@@ -30,3 +30,24 @@
     -fx-vertical-gap:50px;
     -fx-pref-width:600;
 }
+
+
+/*TablPane styling*/
+.tab{
+    -fx-background-color: orange;
+}
+
+.tab-header-background{
+    -fx-background-color: orange;
+}
+
+.tab-label{
+    -fx-text-fill: white;
+    -fx-font-size: 16pt;
+}
+
+
+.tab-main{
+    -fx-pref-height : 80;
+    -fx-max-height : 80;
+}

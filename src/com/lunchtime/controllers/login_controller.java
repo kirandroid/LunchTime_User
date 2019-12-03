@@ -228,7 +228,7 @@ public class login_controller implements Initializable {
             email_field.requestFocus();
         });
         fieldValidators();
-        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/loginVideoCustom.mp4").toURI().toString()));
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/loginVideo.mp4").toURI().toString()));
         video.setMute(true);
         video.setCycleCount(MediaPlayer.INDEFINITE);
         video.play();

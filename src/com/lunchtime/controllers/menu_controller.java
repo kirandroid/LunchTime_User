@@ -22,6 +22,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -31,6 +33,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +82,12 @@ public class menu_controller {
 
 
     @FXML
+    private JFXButton searchButton;
+
+    @FXML
+    private JFXButton refreshButton;
+
+    @FXML
     void refresh(ActionEvent event) {
         testMasonryPane.getChildren().clear();
         initialize();
@@ -86,6 +95,9 @@ public class menu_controller {
 
 
     public void initialize() {
+        refreshButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/refresh.png").toURI().toString(), 20, 20, false, true, true)));
+        searchButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/search.png").toURI().toString(), 20, 20, false, true, true)));
+
         NetworkManager.getInstance().GetMenu(new NetworkResponseListener<ApiBaseResponse<MenuWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<MenuWrapper> menuWrapperApiBaseResponse) {
@@ -104,6 +116,7 @@ public class menu_controller {
                         StackPane header = new StackPane();
                         VBox bodyContent = new VBox();
                         Label foodName = new Label();
+                        Label foodPrice = new Label();
                         String headerColor = "#4E6A9C";
                         header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture() + ");");
                         VBox.setVgrow(header, Priority.ALWAYS);
@@ -111,8 +124,14 @@ public class menu_controller {
 
                         StackPane body = new StackPane();
                         body.setPrefHeight(100);
+                        bodyContent.setPadding(new Insets(20,10,10,10));
+                        foodName.setStyle("-fx-font: 24 arial;");
+                        foodPrice.setPadding(new Insets(10,0,0,0));
+                        foodPrice.setTextFill(Color.web("#85bb65"));
+                        foodPrice.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
                         foodName.setText(menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_name());
-                        bodyContent.getChildren().add(foodName);
+                        foodPrice.setText("Rs. "+menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_price().toString());
+                        bodyContent.getChildren().addAll(foodName, foodPrice);
                         body.getChildren().add(bodyContent);
                         VBox content = new VBox();
                         content.getChildren().addAll(header, body);
