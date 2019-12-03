@@ -1,7 +1,6 @@
 package com.lunchtime.controllers;
 
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -19,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,20 +28,16 @@ import java.util.ResourceBundle;
 public class register_controller implements Initializable {
 
     private boolean firstNameIsEmpty = true;
-    private boolean firstNameIsValid = false;
     private boolean lastNameIsEmpty = true;
-    private boolean lastNameIsValid = false;
     private boolean emailIsEmpty = true;
     private boolean emailIsValid = false;
     private boolean phoneIsEmpty = true;
     private boolean phoneIsValid = false;
     private boolean passwordIsEmpty = true;
     private boolean passwordIsValid = false;
-    private boolean confirmPasswordIsEmpty = true;
-    private boolean confirmPasswordIsValid = false;
 
     @FXML
-    private AnchorPane registerPane;
+    private StackPane registerPane;
 
     @FXML
     private MediaView registerVideoPlayer;
@@ -61,8 +57,6 @@ public class register_controller implements Initializable {
     @FXML
     private JFXTextField first_name_field;
 
-    @FXML
-    private JFXPasswordField confirm_password_field;
 
     @FXML
     void login_button_clicked(ActionEvent event) throws IOException {
@@ -72,12 +66,13 @@ public class register_controller implements Initializable {
 
     @FXML
     void register_button_clicked(ActionEvent event) {
-        RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), password_field.getText(), "google");
+        if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !passwordIsEmpty && !phoneIsEmpty && emailIsValid && passwordIsValid && phoneIsValid){
+            RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), password_field.getText(), "google");
 
-        NetworkManager.getInstance().Register(registerRequest, new NetworkResponseListener<ApiBaseResponse>() {
-            @Override
-            public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
-                Platform.runLater(
+            NetworkManager.getInstance().Register(registerRequest, new NetworkResponseListener<ApiBaseResponse>() {
+                @Override
+                public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                    Platform.runLater(
                             () -> {
                                 try {
                                     StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
@@ -87,13 +82,26 @@ public class register_controller implements Initializable {
                                 }
                             }
                     );
-            }
+                }
 
-            @Override
-            public void onError() {
-                System.out.println("Register Error!");
-            }
-        });
+                @Override
+                public void onError() {
+                    Platform.runLater(() -> {
+                        JFXDialogLayout content = new JFXDialogLayout();
+                        content.setHeading(new Text("Error"));
+                        content.setBody(new Text("Email Already Used"));
+                        JFXButton button = new JFXButton("Okay");
+                        JFXDialog dialog = new JFXDialog(registerPane, content, JFXDialog.DialogTransition.CENTER);
+
+                        button.setOnAction(event -> dialog.close());
+                        content.setActions(button);
+
+                        dialog.show();
+                    });
+                }
+            });
+        }
+
     }
 
     @Override
@@ -168,7 +176,7 @@ public class register_controller implements Initializable {
         //Field Required validator for phone
         RequiredFieldValidator phoneRequiredFieldValidator = new RequiredFieldValidator();
         phone_field.getValidators().add(phoneRequiredFieldValidator);
-        phoneRequiredFieldValidator.setMessage("Please enter an email!");
+        phoneRequiredFieldValidator.setMessage("Please enter an phone!");
         phone_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 if (phone_field.validate()) {
@@ -202,75 +210,80 @@ public class register_controller implements Initializable {
         });
         password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
 
+//----------------------------------------------------------------------------------------------------------------------------------//
 
-        //Field Required validator for Confirm password
-        RequiredFieldValidator confirmPasswordRequiredFieldValidator = new RequiredFieldValidator();
-        confirm_password_field.getValidators().add(confirmPasswordRequiredFieldValidator);
-        confirmPasswordRequiredFieldValidator.setMessage("Please enter a password!");
-        confirm_password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//        //Email Validator
+        RegexValidator emailValidator = new RegexValidator();
+        emailValidator.setRegexPattern("^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        email_field.setValidators(emailValidator);
+        emailValidator.setMessage("Email is invalid!");
+        email_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                if (confirm_password_field.validate()) {
-                    System.out.println("Confirm Password not empty");
-                    confirmPasswordIsEmpty = false;
+                if (email_field.validate()) {
+                    System.out.println("Email valid");
+                    emailIsValid = true;
                 } else {
-                    System.out.println("Confirm Password empty");
-                    confirmPasswordIsEmpty = true;
+                    System.out.println("Email not valid");
+                    emailIsValid = false;
                 }
             }
         });
-        confirm_password_field.textProperty().addListener((observable, oldValue, newValue) -> confirm_password_field.validate());
-//----------------------------------------------------------------------------------------------------------------------------------//
+        email_field.textProperty().addListener((observable, oldValue, newValue) -> email_field.validate());
 
-//
-//        //Email Validator
-//        RegexValidator emailValidator = new RegexValidator();
-//        emailValidator.setRegexPattern("^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
-//                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-//        email_field.setValidators(emailValidator);
-//        emailValidator.setMessage("Email is invalid!");
-//        email_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (!newValue) {
-//                if (email_field.validate()) {
-//                    System.out.println("Email valid");
-//                    emailIsValid = true;
-//                } else {
-//                    System.out.println("Email not valid");
-//                    emailIsValid = false;
-//                }
-//            }
-//        });
-//        email_field.textProperty().addListener((observable, oldValue, newValue) -> email_field.validate());
-//
-//
-
-//        //Field Required validator for password
-//        NumberValidator phoneRequiredFieldValidator = new NumberValidator();
-//        phone_field.getValidators().add(phoneRequiredFieldValidator);
-//        phoneRequiredFieldValidator.setMessage("Please enter a mobile number!");
-//        phone_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (!newValue) {
-//                phone_field.validate();
-//            }
-//        });
-//        phone_field.textProperty().addListener((observable, oldValue, newValue) -> phone_field.validate());
+//        //Field Required validator for phone
+        NumberValidator phoneFieldValidator = new NumberValidator();
+        phone_field.getValidators().add(phoneFieldValidator);
+        phoneFieldValidator.setMessage("Only numbers accepted!");
+        phone_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (phone_field.validate()) {
+                    System.out.println("Phone valid");
+                    phoneIsValid = true;
+                } else {
+                    System.out.println("Phone not valid");
+                    phoneIsValid = false;
+                }
+            }
+        });
+        phone_field.textProperty().addListener((observable, oldValue, newValue) -> phone_field.validate());
 
 //        //Password Validator
-//        RegexValidator passwordValidator = new RegexValidator();
-//        passwordValidator.setRegexPattern("^.{8,}$");
-//        password_field.setValidators(passwordValidator);
-//        passwordValidator.setMessage("Password should be atleast 8 characters long!");
-//        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (!newValue) {
-//                if (password_field.validate()) {
-//                    System.out.println("Password valid");
-//                    passwordIsValid = true;
-//                } else {
-//                    System.out.println("Password not valid");
-//                    passwordIsValid = false;
-//                }
-//            }
-//        });
-//        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
+        RegexValidator passwordValidator = new RegexValidator();
+        passwordValidator.setRegexPattern("^.{8,}$");
+        password_field.setValidators(passwordValidator);
+        passwordValidator.setMessage("Password should be atleast 8 characters long!");
+        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (password_field.validate()) {
+                    System.out.println("Password valid");
+                    passwordIsValid = true;
+                } else {
+                    System.out.println("Password not valid");
+                    passwordIsValid = false;
+                }
+            }
+        });
+        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
+
+
+//        //Phone length Validator
+        RegexValidator phoneLengthValidator = new RegexValidator();
+        phoneLengthValidator.setRegexPattern("^.{10}$");
+        phone_field.setValidators(phoneLengthValidator);
+        phoneLengthValidator.setMessage("Phone Number should be 10 characters long!");
+        phone_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (phone_field.validate()) {
+                    System.out.println("Phone valid");
+                    phoneIsValid = true;
+                } else {
+                    System.out.println("Phone not valid");
+                    phoneIsValid = false;
+                }
+            }
+        });
+        phone_field.textProperty().addListener((observable, oldValue, newValue) -> phone_field.validate());
 
     }
 

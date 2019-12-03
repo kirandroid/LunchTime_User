@@ -9,14 +9,12 @@ import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.requests.LoginRequest;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -120,7 +118,7 @@ public class login_controller implements Initializable {
 
     @FXML
     void register_button_clicked(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/register_view.fxml"));
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/register_view.fxml"));
         login_pane.getChildren().setAll(pane);
     }
 
