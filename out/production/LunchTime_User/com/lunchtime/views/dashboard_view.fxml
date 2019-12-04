@@ -21,6 +21,9 @@
          <Tab fx:id="expenseTab" text="Expenses">
             <fx:include fx:id="test3" source="expense_view.fxml" />
          </Tab>
+         <Tab fx:id="profileTab" text="Profile">
+            <fx:include fx:id="test4" source="profile_view.fxml" />
+         </Tab>
       </tabs>
    </JFXTabPane>
 </center>

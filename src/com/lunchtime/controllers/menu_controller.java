@@ -47,7 +47,6 @@ public class menu_controller implements Initializable {
     private boolean quantityFieldIsValid = false;
 
     private Integer coins = 500;
-    private Integer userId = 16;
 
     @FXML
     private JFXMasonryPane testMasonryPane;
@@ -254,7 +253,7 @@ public class menu_controller implements Initializable {
 
                     confirmCancelButton.setOnAction(closeEvent -> confirmDialog.close());
                     confirmOrderButton.setOnAction(confirmEvent -> {
-                        OrderRequest orderRequest = new OrderRequest(userId, foodId, quantity, totalPrice);
+                        OrderRequest orderRequest = new OrderRequest(login_controller.userId, foodId, quantity, totalPrice);
                         NetworkManager.getInstance().Order(orderRequest, new NetworkResponseListener<ApiBaseResponse>() {
                             @Override
                             public void onResponseReceived(ApiBaseResponse apiBaseResponse) {

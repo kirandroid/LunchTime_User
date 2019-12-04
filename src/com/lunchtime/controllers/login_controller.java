@@ -42,6 +42,8 @@ public class login_controller implements Initializable {
     private boolean passwordIsValid = false;
     private boolean passwordIsEmpty = true;
 
+    public static int userId;
+
 
     //---------------For making the screen draggable-------------
     private double x, y;
@@ -105,6 +107,7 @@ public class login_controller implements Initializable {
                     Platform.runLater(
                             () -> {
                                 try {
+                                    userId = userWrapperApiBaseResponse.getData().getUser().getId();
                                     BorderPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
                                     login_pane.getChildren().setAll(pane);
                                 } catch (IOException e) {

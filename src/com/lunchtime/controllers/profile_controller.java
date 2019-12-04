@@ -13,62 +13,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class profile_controller implements Initializable {
+public class profile_controller {
     @FXML
     private AnchorPane profilePane;
 
     @FXML
-    private JFXTextField phone_field;
-
-    @FXML
-    private JFXPasswordField password_field;
-
-    @FXML
-    private JFXTextField email_field;
-
-    @FXML
-    private JFXTextField last_name_field;
-
-    @FXML
-    private JFXTextField first_name_field;
-
-    @FXML
-    private JFXPasswordField confirm_password_field;
-
-    @FXML
-    void register_button_clicked(ActionEvent event) {
-        UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), password_field.getText(), 1);
-
-        NetworkManager.getInstance().Update(updateProfileRequest, new NetworkResponseListener<ApiBaseResponse>() {
-            @Override
-            public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
-                Platform.runLater(
-                        () -> {
-                            try {
-                                AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
-                                profilePane.getChildren().setAll(pane);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                );
-            }
-
-            @Override
-            public void onError() {
-                System.out.println("Update Error!");
-            }
-        });
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Test");
+    void logout(ActionEvent event) throws IOException {
+//        StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
+//        profilePane.getChildren().setAll(pane);
     }
 }

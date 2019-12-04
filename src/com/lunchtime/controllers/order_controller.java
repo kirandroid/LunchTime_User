@@ -92,7 +92,7 @@ public class order_controller implements Initializable{
         refreshButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/refresh.png").toURI().toString(), 20, 20, false, true, true)));
         searchButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/search.png").toURI().toString(), 20, 20, false, true, true)));
 
-        NetworkManager.getInstance().MyOrder(16, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
+        NetworkManager.getInstance().MyOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 System.out.println("order");
