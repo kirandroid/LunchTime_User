@@ -17,6 +17,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -34,12 +35,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
-public class menu_controller {
+public class menu_controller implements Initializable {
     private boolean quantityFieldIsEmpty = true;
     private boolean quantityFieldIsValid = false;
 
@@ -90,17 +93,18 @@ public class menu_controller {
     @FXML
     void refresh(ActionEvent event) {
         testMasonryPane.getChildren().clear();
-        initialize();
+        loadData();
     }
 
 
-    public void initialize() {
+    public void loadData() {
         refreshButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/refresh.png").toURI().toString(), 20, 20, false, true, true)));
         searchButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/search.png").toURI().toString(), 20, 20, false, true, true)));
 
         NetworkManager.getInstance().GetMenu(new NetworkResponseListener<ApiBaseResponse<MenuWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<MenuWrapper> menuWrapperApiBaseResponse) {
+                System.out.println("menu");
                 Platform.runLater(() -> {
                     final List menu = menuWrapperApiBaseResponse.getData().getMenu();
                     ArrayList<Node> children = new ArrayList<>();
@@ -323,5 +327,10 @@ public class menu_controller {
         //--------Validators-----------//
         //-----------------------------------------------------------------------------------------------------------------//
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadData();
     }
 }

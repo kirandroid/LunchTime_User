@@ -8,6 +8,7 @@ import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
+import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 
 public class ApiService {
@@ -30,5 +31,9 @@ public class ApiService {
 
     public void orderApi(NetworkResponseListener<ApiBaseResponse> listener, LunchAPI api, OrderRequest orderRequest){
         api.order(orderRequest).enqueue(new NetworkResponse<>(listener));
+    }
+
+    public void myOrderApi(NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener, LunchAPI api, int userId){
+        api.myOrder(userId).enqueue(new NetworkResponse<>(listener));
     }
 }

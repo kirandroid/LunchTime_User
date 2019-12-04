@@ -6,6 +6,7 @@ import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
+import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -26,4 +27,7 @@ public interface LunchAPI {
 
     @POST("order")
     Call<ApiBaseResponse> order(@Body OrderRequest orderRequest);
+
+    @GET("order/{user_id}")
+    Call<ApiBaseResponse<OrderWrapper>> myOrder(@Path("user_id") int order);
 }

@@ -6,6 +6,7 @@ import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
+import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import com.lunchtime.network.apiServices.ApiService;
 import okhttp3.OkHttpClient;
@@ -54,6 +55,10 @@ public class NetworkManager {
 
     public void Order(OrderRequest orderRequest, NetworkResponseListener<ApiBaseResponse> listener){
         apiService.orderApi(listener, api, orderRequest);
+    }
+
+    public void MyOrder(int userId, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
+        apiService.myOrderApi(listener, api, userId);
     }
 
 
