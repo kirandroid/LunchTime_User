@@ -18,10 +18,13 @@ public class User {
     @SerializedName("picture")
     private String picture;
 
+    @SerializedName("balance")
+    private int balance;
+
     public User() {
     }
 
-    public User(Integer id, String first_name, String last_name, String email, String phone_number, String password, String picture) {
+    public User(Integer id, String first_name, String last_name, String email, String phone_number, String password, String picture, int balance) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -29,6 +32,7 @@ public class User {
         this.phone_number = phone_number;
         this.password = password;
         this.picture = picture;
+        this.balance = balance;
     }
 
     public Integer getId() {
@@ -51,39 +55,12 @@ public class User {
         return phone_number;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
     public String getPicture() {
         return picture;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public int getBalance() {
+        return balance;
     }
 }

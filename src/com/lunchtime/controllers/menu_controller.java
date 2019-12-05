@@ -89,17 +89,8 @@ public class menu_controller implements Initializable {
     @FXML
     private JFXButton refreshButton;
 
-    @FXML
-    void refresh(ActionEvent event) {
-        testMasonryPane.getChildren().clear();
-        loadData();
-    }
-
 
     public void loadData() {
-        refreshButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/refresh.png").toURI().toString(), 20, 20, false, true, true)));
-        searchButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/search.png").toURI().toString(), 20, 20, false, true, true)));
-
         NetworkManager.getInstance().GetMenu(new NetworkResponseListener<ApiBaseResponse<MenuWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<MenuWrapper> menuWrapperApiBaseResponse) {

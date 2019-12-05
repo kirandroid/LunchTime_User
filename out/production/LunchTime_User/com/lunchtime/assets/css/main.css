@@ -51,3 +51,30 @@
     -fx-pref-height : 80;
     -fx-max-height : 80;
 }
+
+
+.menuButton:hover{
+    -fx-background-color: #84DCC6;
+}
+
+
+.menuButton:pressed{
+    -fx-background-color: #84DCC6;
+}
+
+.closeButton{
+    -fx-background-color: #84DCC6;
+}
+
+.closeButton:hover{
+    -fx-background-color: #FF686B;
+}
+
+.logoutButton{
+    -fx-background-color: #FF686B;
+}
+
+
+.logoutButton:hover{
+    -fx-background-color: #DD1C1A;
+}

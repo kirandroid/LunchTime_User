@@ -14,7 +14,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -22,8 +21,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -32,7 +29,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,22 +72,7 @@ public class order_controller implements Initializable{
     @FXML
     private JFXMasonryPane orderMasonryPane;
 
-    @FXML
-    private JFXButton searchButton;
-
-    @FXML
-    private JFXButton refreshButton;
-
-    @FXML
-    void refresh(ActionEvent event) {
-        orderMasonryPane.getChildren().clear();
-        loadOrderData();
-    }
-
     public void loadOrderData() {
-        refreshButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/refresh.png").toURI().toString(), 20, 20, false, true, true)));
-        searchButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/search.png").toURI().toString(), 20, 20, false, true, true)));
-
         NetworkManager.getInstance().MyOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {

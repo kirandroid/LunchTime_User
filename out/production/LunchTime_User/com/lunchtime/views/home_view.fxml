@@ -6,7 +6,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" text="My Expenses">
+      <Label alignment="CENTER" text="Home View">
          <font>
             <Font size="48.0" />
          </font>

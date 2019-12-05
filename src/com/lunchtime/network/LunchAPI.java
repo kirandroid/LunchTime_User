@@ -28,6 +28,6 @@ public interface LunchAPI {
     @POST("order")
     Call<ApiBaseResponse> order(@Body OrderRequest orderRequest);
 
-    @GET("order/{user_id}")
-    Call<ApiBaseResponse<OrderWrapper>> myOrder(@Path("user_id") int order);
+    @GET("order/{id}")
+    Call<ApiBaseResponse<OrderWrapper>> myOrder(@Path("id") int order);
 }

@@ -6,6 +6,7 @@ import com.jfoenix.validation.RequiredFieldValidator;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
+import com.lunchtime.network.apiObjects.models.User;
 import com.lunchtime.network.apiObjects.requests.LoginRequest;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.application.Platform;
@@ -17,14 +18,12 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +42,13 @@ public class login_controller implements Initializable {
     private boolean passwordIsEmpty = true;
 
     public static int userId;
+    public static String firsName;
+    public static String lastName;
+    public static String phoneNumber;
+    public static String email;
+    public static int balance;
+    public static String picture;
+
 
 
     //---------------For making the screen draggable-------------
@@ -104,11 +110,21 @@ public class login_controller implements Initializable {
             NetworkManager.getInstance().Login(loginRequest, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
                 @Override
                 public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
+                    User user = userWrapperApiBaseResponse.getData().getUser();
                     Platform.runLater(
                             () -> {
                                 try {
-                                    userId = userWrapperApiBaseResponse.getData().getUser().getId();
-                                    BorderPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
+                                    //for global variable
+                                    userId = user.getId();
+                                    firsName = user.getFirst_name();
+                                    lastName = user.getLast_name();
+                                    phoneNumber = user.getPhone_number();
+                                    email = user.getEmail();
+                                    balance = user.getBalance();
+                                    picture = user.getPicture();
+
+                                    StackPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
+
                                     login_pane.getChildren().setAll(pane);
                                 } catch (IOException e) {
                                     e.printStackTrace();

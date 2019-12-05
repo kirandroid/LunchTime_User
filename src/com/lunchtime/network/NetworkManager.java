@@ -57,8 +57,8 @@ public class NetworkManager {
         apiService.orderApi(listener, api, orderRequest);
     }
 
-    public void MyOrder(int userId, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
-        apiService.myOrderApi(listener, api, userId);
+    public void MyOrder(int id, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
+        apiService.myOrderApi(listener, api, id);
     }
 
 

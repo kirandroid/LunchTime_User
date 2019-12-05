@@ -1,41 +1,58 @@
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import com.lunchtime.network.NetworkManager;
-import com.lunchtime.network.NetworkResponseListener;
-import com.lunchtime.network.apiObjects.ApiBaseResponse;
-import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class dashboard_controller {
+public class dashboard_controller implements Initializable {
+    @FXML
+    private StackPane dashboardPane;
 
     @FXML
-    private AnchorPane dashboardPane;
+    private Label userNameLabel;
 
     @FXML
-    private JFXListView<Label> menuListview;
+    private Label userBalanceLabel;
 
+    @FXML
+    private Circle profilePicture;
+
+    @FXML
+    private AnchorPane homePaneButton;
+
+    @FXML
+    private AnchorPane menuPaneButton;
+
+    @FXML
+    private AnchorPane orderPaneButton;
+
+    @FXML
+    private AnchorPane expensePaneButton;
+
+    @FXML
+    private StackPane dashboardContentPane;
 
 
     //---------------For making the screen draggable-------------
-    double x, y;
+    private double x, y;
 
     @FXML
     void windowDragged(MouseEvent event) {
@@ -58,44 +75,71 @@ public class dashboard_controller {
     }
     //---------------For making the screen draggable-------------
 
-    @FXML
-    private JFXButton closeButton;
 
+    //Exits the application
     @FXML
-    void closeButtonClicked(ActionEvent event) {
+    void closeButtonClicked(MouseEvent event) {
         System.exit(0);
     }
 
     @FXML
-    void profileClicked(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("../views/profile_view.fxml"));
-        dashboardPane.getChildren().setAll(pane);
+    void expensePaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/expense_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
     }
 
-    public void initialize() {
-        closeButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/close.png").toURI().toString(), 15, 15, false, true, true)));
+    @FXML
+    void homePaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/home_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
+    }
 
-        NetworkManager.getInstance().GetMenu(new NetworkResponseListener<ApiBaseResponse<MenuWrapper>>() {
-            @Override
-            public void onResponseReceived(ApiBaseResponse<MenuWrapper> menuWrapperApiBaseResponse) {
 
+    @FXML
+    void menuPaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/menu_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
+    }
 
-                Platform.runLater(() -> {
-//                    final List menu = menuWrapperApiBaseResponse.getData().getMenu();
-//                    for (int i = 0; i < menu.size(); i++) {
-//
-//                        Label label = new Label(menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_name());
-//                        label.setGraphic(new ImageView(new Image(menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture(), 100, 100, false, true,true)));
-//                        menuListview.getItems().add(label);
-//
-//                    }
-                });
-            }
+    @FXML
+    void orderPaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/order_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
+    }
 
-            @Override
-            public void onError() {
-                System.out.println("Error on menu fetch");
-            }
+    //Shows confirmation dialog and Logout the user and change view to login screen.
+    @FXML
+    void logOutPaneButtonClicked(MouseEvent event) throws IOException {
+        Platform.runLater(() -> {
+            JFXDialogLayout logoutContent = new JFXDialogLayout();
+            logoutContent.setHeading(new Text("Logout from the system?"));
+            logoutContent.setBody(new Text("Are you sure you want to logout?"));
+            JFXDialog logoutDialog = new JFXDialog(dashboardPane, logoutContent, JFXDialog.DialogTransition.CENTER);
+            JFXButton logoutConfirmButton = new JFXButton("Confirm");
+            JFXButton logoutCancelButton = new JFXButton("Cancel");
+            logoutContent.setActions(logoutCancelButton, logoutConfirmButton);
+
+            logoutCancelButton.setOnAction(logout -> logoutDialog.close());
+
+            logoutConfirmButton.setOnAction(logout -> {
+                StackPane pane = null;
+                try {
+                    pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dashboardPane.getChildren().setAll(pane);
+            });
+            logoutDialog.show();
         });
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        login_controller loginController = new login_controller();
+        profilePicture.setFill(new ImagePattern(new Image(loginController.picture)));
+        userBalanceLabel.setText(String.valueOf(loginController.balance));
+        userNameLabel.setText(loginController.firsName + " "+ loginController.lastName);
     }
 }
