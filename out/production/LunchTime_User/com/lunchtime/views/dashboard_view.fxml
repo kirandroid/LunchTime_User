@@ -15,9 +15,9 @@
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <left>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A5FFD6;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #A5FFD6;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="454.0" prefWidth="209.0" style="-fx-background-color: #A5FFD6;">
+                  <VBox prefHeight="454.0" prefWidth="200.0" style="-fx-background-color: #A5FFD6;">
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #84DCC6;">
                            <children>
@@ -30,7 +30,7 @@
                               <Circle fx:id="profilePicture" fill="#a5ffd6" layoutX="105.0" layoutY="74.0" radius="47.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="homePaneButton" onMouseClicked="#homePaneButtonClicked" prefHeight="62.0" prefWidth="209.0" styleClass="menuButton">
+                        <AnchorPane fx:id="homePaneButton" onMouseClicked="#homePaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
                            <children>
                               <Label layoutX="62.0" layoutY="19.0" text="Home">
                                  <font>
@@ -39,7 +39,7 @@
                               <MaterialDesignIconView glyphName="HOME" layoutX="20.0" layoutY="38.0" size="20" wrappingWidth="20.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="menuPaneButton" layoutX="10.0" layoutY="210.0" onMouseClicked="#menuPaneButtonClicked" prefHeight="62.0" prefWidth="209.0" styleClass="menuButton">
+                        <AnchorPane fx:id="menuPaneButton" layoutX="10.0" layoutY="210.0" onMouseClicked="#menuPaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
                            <children>
                               <Label layoutX="62.0" layoutY="19.0" text="Food Menu">
                                  <font>
@@ -49,7 +49,7 @@
                               <MaterialDesignIconView glyphName="FOOD" layoutX="20.0" layoutY="38.0" size="20" wrappingWidth="20.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="orderPaneButton" layoutX="10.0" layoutY="272.0" onMouseClicked="#orderPaneButtonClicked" prefHeight="62.0" prefWidth="209.0" styleClass="menuButton">
+                        <AnchorPane fx:id="orderPaneButton" layoutX="10.0" layoutY="272.0" onMouseClicked="#orderPaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
                            <children>
                               <Label layoutX="62.0" layoutY="19.0" text="Orders">
                                  <font>
@@ -59,7 +59,7 @@
                               <MaterialDesignIconView glyphName="BORDER_ALL" layoutX="20.0" layoutY="38.0" size="20" wrappingWidth="20.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="expensePaneButton" layoutX="10.0" layoutY="334.0" onMouseClicked="#expensePaneButtonClicked" prefHeight="62.0" prefWidth="209.0" styleClass="menuButton">
+                        <AnchorPane fx:id="expensePaneButton" layoutX="10.0" layoutY="334.0" onMouseClicked="#expensePaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
                            <children>
                               <Label layoutX="62.0" layoutY="19.0" text="Expense Report">
                                  <font>
@@ -71,7 +71,7 @@
                         </AnchorPane>
                      </children>
                   </VBox>
-                  <AnchorPane fx:id="logOutPaneButton" layoutY="538.0" onMouseClicked="#logOutPaneButtonClicked" prefHeight="62.0" prefWidth="209.0" styleClass="logoutButton">
+                  <AnchorPane fx:id="logOutPaneButton" layoutY="538.0" onMouseClicked="#logOutPaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="logoutButton">
                      <children>
                         <Label layoutX="76.0" layoutY="19.0" text="Log Out" textFill="WHITE">
                            <font>
@@ -84,9 +84,9 @@
             </AnchorPane>
          </left>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="791.0">
+                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="800.0">
                      <children>
                         <Pane onMouseClicked="#closeButtonClicked" prefHeight="30.0" prefWidth="30.0" styleClass="closeButton">
                            <children>
@@ -95,7 +95,9 @@
                         </Pane>
                      </children></HBox>
                   <StackPane fx:id="dashboardContentPane" prefHeight="570.0" prefWidth="800.0">
-                     <fx:include fx:id="test1" source="home_view.fxml" />
+                     <children>
+                        <fx:include fx:id="test1" source="home_view.fxml" />
+                     </children>
                   </StackPane>
                </children>
             </VBox>

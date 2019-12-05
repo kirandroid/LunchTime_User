@@ -21,6 +21,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -97,8 +99,12 @@ public class order_controller implements Initializable{
                         Label foodName = new Label();
                         Label foodPrice = new Label();
                         Label foodQuantity = new Label();
+                        ImageView imageView = new ImageView(new Image(order.get(i).getPicture(), 230, 209, false, true, true));
+                        header.getChildren().add(imageView);
                         String headerColor = "#4E6A9C";
-                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + order.get(i).getPicture() + ");");
+//                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + order.get(i).getPicture() + ");");
+                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + ";");
+
                         VBox.setVgrow(header, Priority.ALWAYS);
 
 

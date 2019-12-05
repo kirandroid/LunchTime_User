@@ -137,9 +137,11 @@ public class dashboard_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        login_controller loginController = new login_controller();
-        profilePicture.setFill(new ImagePattern(new Image(loginController.picture)));
-        userBalanceLabel.setText(String.valueOf(loginController.balance));
-        userNameLabel.setText(loginController.firsName + " "+ loginController.lastName);
+        Platform.runLater(() -> {
+            login_controller loginController = new login_controller();
+            profilePicture.setFill(new ImagePattern(new Image(loginController.picture)));
+            userBalanceLabel.setText(String.valueOf(loginController.balance));
+            userNameLabel.setText(loginController.firsName + " "+ loginController.lastName);
+        });
     }
 }

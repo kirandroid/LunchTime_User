@@ -111,8 +111,13 @@ public class menu_controller implements Initializable {
                         VBox bodyContent = new VBox();
                         Label foodName = new Label();
                         Label foodPrice = new Label();
+                        ImageView imageView = new ImageView(new Image(menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture(), 230, 209, false, true, true));
+
+                        header.getChildren().add(imageView);
                         String headerColor = "#4E6A9C";
-                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture() + ");");
+//                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture() + ");");
+                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + ";");
+
                         VBox.setVgrow(header, Priority.ALWAYS);
 
 
