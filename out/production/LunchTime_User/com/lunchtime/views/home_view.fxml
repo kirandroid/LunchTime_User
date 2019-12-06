@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.home_controller">
    <children>
-      <Label alignment="CENTER" text="Home View">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Label>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Label alignment="CENTER" layoutX="278.0" layoutY="22.0" text="Home View">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <JFXButton buttonType="RAISED" layoutX="374.0" layoutY="337.0" onAction="#chooseImageButtonClicked" text="Choose" />
+            <ImageView fx:id="selectedImageView" fitHeight="150.0" fitWidth="200.0" layoutX="302.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
+            <JFXButton buttonType="RAISED" layoutX="374.0" layoutY="380.0" onAction="#uploadImageButtonClicked" text="Upload" />
+         </children>
+      </AnchorPane>
    </children>
 </StackPane>

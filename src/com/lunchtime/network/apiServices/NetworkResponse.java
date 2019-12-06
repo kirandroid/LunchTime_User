@@ -21,6 +21,7 @@ public class NetworkResponse<ResponseType> implements Callback<ResponseType> {
             }else{
                 listener.get().onResponseReceived(response.body());
             }
+            System.out.println(response);
 
         }
     }
@@ -32,5 +33,7 @@ public class NetworkResponse<ResponseType> implements Callback<ResponseType> {
         }
         System.out.println("Error : From NetworkResponse");
         throwable.printStackTrace();
+        System.out.println(call);
+        System.out.println(throwable);
     }
 }

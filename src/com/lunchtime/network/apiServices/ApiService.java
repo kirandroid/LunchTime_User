@@ -2,14 +2,17 @@ package com.lunchtime.network.apiServices;
 
 import com.lunchtime.network.LunchAPI;
 import com.lunchtime.network.NetworkResponseListener;
+import com.lunchtime.network.UploadAPI;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
-import com.lunchtime.network.apiObjects.requests.LoginRequest;
-import com.lunchtime.network.apiObjects.requests.OrderRequest;
-import com.lunchtime.network.apiObjects.requests.RegisterRequest;
-import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
+import com.lunchtime.network.apiObjects.models.UploadResponse;
+import com.lunchtime.network.apiObjects.requests.*;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
 import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
+import okhttp3.MultipartBody;
+import retrofit2.http.Part;
+
+import java.io.File;
 
 public class ApiService {
     public void loginApi(NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener, LunchAPI api, LoginRequest loginRequest){
@@ -35,5 +38,9 @@ public class ApiService {
 
     public void myOrderApi(NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener, LunchAPI api, int id){
         api.myOrder(id).enqueue(new NetworkResponse<>(listener));
+    }
+
+    public void uploadApi(NetworkResponseListener<UploadResponse> listener, UploadAPI api, UploadRequest uploadRequest){
+        api.upload(uploadRequest).enqueue(new NetworkResponse<>(listener));
     }
 }
