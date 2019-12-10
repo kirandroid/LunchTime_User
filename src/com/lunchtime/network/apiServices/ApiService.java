@@ -10,9 +10,7 @@ import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
 import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import okhttp3.MultipartBody;
-import retrofit2.http.Part;
-
-import java.io.File;
+import okhttp3.RequestBody;
 
 public class ApiService {
     public void loginApi(NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener, LunchAPI api, LoginRequest loginRequest){
@@ -40,7 +38,7 @@ public class ApiService {
         api.myOrder(id).enqueue(new NetworkResponse<>(listener));
     }
 
-    public void uploadApi(NetworkResponseListener<UploadResponse> listener, UploadAPI api, UploadRequest uploadRequest){
-        api.upload(uploadRequest).enqueue(new NetworkResponse<>(listener));
+    public void uploadApi(NetworkResponseListener<UploadResponse> listener, UploadAPI api, RequestBody file){
+        api.upload(file).enqueue(new NetworkResponse<>(listener));
     }
 }

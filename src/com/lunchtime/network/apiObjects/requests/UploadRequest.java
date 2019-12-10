@@ -14,17 +14,14 @@ public class UploadRequest {
     private String api_key;
     @SerializedName("eager")
     private String eager;
-    @SerializedName("file")
-    private String file;
     @SerializedName("signature")
     private String signature;
 
-    public UploadRequest(long timestamp, String public_id, String api_key, String eager, String file, String signature) {
+    public UploadRequest(long timestamp, String public_id, String api_key, String eager, String signature) {
         this.timestamp = timestamp;
         this.public_id = public_id;
         this.api_key = api_key;
         this.eager = eager;
-        this.file = file;
         this.signature = signature;
     }
 
@@ -44,9 +41,6 @@ public class UploadRequest {
         return eager;
     }
 
-    public String getFile() {
-        return file;
-    }
 
     public String getSignature() {
         return signature;

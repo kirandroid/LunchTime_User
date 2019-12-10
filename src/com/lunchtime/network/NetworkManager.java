@@ -9,6 +9,7 @@ import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import com.lunchtime.network.apiServices.ApiService;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Multipart;
@@ -75,8 +76,8 @@ public class NetworkManager {
     }
 
 
-    public void UploadImage(UploadRequest uploadRequest, NetworkResponseListener<UploadResponse> listener){
-        apiService.uploadApi(listener, uploadAPI, uploadRequest);
+    public void UploadImage(RequestBody file, NetworkResponseListener<UploadResponse> listener){
+        apiService.uploadApi(listener, uploadAPI, file);
     }
 
 
