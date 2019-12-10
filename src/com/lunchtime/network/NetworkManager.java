@@ -19,9 +19,7 @@ import java.io.File;
 public class NetworkManager {
     private static final NetworkManager instance = new NetworkManager();
     private final LunchAPI api;
-    private final UploadAPI uploadAPI;
     private final String BASE_URL = "http://localhost:3000/api/";
-    private final String UPLOAD_BASE_URL = "https://api.cloudinary.com/v1_1/kirandroid/image/";
     private final ApiService apiService;
 
     private NetworkManager() {
@@ -33,15 +31,6 @@ public class NetworkManager {
                 .build();
 
         api = retrofit.create(LunchAPI.class);
-
-
-        Retrofit uploadRetrofit = new Retrofit.Builder()
-                .baseUrl(UPLOAD_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(new OkHttpClient())
-                .build();
-
-        uploadAPI = uploadRetrofit.create(UploadAPI.class);
 
         apiService = new ApiService();
     }
@@ -75,10 +64,6 @@ public class NetworkManager {
         apiService.myOrderApi(listener, api, id);
     }
 
-
-    public void UploadImage(RequestBody file, NetworkResponseListener<UploadResponse> listener){
-        apiService.uploadApi(listener, uploadAPI, file);
-    }
 
 
 }
