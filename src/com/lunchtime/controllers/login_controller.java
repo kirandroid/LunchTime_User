@@ -106,8 +106,8 @@ public class login_controller implements Initializable {
             messageDigest.update(password_field.getText().getBytes("UTF-8"), 0, password_field.getText().length());
             String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
 
-//            LoginRequest loginRequest = new LoginRequest(email_field.getText(), encriptedPassword);
-            LoginRequest loginRequest = new LoginRequest("kiran@gmail.com", "936A014FC67E26ABD1BC1405824B74EE958D016B");
+            LoginRequest loginRequest = new LoginRequest(email_field.getText(), encriptedPassword);
+//            LoginRequest loginRequest = new LoginRequest("kiran@gmail.com", "936A014FC67E26ABD1BC1405824B74EE958D016B");
 
             NetworkManager.getInstance().Login(loginRequest, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
                 @Override

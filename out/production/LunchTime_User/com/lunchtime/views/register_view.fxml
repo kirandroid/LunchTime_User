@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.media.MediaView?>
+<?import javafx.scene.shape.Circle?>
 
 <!--   <AnchorPane fx:id="registerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.register_controller">-->
 <!--   </AnchorPane>-->
@@ -27,6 +28,16 @@
                   <JFXButton buttonType="RAISED" layoutX="119.0" layoutY="424.0" onAction="#register_button_clicked" prefHeight="48.0" prefWidth="262.0" ripplerFill="#4932b9" style="-fx-background-color: red;" text="REGISTER" textFill="WHITE" />
                   <JFXButton buttonType="RAISED" layoutX="120.0" layoutY="519.0" onAction="#login_button_clicked" prefHeight="48.0" prefWidth="262.0" ripplerFill="#da340e" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0.5;" text="LOGIN" />
                   <Label layoutX="183.0" layoutY="488.0" text="Already have an account?" />
+                  <StackPane layoutX="191.0" layoutY="14.0" onMouseClicked="#selectPictureClicked" prefHeight="90.0" prefWidth="78.0">
+                     <children>
+                        <Circle fx:id="profilePictureView" fill="#bfbfbf" radius="45.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <StackPane alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="101.0" prefWidth="175.0">
+                           <children>
+                              <Circle fx:id="addPictureView" fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </StackPane>
                </children>
             </AnchorPane>
             <StackPane alignment="TOP_RIGHT" prefHeight="150.0" prefWidth="200.0">
