@@ -14,19 +14,49 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class profile_controller {
-    @FXML
-    private AnchorPane profilePane;
 
     @FXML
-    void logout(ActionEvent event) throws IOException {
-//        StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
-//        profilePane.getChildren().setAll(pane);
+    private StackPane profilePane;
+
+    @FXML
+    private JFXTextField first_name_field;
+
+    @FXML
+    private JFXTextField last_name_field;
+
+    @FXML
+    private JFXTextField email_field;
+
+    @FXML
+    private JFXPasswordField password_field;
+
+    @FXML
+    private JFXTextField phone_field;
+
+    @FXML
+    private Circle profilePictureView;
+
+    @FXML
+    private Circle addPictureView;
+
+    @FXML
+    void selectPictureClicked(MouseEvent event) {
+
     }
+
+    @FXML
+    void update_button_clicked(ActionEvent event) {
+
+    }
+
+
 }

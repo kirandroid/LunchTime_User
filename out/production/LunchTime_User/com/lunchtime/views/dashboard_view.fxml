@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -11,97 +10,63 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="dashboardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
+<StackPane fx:id="dashboardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <left>
-            <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #A5FFD6;" BorderPane.alignment="CENTER">
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A5FFD6;">
                <children>
-                  <VBox prefHeight="454.0" prefWidth="200.0" style="-fx-background-color: #A5FFD6;">
+                  <VBox layoutX="66.0" layoutY="86.0" prefHeight="525.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #84DCC6;">
+                        <AnchorPane onMouseClicked="#profileClicked" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #84DCC6;">
                            <children>
-                              <Label fx:id="userNameLabel" layoutX="59.0" layoutY="137.0" text="Kiran Pradhan">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="userBalanceLabel" layoutX="82.0" layoutY="163.0" text="1000 CC" />
-                              <Circle fx:id="profilePicture" fill="#a5ffd6" layoutX="105.0" layoutY="74.0" radius="47.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="homePaneButton" onMouseClicked="#homePaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
-                           <children>
-                              <Label layoutX="62.0" layoutY="19.0" text="Home">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font></Label>
-                              <MaterialDesignIconView glyphName="HOME" layoutX="20.0" layoutY="38.0" size="20" wrappingWidth="20.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="menuPaneButton" layoutX="10.0" layoutY="210.0" onMouseClicked="#menuPaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
-                           <children>
-                              <Label layoutX="62.0" layoutY="19.0" text="Food Menu">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <MaterialDesignIconView glyphName="FOOD" layoutX="20.0" layoutY="38.0" size="20" wrappingWidth="20.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="orderPaneButton" layoutX="10.0" layoutY="272.0" onMouseClicked="#orderPaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
-                           <children>
-                              <Label layoutX="62.0" layoutY="19.0" text="Orders">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <MaterialDesignIconView glyphName="BORDER_ALL" layoutX="20.0" layoutY="38.0" size="20" wrappingWidth="20.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="expensePaneButton" layoutX="10.0" layoutY="334.0" onMouseClicked="#expensePaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="menuButton">
-                           <children>
-                              <Label layoutX="62.0" layoutY="19.0" text="Expense Report">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <MaterialDesignIconView glyphName="CHART_AREASPLINE" layoutX="20.0" layoutY="38.0" size="20" wrappingWidth="20.0" />
-                           </children>
-                        </AnchorPane>
+                              <Pane layoutY="140.0" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0;">
+                                 <children>
+                                    <Label fx:id="userNameLabel" layoutX="14.0" layoutY="12.0" prefHeight="36.0" prefWidth="98.0" text="Kiran Pradhan ">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="userBalanceLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="117.0" layoutY="17.0" prefHeight="26.0" prefWidth="69.0" text="CC : 1280 " textFill="#0b941b">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Circle fx:id="profilePicture" fill="#c3c3c3" layoutX="100.0" layoutY="73.0" radius="45.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.5" />
+                           </children></AnchorPane>
+                        <JFXButton onAction="#homePaneButtonClicked" prefHeight="60.0" prefWidth="203.0" styleClass="menuButton" text="Home" />
+                        <JFXButton layoutX="10.0" layoutY="210.0" onAction="#menuPaneButtonClicked" prefHeight="60.0" prefWidth="203.0" styleClass="menuButton" text="Food Menu" />
+                        <JFXButton layoutX="10.0" layoutY="270.0" onAction="#orderPaneButtonClicked" prefHeight="60.0" prefWidth="203.0" styleClass="menuButton" text="My Orders" />
+                        <JFXButton layoutX="10.0" layoutY="330.0" onAction="#expensePaneButtonClicked" prefHeight="60.0" prefWidth="203.0" styleClass="menuButton" text="Expenses" />
                      </children>
                   </VBox>
-                  <AnchorPane fx:id="logOutPaneButton" layoutY="538.0" onMouseClicked="#logOutPaneButtonClicked" prefHeight="62.0" prefWidth="200.0" styleClass="logoutButton">
-                     <children>
-                        <Label layoutX="76.0" layoutY="19.0" text="Log Out" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
+                  <JFXButton layoutY="541.0" onAction="#logOutPaneButtonClicked" prefHeight="60.0" prefWidth="200.0" styleClass="logoutButton" text="Log Out" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </JFXButton>
                </children>
             </AnchorPane>
-         </left>
-         <center>
-            <VBox prefHeight="200.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="800.0">
+                  <VBox layoutX="110.0" layoutY="171.0" prefHeight="601.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Pane onMouseClicked="#closeButtonClicked" prefHeight="30.0" prefWidth="30.0" styleClass="closeButton">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0">
                            <children>
-                              <MaterialDesignIconView fill="WHITE" glyphName="CLOSE" layoutX="5.0" layoutY="22.0" size="20" />
+                              <JFXButton onAction="#closeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="logoutButton" text="CLOSE" textFill="WHITE" />
                            </children>
-                        </Pane>
-                     </children></HBox>
-                  <StackPane fx:id="dashboardContentPane" prefHeight="570.0" prefWidth="800.0">
-                     <children>
-                        <fx:include fx:id="test1" source="home_view.fxml" />
+                        </HBox>
+                        <StackPane fx:id="dashboardContentPane" prefHeight="570.0" prefWidth="800.0">
+                           <children>
+                              <fx:include fx:id="test1" source="./home_view.fxml" />
+                           </children>
+                        </StackPane>
                      </children>
-                  </StackPane>
-               </children>
-            </VBox>
-         </center>
-      </BorderPane>
+                  </VBox>
+               </children></AnchorPane>
+         </children>
+      </HBox>
    </children>
 </StackPane>

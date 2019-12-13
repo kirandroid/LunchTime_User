@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -78,38 +79,38 @@ public class dashboard_controller implements Initializable {
 
     //Exits the application
     @FXML
-    void closeButtonClicked(MouseEvent event) {
+    void closeButtonClicked(ActionEvent event) {
         System.exit(0);
     }
 
     @FXML
-    void expensePaneButtonClicked(MouseEvent event) throws IOException {
+    void expensePaneButtonClicked(ActionEvent event) throws IOException {
         StackPane pane = FXMLLoader.load(getClass().getResource("../views/expense_view.fxml"));
         dashboardContentPane.getChildren().setAll(pane);
     }
 
     @FXML
-    void homePaneButtonClicked(MouseEvent event) throws IOException {
+    void homePaneButtonClicked(ActionEvent event) throws IOException {
         StackPane pane = FXMLLoader.load(getClass().getResource("../views/home_view.fxml"));
         dashboardContentPane.getChildren().setAll(pane);
     }
 
 
     @FXML
-    void menuPaneButtonClicked(MouseEvent event) throws IOException {
+    void menuPaneButtonClicked(ActionEvent event) throws IOException {
         StackPane pane = FXMLLoader.load(getClass().getResource("../views/menu_view.fxml"));
         dashboardContentPane.getChildren().setAll(pane);
     }
 
     @FXML
-    void orderPaneButtonClicked(MouseEvent event) throws IOException {
+    void orderPaneButtonClicked(ActionEvent event) throws IOException {
         StackPane pane = FXMLLoader.load(getClass().getResource("../views/order_view.fxml"));
         dashboardContentPane.getChildren().setAll(pane);
     }
 
     //Shows confirmation dialog and Logout the user and change view to login screen.
     @FXML
-    void logOutPaneButtonClicked(MouseEvent event) throws IOException {
+    void logOutPaneButtonClicked(ActionEvent event) throws IOException {
         Platform.runLater(() -> {
             JFXDialogLayout logoutContent = new JFXDialogLayout();
             logoutContent.setHeading(new Text("Logout from the system?"));
@@ -132,7 +133,12 @@ public class dashboard_controller implements Initializable {
             });
             logoutDialog.show();
         });
+    }
 
+    @FXML
+    void profileClicked(MouseEvent event) throws IOException{
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/profile_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
     }
 
     @Override
@@ -140,7 +146,7 @@ public class dashboard_controller implements Initializable {
         Platform.runLater(() -> {
             login_controller loginController = new login_controller();
             profilePicture.setFill(new ImagePattern(new Image(loginController.picture)));
-            userBalanceLabel.setText(String.valueOf(loginController.balance));
+            userBalanceLabel.setText(String.valueOf("CC: "+loginController.balance));
             userNameLabel.setText(loginController.firsName + " "+ loginController.lastName);
         });
     }

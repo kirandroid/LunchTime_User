@@ -51,15 +51,29 @@
     -fx-pref-height : 80;
     -fx-max-height : 80;
 }
-
+.menuButton{
+    -fx-background-color: #A5FFD6;
+}
 
 .menuButton:hover{
     -fx-background-color: #84DCC6;
 }
 
-
-.menuButton:pressed{
+.menuButton:focused{
     -fx-background-color: #84DCC6;
+}
+
+
+.menuIconButton{
+    -fx-background-color: #A5FFD6;
+}
+
+.menuIconButton:hover{
+    -fx-background-color: #FFF;
+}
+
+.menuIconButton:focused{
+    -fx-background-color: #FFF;
 }
 
 .closeButton{
