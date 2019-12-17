@@ -3,9 +3,9 @@ package com.lunchtime.network.apiObjects.models;
 import com.google.gson.annotations.SerializedName;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
-public class MyOrder extends RecursiveTreeObject<MyOrder> {
+public class MyOrder {
     @SerializedName("date")
-    private  String date;
+    private  long date;
     @SerializedName("quantity")
     private Integer quantity;
     @SerializedName("total_price")
@@ -15,7 +15,7 @@ public class MyOrder extends RecursiveTreeObject<MyOrder> {
     @SerializedName("picture")
     private String picture;
 
-    public MyOrder(String date, Integer quantity, Integer total_price, String food_name, String picture) {
+    public MyOrder(long date, Integer quantity, Integer total_price, String food_name, String picture) {
         this.date = date;
         this.quantity = quantity;
         this.total_price = total_price;
@@ -23,7 +23,7 @@ public class MyOrder extends RecursiveTreeObject<MyOrder> {
         this.picture = picture;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 

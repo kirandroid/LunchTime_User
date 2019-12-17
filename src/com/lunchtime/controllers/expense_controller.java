@@ -9,6 +9,8 @@ import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.MyOrder;
 import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -26,10 +28,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.text.ParseException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class expense_controller implements Initializable {
@@ -48,18 +48,18 @@ public class expense_controller implements Initializable {
     private Label totalFoodOrderLabel;
 
     @FXML
-    private JFXTreeTableView<MyOrder> expenseTableView;
+    private JFXTreeTableView<Order> expenseTableView;
 
     @FXML
-    private TreeTableColumn<MyOrder, String> dateColumn;
+    private TreeTableColumn<Order, String> dateColumn;
 
     @FXML
-    private TreeTableColumn<MyOrder, String> foodNameColumn;
+    private TreeTableColumn<Order, String> foodNameColumn;
 
     @FXML
-    private TreeTableColumn<MyOrder, String> foodPriceColumn;
+    private TreeTableColumn<Order, String> foodPriceColumn;
 
-    ObservableList<MyOrder> orders = FXCollections.observableArrayList();
+    ObservableList<Order> orders = FXCollections.observableArrayList();
 
 
     @FXML
@@ -75,25 +75,26 @@ public class expense_controller implements Initializable {
         yAxis.setLabel("Price");
 
         //Creating the Bar chart
-        BarChart<String, Number> barChart = new BarChart(xAxis, yAxis);
+        BarChart<String, Integer> barChart = new BarChart(xAxis, yAxis);
         barChart.setAnimated(true);
         barChart.setTitle("Expenses during one week");
         //Prepare XYChart.Series objects by setting data
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Food");
 
-        for (int i = 0; i< orders.size(); i++){
-            series1.getData().add(new XYChart.Data(orders.get(i).getFood_name(), orders.get(i).getTotal_price()));
+        //Creating a Group object
+        Group root = new Group(barChart);
+        ChartRootView.getChildren().clear();
+        ChartRootView.getChildren().addAll(root);
+
+        for (Order order : orders) {
+            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
         }
 
         //Setting the XYChart.Series objects to Bar chart
         barChart.getData().addAll(series1);
         barChart.setPrefWidth(396);
 
-        //Creating a Group object
-        Group root = new Group(barChart);
-        ChartRootView.getChildren().clear();
-        ChartRootView.getChildren().addAll(root);
     }
 
     @FXML
@@ -106,24 +107,26 @@ public class expense_controller implements Initializable {
         yAxis.setLabel("Price");
 
         //Creating the Line chart
-        LineChart<String, Number> lineChart = new LineChart(xAxis, yAxis);
+        LineChart<String, Integer> lineChart = new LineChart(xAxis, yAxis);
         lineChart.setAnimated(true);
         lineChart.setTitle("Expenses during one week");
 
         //Prepare XYChart.Series objects by setting data
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Food");
-        for (int i = 0; i< orders.size(); i++){
-            series1.getData().add(new XYChart.Data(orders.get(i).getFood_name(), orders.get(i).getTotal_price()));
-        }
-        //Setting the XYChart.Series objects to Line chart
-        lineChart.getData().addAll(series1);
-        lineChart.setPrefWidth(396);
 
         //Creating a Group object
         Group root = new Group(lineChart);
         ChartRootView.getChildren().clear();
         ChartRootView.getChildren().add(root);
+
+        for (Order order : orders) {
+            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
+        }
+        //Setting the XYChart.Series objects to Line chart
+        lineChart.getData().addAll(series1);
+        lineChart.setPrefWidth(396);
+
     }
 
     @FXML
@@ -132,18 +135,18 @@ public class expense_controller implements Initializable {
         PieChart pieChart = new PieChart();
         pieChart.setAnimated(true);
         pieChart.setTitle("Expenses during one week");
-
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        for (MyOrder order : orders) {
-            pieChartData.addAll(new PieChart.Data(order.getFood_name(), order.getTotal_price()));
-        }
-        pieChart.setData(pieChartData);
-        pieChart.setPrefWidth(396);
-
         //Creating a Group object
         Group root = new Group(pieChart);
         ChartRootView.getChildren().clear();
         ChartRootView.getChildren().add(root);
+
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        for (Order order : orders) {
+            pieChartData.addAll(new PieChart.Data(order.getFoodName(), order.getPrice()));
+        }
+        pieChart.setData(pieChartData);
+        pieChart.setPrefWidth(396);
+
     }
 
     @FXML
@@ -156,24 +159,25 @@ public class expense_controller implements Initializable {
         yAxis.setLabel("Price");
 
         //Creating the Scatter chart
-        ScatterChart<String, Number> scatterChart = new ScatterChart(xAxis, yAxis);
+        ScatterChart<String, Integer> scatterChart = new ScatterChart(xAxis, yAxis);
         scatterChart.setAnimated(true);
         scatterChart.setTitle("Expenses during one week");
 
         //Prepare XYChart.Series objects by setting data
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Food");
-        for (MyOrder order : orders) {
-            series1.getData().add(new XYChart.Data(order.getFood_name(), order.getTotal_price()));
-        }
-        //Setting the XYChart.Series objects to Scatter chart
-        scatterChart.getData().addAll(series1);
-        scatterChart.setPrefWidth(396);
 
         //Creating a Group object
         Group root = new Group(scatterChart);
         ChartRootView.getChildren().clear();
         ChartRootView.getChildren().add(root);
+        for (Order order : orders) {
+            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
+        }
+        //Setting the XYChart.Series objects to Scatter chart
+        scatterChart.getData().addAll(series1);
+        scatterChart.setPrefWidth(396);
+
     }
 
     public void loadAreaChart(){
@@ -185,44 +189,45 @@ public class expense_controller implements Initializable {
         yAxis.setLabel("Price");
 
         //Creating the Area chart
-        AreaChart<String, Number> areaChart = new AreaChart(xAxis, yAxis);
+        AreaChart<String, Integer> areaChart = new AreaChart(xAxis, yAxis);
         areaChart.setAnimated(true);
         areaChart.setTitle("Expenses during one week");
 
         //Prepare XYChart.Series objects by setting data
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Food");
-        for (int i = 0; i< orders.size(); i++){
-            series1.getData().add(new XYChart.Data(orders.get(i).getFood_name(), orders.get(i).getTotal_price()));
-        }
-        //Setting the XYChart.Series objects to area chart
-        areaChart.getData().addAll(series1);
-        areaChart.setPrefWidth(396);
 
         //Creating a Group object
         Group root = new Group(areaChart);
         ChartRootView.getChildren().clear();
         ChartRootView.getChildren().add(root);
+        for (Order order : orders) {
+            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
+        }
+        //Setting the XYChart.Series objects to area chart
+        areaChart.getData().addAll(series1);
+        areaChart.setPrefWidth(396);
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        dateColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getDate()));
-        foodNameColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getFood_name()));
-        foodPriceColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getTotal_price().toString()));
+        dateColumn.setCellValueFactory(param -> param.getValue().getValue().date);
+        foodNameColumn.setCellValueFactory(param -> param.getValue().getValue().foodName);
+        foodPriceColumn.setCellValueFactory(param -> param.getValue().getValue().price.asString());
 
         NetworkManager.getInstance().MyOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 for (int i = 0; i< orderWrapperApiBaseResponse.getData().getOrder().size(); i++){
                     MyOrder myOrder = orderWrapperApiBaseResponse.getData().getOrder().get(i);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
-                    try {
-                        Date date = simpleDateFormat.parse(myOrder.getDate());
-                        orders.add(new MyOrder(date.toString(), myOrder.getQuantity(), myOrder.getTotal_price(), myOrder.getFood_name(), myOrder.getPicture()));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    Timestamp timestamp = new Timestamp(myOrder.getDate());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, MMM dd yyyy");
+                   String date =  simpleDateFormat.format(timestamp);
+                    System.out.println(date);
+
+
+                    orders.add(new Order(date, myOrder.getFood_name(), myOrder.getTotal_price()));
                     totalFood = orderWrapperApiBaseResponse.getData().getOrder().size();
                     totalMoney = myOrder.getTotal_price() + totalMoney;
                 }
@@ -235,13 +240,38 @@ public class expense_controller implements Initializable {
         });
 
         Platform.runLater(() -> {
-            final TreeItem<MyOrder> root = new RecursiveTreeItem<>(orders, RecursiveTreeObject::getChildren);
+            final TreeItem<Order> root = new RecursiveTreeItem<>(orders, RecursiveTreeObject::getChildren);
             expenseTableView.setRoot(root);
             expenseTableView.setShowRoot(false);
             totalMoneyLabel.setText(String.valueOf(totalMoney));
             totalFoodOrderLabel.setText(String.valueOf(totalFood));
             loadAreaChart();
         });
+
+    }
+
+    class Order extends RecursiveTreeObject<Order>{
+        StringProperty date;
+        StringProperty foodName;
+        IntegerProperty price;
+
+        public Order(String date, String foodName, Integer price) {
+            this.date = new SimpleStringProperty(date);
+            this.foodName = new SimpleStringProperty(foodName);
+            this.price = new SimpleIntegerProperty(price);
+        }
+
+        public String getDate() {
+            return date.get();
+        }
+
+        public String getFoodName() {
+            return foodName.get();
+        }
+
+        public int getPrice() {
+            return price.get();
+        }
 
     }
 }
