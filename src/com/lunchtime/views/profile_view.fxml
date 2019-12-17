@@ -14,8 +14,9 @@
             <JFXTextField fx:id="first_name_field" labelFloat="true" layoutX="184.0" layoutY="206.0" prefHeight="39.0" prefWidth="175.0" promptText="First Name" />
             <JFXTextField fx:id="last_name_field" labelFloat="true" layoutX="428.0" layoutY="206.0" prefHeight="39.0" prefWidth="175.0" promptText="Last Name" />
             <JFXTextField fx:id="email_field" labelFloat="true" layoutX="184.0" layoutY="297.0" prefHeight="39.0" prefWidth="175.0" promptText="Email" />
-            <JFXPasswordField fx:id="password_field" labelFloat="true" layoutX="428.0" layoutY="297.0" prefHeight="39.0" prefWidth="175.0" promptText="Password" />
-            <JFXTextField fx:id="phone_field" labelFloat="true" layoutX="234.0" layoutY="373.0" prefHeight="39.0" prefWidth="337.0" promptText="Phone" />
+            <JFXTextField fx:id="phone_field" labelFloat="true" layoutX="428.0" layoutY="297.0" prefHeight="39.0" prefWidth="175.0" promptText="Phone" />
+            <JFXPasswordField fx:id="old_password_field" labelFloat="true" layoutX="184.0" layoutY="383.0" prefHeight="39.0" prefWidth="175.0" promptText="Old Password" />
+            <JFXPasswordField fx:id="password_field" labelFloat="true" layoutX="428.0" layoutY="383.0" prefHeight="39.0" prefWidth="175.0" promptText="New Password" />
             <JFXButton buttonType="RAISED" layoutX="271.0" layoutY="468.0" onAction="#update_button_clicked" prefHeight="48.0" prefWidth="262.0" ripplerFill="#4932b9" style="-fx-background-color: red;" text="UPDATE" textFill="WHITE" />
             <StackPane layoutX="355.0" layoutY="61.0" onMouseClicked="#selectPictureClicked" prefHeight="90.0" prefWidth="78.0">
                <children>

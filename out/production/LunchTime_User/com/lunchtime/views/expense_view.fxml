@@ -1,15 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.expense_controller">
    <children>
-      <Label alignment="CENTER" text="My Expenses">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Label>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="404.0">
+               <children>
+                  <JFXTreeTableView fx:id="expenseTableView" prefHeight="570.0" prefWidth="404.0">
+                     <columns>
+                        <TreeTableColumn fx:id="dateColumn" editable="false" prefWidth="99.0" style="-fx-alignment: center;" text="Date" />
+                        <TreeTableColumn fx:id="foodNameColumn" editable="false" prefWidth="180.0" style="-fx-alignment: center;" text="Food" />
+                        <TreeTableColumn fx:id="foodPriceColumn" editable="false" prefWidth="124.0" style="-fx-alignment: center;" text="Price" />
+                     </columns>
+                  </JFXTreeTableView>
+                  <HBox prefHeight="142.0" prefWidth="396.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                           <children>
+                              <VBox layoutX="31.0" layoutY="-65.0" prefHeight="135.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <AnchorPane prefHeight="92.0" prefWidth="200.0">
+                                       <children>
+                                          <Label fx:id="totalMoneyLabel" layoutX="55.0" layoutY="16.0" text="1580">
+                                             <font>
+                                                <Font name="System Bold" size="39.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="32.0" prefWidth="200.0">
+                                       <children>
+                                          <Label layoutX="27.0" prefHeight="35.0" prefWidth="146.0" text="Total Money Spent" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                           <children>
+                              <VBox layoutX="31.0" layoutY="-65.0" prefHeight="135.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <AnchorPane prefHeight="92.0" prefWidth="200.0">
+                                       <children>
+                                          <Label fx:id="totalFoodOrderLabel" layoutX="69.0" layoutY="16.0" text="12">
+                                             <font>
+                                                <Font name="System Bold" size="39.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="32.0" prefWidth="200.0">
+                                       <children>
+                                          <Label layoutX="14.0" prefHeight="35.0" prefWidth="156.0" text="Total Food Ordered" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="552.0" prefWidth="396.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="396.0">
+                     <children>
+                        <JFXButton prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="All Time" />
+                        <JFXButton layoutX="85.0" layoutY="10.0" prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="Today" />
+                        <JFXButton layoutX="167.0" layoutY="10.0" prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="Week" />
+                        <JFXButton layoutX="208.0" layoutY="10.0" prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="Month" />
+                     </children>
+                  </HBox>
+                  <AnchorPane fx:id="ChartRootView" prefHeight="479.0" prefWidth="396.0" />
+                  <HBox prefHeight="33.0" prefWidth="396.0">
+                     <children>
+                        <JFXButton onAction="#areaChartButtonClicked" prefHeight="33.0" prefWidth="82.0" styleClass="chartSelectButton" text="AreaChart" />
+                        <JFXButton onAction="#barChartButtonClicked" prefHeight="33.0" prefWidth="82.0" styleClass="chartSelectButton" text="BarChart" />
+                        <JFXButton onAction="#lineChartButtonClicked" prefHeight="33.0" prefWidth="82.0" styleClass="chartSelectButton" text="LineChart" />
+                        <JFXButton layoutX="174.0" layoutY="10.0" onAction="#pieChartButtonClicked" prefHeight="33.0" prefWidth="82.0" styleClass="chartSelectButton" text="PieChart" />
+                        <JFXButton layoutX="256.0" layoutY="10.0" onAction="#scatterChartButtonClicked" prefHeight="33.0" prefWidth="82.0" styleClass="chartSelectButton" text="Scatter" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </StackPane>

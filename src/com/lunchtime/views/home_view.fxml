@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="homeRootPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.home_controller">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label alignment="CENTER" layoutX="278.0" layoutY="22.0" text="Home View">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <JFXButton buttonType="RAISED" layoutX="374.0" layoutY="337.0" onAction="#chooseImageButtonClicked" text="Choose" />
-            <ImageView fx:id="selectedImageView" fitHeight="150.0" fitWidth="200.0" layoutX="302.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
-            <JFXButton buttonType="RAISED" layoutX="374.0" layoutY="380.0" onAction="#uploadImageButtonClicked" text="Upload" />
-            <AnchorPane layoutX="61.0" layoutY="185.0" prefHeight="83.0" prefWidth="200.0" styleClass="menuButton" />
-            <AnchorPane layoutX="61.0" layoutY="254.0" prefHeight="83.0" prefWidth="200.0" styleClass="menuButton" />
-            <AnchorPane layoutX="61.0" layoutY="321.0" prefHeight="83.0" prefWidth="200.0" styleClass="menuButton" />
+            <Pane fx:id="homeTopImage" prefHeight="286.0" prefWidth="800.0" style="-fx-background-color: grey;">
+               <children>
+                  <Label layoutX="63.0" layoutY="120.0" text="Welcome To Lunch Time">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <ScrollPane hbarPolicy="ALWAYS" prefHeight="284.0" prefWidth="800.0" vbarPolicy="NEVER">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </content>
+            </ScrollPane>
          </children>
-      </AnchorPane>
+      </VBox>
    </children>
 </StackPane>

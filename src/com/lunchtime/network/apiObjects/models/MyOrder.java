@@ -1,8 +1,9 @@
 package com.lunchtime.network.apiObjects.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
-public class MyOrder {
+public class MyOrder extends RecursiveTreeObject<MyOrder> {
     @SerializedName("date")
     private  String date;
     @SerializedName("quantity")
