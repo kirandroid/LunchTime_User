@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="dashboardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.dashboard_controller">
@@ -22,19 +20,15 @@
                            <children>
                               <Pane layoutY="140.0" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0;">
                                  <children>
-                                    <Label fx:id="userNameLabel" layoutX="14.0" layoutY="12.0" prefHeight="36.0" prefWidth="98.0" text="Kiran Pradhan ">
-                                       <font>
-                                          <Font size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="userBalanceLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="117.0" layoutY="17.0" prefHeight="26.0" prefWidth="69.0" text="CC : 1280 " textFill="#0b941b">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                    </Label>
+                                    <HBox fx:id="dashboardUserDetailBox" alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+                                       <children>
+                                          <HBox fx:id="usernameHbox" alignment="CENTER" prefHeight="60.0" prefWidth="250.0" />
+                                          <HBox fx:id="balanceHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+                                       </children>
+                                    </HBox>
                                  </children>
                               </Pane>
-                              <Circle fx:id="profilePicture" fill="#c3c3c3" layoutX="100.0" layoutY="73.0" radius="45.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.5" />
+                              <HBox fx:id="profilePictureHbox" alignment="CENTER" prefHeight="140.0" prefWidth="200.0" />
                            </children></AnchorPane>
                         <JFXButton onAction="#homePaneButtonClicked" prefHeight="60.0" prefWidth="203.0" styleClass="menuButton" text="Home" />
                         <JFXButton layoutX="10.0" layoutY="210.0" onAction="#menuPaneButtonClicked" prefHeight="60.0" prefWidth="203.0" styleClass="menuButton" text="Food Menu" />

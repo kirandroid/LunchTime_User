@@ -13,9 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,15 +30,6 @@ import java.util.ResourceBundle;
 public class dashboard_controller implements Initializable {
     @FXML
     private StackPane dashboardPane;
-
-    @FXML
-    private Label userNameLabel;
-
-    @FXML
-    private Label userBalanceLabel;
-
-    @FXML
-    private Circle profilePicture;
 
     @FXML
     private AnchorPane homePaneButton;
@@ -51,6 +46,18 @@ public class dashboard_controller implements Initializable {
     @FXML
     private StackPane dashboardContentPane;
 
+    @FXML
+    private HBox usernameHbox;
+
+    @FXML
+    private HBox profilePictureHbox;
+
+    @FXML
+    private HBox balanceHbox;
+
+    public static Label userNameLabel = new Label(com.lunchtime.controllers.login_controller.firsName + " "+ com.lunchtime.controllers.login_controller.lastName);
+    public static Label userBalanceLabel = new Label(String.valueOf("CC: "+com.lunchtime.controllers.login_controller.balance));
+    public static Circle profilePicture = new Circle(45, new ImagePattern(new Image(login_controller.picture)));
 
     //---------------For making the screen draggable-------------
     private double x, y;
@@ -145,9 +152,13 @@ public class dashboard_controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
             login_controller loginController = new login_controller();
-            profilePicture.setFill(new ImagePattern(new Image(loginController.picture)));
-            userBalanceLabel.setText(String.valueOf("CC: "+loginController.balance));
-            userNameLabel.setText(loginController.firsName + " "+ loginController.lastName);
+//            profilePicture.setFill(new ImagePattern(new Image(loginController.picture)));
+            userNameLabel.setFont(new Font(15));
+            userBalanceLabel.setFont(new Font(15));
+            userBalanceLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #0b941b");
+            usernameHbox.getChildren().add(userNameLabel);
+            balanceHbox.getChildren().add(userBalanceLabel);
+            profilePictureHbox.getChildren().add(profilePicture);
         });
     }
 }

@@ -1,8 +1,14 @@
 package com.lunchtime.network.apiObjects.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.lunchtime.controllers.dashboard_controller;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
-public class User {
+import java.util.Observable;
+import java.util.Observer;
+
+public class User implements Observer {
     @SerializedName("id")
     private Integer id;
     @SerializedName("first_name")
@@ -13,8 +19,6 @@ public class User {
     private String email;
     @SerializedName("phone_number")
     private String phone_number;
-    @SerializedName("password")
-    private String password;
     @SerializedName("picture")
     private String picture;
 
@@ -24,13 +28,12 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String first_name, String last_name, String email, String phone_number, String password, String picture, int balance) {
+    public User(Integer id, String first_name, String last_name, String email, String phone_number, String picture, int balance) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.phone_number = phone_number;
-        this.password = password;
         this.picture = picture;
         this.balance = balance;
     }
@@ -55,12 +58,18 @@ public class User {
         return phone_number;
     }
 
-
     public String getPicture() {
         return picture;
     }
 
     public int getBalance() {
         return balance;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("new value "+getFirst_name());
+        dashboard_controller.userNameLabel.setText(getFirst_name()+" "+getLast_name());
+        dashboard_controller.profilePicture.setFill(new ImagePattern(new Image(getPicture())));
     }
 }

@@ -10,6 +10,7 @@ import com.lunchtime.network.UploadAPI;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.UploadResponse;
 import com.lunchtime.network.apiObjects.models.User;
+import com.lunchtime.network.apiObjects.models.UserObservable;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import javafx.application.Platform;
@@ -40,20 +41,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
 public class profile_controller implements Initializable {
 
-    private boolean firstNameIsEmpty = true;
-    private boolean lastNameIsEmpty = true;
-    private boolean emailIsEmpty = true;
-    private boolean emailIsValid = false;
-    private boolean phoneIsEmpty = true;
-    private boolean phoneIsValid = false;
-    private boolean passwordIsEmpty = true;
-    private boolean passwordIsValid = false;
+    private boolean firstNameIsEmpty = false;
+    private boolean lastNameIsEmpty = false;
+    private boolean emailIsEmpty = false;
+    private boolean emailIsValid = true;
+    private boolean phoneIsEmpty = false;
+    private boolean phoneIsValid = true;
 
 
     final FileChooser fileChooser = new FileChooser();
@@ -145,6 +145,16 @@ public class profile_controller implements Initializable {
                                         content.setActions(button);
 
                                         dialog.show();
+
+
+                                        List<User> users = new ArrayList<>();
+                                        users.add(new User(login_controller.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), response.body().getEager().get(0).getSecureUrl(), login_controller.balance));
+                                        UserObservable userObservable = new UserObservable();
+
+                                        for (User user: users){
+                                            userObservable.addObserver(user);
+                                        }
+                                        userObservable.UserObservable();
                                     }
                             );
                         }
@@ -194,6 +204,15 @@ public class profile_controller implements Initializable {
                                 content.setActions(button);
 
                                 dialog.show();
+
+                                List<User> users = new ArrayList<>();
+                                users.add(new User(login_controller.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), login_controller.picture, login_controller.balance));
+                                UserObservable userObservable = new UserObservable();
+
+                                for (User user: users){
+                                    userObservable.addObserver(user);
+                                }
+                                userObservable.UserObservable();
                             }
                     );
                 }
