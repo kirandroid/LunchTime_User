@@ -186,7 +186,7 @@ public class expense_controller implements Initializable {
             expenseTableView.setShowRoot(false);
             totalMoneyLabel.setText(String.valueOf(totalMoney));
             totalFoodOrderLabel.setText(String.valueOf(totalFood));
-            loadChart("Bar");
+            loadChart("Area");
         });
 
     }

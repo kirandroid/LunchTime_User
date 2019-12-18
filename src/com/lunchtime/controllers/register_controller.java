@@ -81,10 +81,6 @@ public class register_controller implements Initializable {
     private JFXTextField first_name_field;
 
     @FXML
-    private JFXButton closeButton;
-
-
-    @FXML
     private Circle profilePictureView;
 
     @FXML
@@ -210,7 +206,6 @@ public class register_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        closeButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/close.png").toURI().toString(), 15, 15, false, true, true)));
         fieldValidators();
         final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
         video.setMute(true);

@@ -89,7 +89,7 @@ public class order_controller implements Initializable{
                         StackPane stackPane = new StackPane();
                         double width = 200;
                         stackPane.setPrefWidth(width);
-                        double height = 250;
+                        double height = 330;
                         stackPane.setPrefHeight(height);
                         JFXDepthManager.setDepth(stackPane, 1);
                         children.add(stackPane);
@@ -101,7 +101,7 @@ public class order_controller implements Initializable{
                         Label foodQuantity = new Label();
                         ImageView imageView = new ImageView(new Image(order.get(i).getPicture(), 230, 209, false, true, true));
                         header.getChildren().add(imageView);
-                        String headerColor = "#4E6A9C";
+                        String headerColor = "#db0f4b";
 //                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + order.get(i).getPicture() + ");");
                         header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + ";");
 
@@ -109,7 +109,7 @@ public class order_controller implements Initializable{
 
 
                         StackPane body = new StackPane();
-                        body.setPrefHeight(100);
+                        body.setPrefHeight(200);
                         bodyContent.setPadding(new Insets(20,10,10,10));
                         foodName.setStyle("-fx-font: 24 arial;");
                         foodQuantity.setStyle("-fx-font: 18 arial;");
@@ -129,7 +129,7 @@ public class order_controller implements Initializable{
                         // create button
                         JFXButton button = new JFXButton("");
                         button.setButtonType(JFXButton.ButtonType.RAISED);
-                        button.setStyle("-fx-background-radius: 40;-fx-background-color: #16669B");
+                        button.setStyle("-fx-background-radius: 40;-fx-background-color: #db0f4b");
                         button.setPrefSize(40, 40);
                         button.setRipplerFill(Color.valueOf(headerColor));
                         button.setScaleX(0);

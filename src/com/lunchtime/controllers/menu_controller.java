@@ -117,7 +117,7 @@ public class menu_controller implements Initializable {
                         ImageView imageView = new ImageView(new Image(menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture(), 230, 209, false, true, true));
 
                         header.getChildren().add(imageView);
-                        String headerColor = "#4E6A9C";
+                        String headerColor = "#db0f4b";
 //                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture() + ");");
                         header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + ";");
 
@@ -143,7 +143,7 @@ public class menu_controller implements Initializable {
                         // create button
                         JFXButton button = new JFXButton("");
                         button.setButtonType(JFXButton.ButtonType.RAISED);
-                        button.setStyle("-fx-background-radius: 40;-fx-background-color: #16669B");
+                        button.setStyle("-fx-background-radius: 40;-fx-background-color: #db0f4b");
                         button.setPrefSize(40, 40);
                         button.setRipplerFill(Color.valueOf(headerColor));
                         button.setScaleX(0);

@@ -70,7 +70,7 @@ public class User implements Observer {
     public void update(Observable o, Object arg) {
         System.out.println("new value "+getFirst_name());
         dashboard_controller.userNameLabel.setText(getFirst_name()+" "+getLast_name());
-        dashboard_controller.userBalanceLabel.setText(String.valueOf("CC: "+getBalance()));
+        dashboard_controller.userBalanceLabel.setText("CC: " + getBalance());
         dashboard_controller.profilePicture.setFill(new ImagePattern(new Image(getPicture())));
     }
 }

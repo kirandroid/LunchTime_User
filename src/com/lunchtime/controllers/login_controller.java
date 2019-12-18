@@ -84,10 +84,6 @@ public class login_controller implements Initializable {
     @FXML
     private JFXPasswordField password_field;
 
-
-    @FXML
-    private JFXButton closeButton;
-
     @FXML
     private MediaView loginVideoPlayer;
 
@@ -244,7 +240,6 @@ public class login_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        closeButton.setGraphic(new ImageView(new Image(new File("src/com/lunchtime/assets/image/close.png").toURI().toString(), 15, 15, false, true, true)));
         Platform.runLater(() -> {
             email_field.requestFocus();
         });
