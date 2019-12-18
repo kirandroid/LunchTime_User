@@ -52,15 +52,17 @@
     -fx-max-height : 80;
 }
 .menuButton{
-    -fx-background-color: #A5FFD6;
+    -fx-background-color: #fff;
 }
 
 .menuButton:hover{
-    -fx-background-color: #84DCC6;
+    -fx-background-color: #DB0F4B;
+    -fx-text-fill: white;
 }
 
 .menuButton:focused{
-    -fx-background-color: #84DCC6;
+    -fx-background-color: #DB0F4B;
+    -fx-text-fill: white;
 }
 
 
@@ -85,39 +87,45 @@
 }
 
 .logoutButton{
-    -fx-background-color: #FF686B;
+    -fx-background-color: #DB0F4B;
+    -fx-text-fill: white;
 }
 
 
 .logoutButton:hover{
-    -fx-background-color: #DD1C1A;
+    -fx-background-color: #FF686B;
 }
-
 
 
 .dateSelectButton{
-    -fx-background-color: #A5FFD6;
+    -fx-background-color: #E33D6C;
+    -fx-text-fill: white;
 }
 
 .dateSelectButton:hover{
-    -fx-background-color: #84DCC6;
+    -fx-background-color: #DB0F4B;
+    -fx-text-fill: white;
 }
 
 .dateSelectButton:focused{
-    -fx-background-color: #84DCC6;
+    -fx-background-color: #DB0F4B;
+    -fx-text-fill: white;
 }
 
 
 .chartSelectButton{
-    -fx-background-color: #A5FFD6;
+    -fx-background-color: #E33D6C;
+    -fx-text-fill: white;
 }
 
 .chartSelectButton:hover{
-    -fx-background-color: #84DCC6;
+    -fx-background-color: #DB0F4B;
+    -fx-text-fill: white;
 }
 
 .chartSelectButton:focused{
-    -fx-background-color: #84DCC6;
+    -fx-background-color: #DB0F4B;
+    -fx-text-fill: white;
 }
 
 

@@ -14,11 +14,11 @@
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A5FFD6;">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                <children>
                   <VBox layoutX="66.0" layoutY="86.0" prefHeight="525.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane onMouseClicked="#profileClicked" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #84DCC6;">
+                        <AnchorPane onMouseClicked="#profileClicked" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DB0F4B;">
                            <children>
                               <Pane layoutY="140.0" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0;">
                                  <children>

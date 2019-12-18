@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -35,7 +36,7 @@ import java.util.ResourceBundle;
 public class expense_controller implements Initializable {
 
     @FXML
-    private AnchorPane ChartRootView;
+    private VBox ChartRootView;
 
     @FXML
     private Label totalMoneyLabel;
@@ -64,150 +65,93 @@ public class expense_controller implements Initializable {
 
     @FXML
     void areaChartButtonClicked(ActionEvent event) {
-       loadAreaChart();
+        loadChart("Area");
     }
 
     @FXML
     void barChartButtonClicked(ActionEvent event) {
-
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Price");
-
-        //Creating the Bar chart
-        BarChart<String, Integer> barChart = new BarChart(xAxis, yAxis);
-        barChart.setAnimated(true);
-        barChart.setTitle("Expenses during one week");
-        //Prepare XYChart.Series objects by setting data
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Food");
-
-        //Creating a Group object
-        Group root = new Group(barChart);
-        ChartRootView.getChildren().clear();
-        ChartRootView.getChildren().addAll(root);
-
-        for (Order order : orders) {
-            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
-        }
-
-        //Setting the XYChart.Series objects to Bar chart
-        barChart.getData().addAll(series1);
-        barChart.setPrefWidth(396);
-
-    }
-
-    @FXML
-    void lineChartButtonClicked(ActionEvent event) {
-        //Defining the X axis
-        CategoryAxis xAxis = new CategoryAxis();
-
-        //defining the y Axis
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Price");
-
-        //Creating the Line chart
-        LineChart<String, Integer> lineChart = new LineChart(xAxis, yAxis);
-        lineChart.setAnimated(true);
-        lineChart.setTitle("Expenses during one week");
-
-        //Prepare XYChart.Series objects by setting data
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Food");
-
-        //Creating a Group object
-        Group root = new Group(lineChart);
-        ChartRootView.getChildren().clear();
-        ChartRootView.getChildren().add(root);
-
-        for (Order order : orders) {
-            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
-        }
-        //Setting the XYChart.Series objects to Line chart
-        lineChart.getData().addAll(series1);
-        lineChart.setPrefWidth(396);
-
+        loadChart("Bar");
     }
 
     @FXML
     void pieChartButtonClicked(ActionEvent event) {
-        //Creating the Pie chart
-        PieChart pieChart = new PieChart();
-        pieChart.setAnimated(true);
-        pieChart.setTitle("Expenses during one week");
-        //Creating a Group object
-        Group root = new Group(pieChart);
-        ChartRootView.getChildren().clear();
-        ChartRootView.getChildren().add(root);
-
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        for (Order order : orders) {
-            pieChartData.addAll(new PieChart.Data(order.getFoodName(), order.getPrice()));
-        }
-        pieChart.setData(pieChartData);
-        pieChart.setPrefWidth(396);
-
+        loadChart("Pie");
     }
 
-    @FXML
-    void scatterChartButtonClicked(ActionEvent event) {
-        //Defining the X axis
-        CategoryAxis xAxis = new CategoryAxis();
+    public void loadChart(String chart) {
 
-        //defining the y Axis
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Price");
+        if (chart == "Area") {
+            //Defining the X axis
+            CategoryAxis xAxis = new CategoryAxis();
 
-        //Creating the Scatter chart
-        ScatterChart<String, Integer> scatterChart = new ScatterChart(xAxis, yAxis);
-        scatterChart.setAnimated(true);
-        scatterChart.setTitle("Expenses during one week");
+            //defining the y Axis
+            NumberAxis yAxis = new NumberAxis();
+            yAxis.setLabel("Price");
 
-        //Prepare XYChart.Series objects by setting data
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Food");
+            //Creating the Area chart
+            AreaChart<String, Integer> areaChart = new AreaChart(xAxis, yAxis);
+            areaChart.setAnimated(true);
+//            areaChart.setTitle(duration.equals("All") ? "All Time Expenses" : duration.equals("Week") ? "Expenses During One Week" : "Expenses During One Month");
 
-        //Creating a Group object
-        Group root = new Group(scatterChart);
-        ChartRootView.getChildren().clear();
-        ChartRootView.getChildren().add(root);
-        for (Order order : orders) {
-            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
+            //Prepare XYChart.Series objects by setting data
+            XYChart.Series series1 = new XYChart.Series();
+            series1.setName("Food");
+
+            //Creating a Group object
+            Group root = new Group(areaChart);
+            ChartRootView.getChildren().clear();
+            ChartRootView.getChildren().add(root);
+
+
+            for (Order order : orders) {
+                series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
+            }
+            //Setting the XYChart.Series objects to area chart
+            areaChart.getData().addAll(series1);
+            areaChart.setPrefWidth(396);
+        } else if (chart == "Bar") {
+
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            yAxis.setLabel("Price");
+
+            //Creating the Bar chart
+            BarChart<String, Integer> barChart = new BarChart(xAxis, yAxis);
+            barChart.setAnimated(true);
+            barChart.setTitle("Expenses during one week");
+            //Prepare XYChart.Series objects by setting data
+            XYChart.Series series1 = new XYChart.Series();
+            series1.setName("Food");
+
+            //Creating a Group object
+            Group root = new Group(barChart);
+            ChartRootView.getChildren().clear();
+            ChartRootView.getChildren().addAll(root);
+
+            for (Order order : orders) {
+                series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
+            }
+
+            //Setting the XYChart.Series objects to Bar chart
+            barChart.getData().addAll(series1);
+            barChart.setPrefWidth(396);
+        } else if (chart == "Pie") {
+            //Creating the Pie chart
+            PieChart pieChart = new PieChart();
+            pieChart.setAnimated(true);
+            pieChart.setTitle("Expenses during one week");
+            //Creating a Group object
+            Group root = new Group(pieChart);
+            ChartRootView.getChildren().clear();
+            ChartRootView.getChildren().add(root);
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            for (Order order : orders) {
+                pieChartData.addAll(new PieChart.Data(order.getFoodName(), order.getPrice()));
+            }
+            pieChart.setData(pieChartData);
+            pieChart.setPrefWidth(396);
         }
-        //Setting the XYChart.Series objects to Scatter chart
-        scatterChart.getData().addAll(series1);
-        scatterChart.setPrefWidth(396);
-
-    }
-
-    public void loadAreaChart(){
-        //Defining the X axis
-        CategoryAxis xAxis = new CategoryAxis();
-
-        //defining the y Axis
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Price");
-
-        //Creating the Area chart
-        AreaChart<String, Integer> areaChart = new AreaChart(xAxis, yAxis);
-        areaChart.setAnimated(true);
-        areaChart.setTitle("Expenses during one week");
-
-        //Prepare XYChart.Series objects by setting data
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Food");
-
-        //Creating a Group object
-        Group root = new Group(areaChart);
-        ChartRootView.getChildren().clear();
-        ChartRootView.getChildren().add(root);
-        for (Order order : orders) {
-            series1.getData().add(new XYChart.Data(order.getFoodName(), order.getPrice()));
-        }
-        //Setting the XYChart.Series objects to area chart
-        areaChart.getData().addAll(series1);
-        areaChart.setPrefWidth(396);
-
     }
 
     @Override
@@ -219,14 +163,11 @@ public class expense_controller implements Initializable {
         NetworkManager.getInstance().MyOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
-                for (int i = 0; i< orderWrapperApiBaseResponse.getData().getOrder().size(); i++){
+                for (int i = 0; i < orderWrapperApiBaseResponse.getData().getOrder().size(); i++) {
                     MyOrder myOrder = orderWrapperApiBaseResponse.getData().getOrder().get(i);
                     Timestamp timestamp = new Timestamp(myOrder.getDate());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, MMM dd yyyy");
-                   String date =  simpleDateFormat.format(timestamp);
-                    System.out.println(date);
-
-
+                    String date = simpleDateFormat.format(timestamp);
                     orders.add(new Order(date, myOrder.getFood_name(), myOrder.getTotal_price()));
                     totalFood = orderWrapperApiBaseResponse.getData().getOrder().size();
                     totalMoney = myOrder.getTotal_price() + totalMoney;
@@ -245,12 +186,12 @@ public class expense_controller implements Initializable {
             expenseTableView.setShowRoot(false);
             totalMoneyLabel.setText(String.valueOf(totalMoney));
             totalFoodOrderLabel.setText(String.valueOf(totalFood));
-            loadAreaChart();
+            loadChart("Bar");
         });
 
     }
 
-    class Order extends RecursiveTreeObject<Order>{
+    class Order extends RecursiveTreeObject<Order> {
         StringProperty date;
         StringProperty foodName;
         IntegerProperty price;

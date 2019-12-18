@@ -1,30 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="homeRootPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.home_controller">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Pane fx:id="homeTopImage" prefHeight="286.0" prefWidth="800.0" style="-fx-background-color: grey;">
+            <Pane fx:id="homeTopImage" prefHeight="571.0" prefWidth="800.0">
                <children>
-                  <Label layoutX="63.0" layoutY="120.0" text="Welcome To Lunch Time">
+                  <Label layoutX="120.0" layoutY="14.0" prefHeight="120.0" prefWidth="560.0" text="ORDER ONLINE EFFICIENTLY AND MAKE YOUR LIFE EASIER." textAlignment="CENTER" wrapText="true">
                      <font>
-                        <Font size="32.0" />
+                        <Font name="System Bold" size="28.0" />
                      </font>
                   </Label>
+                  <ImageView fitHeight="41.0" fitWidth="107.0" layoutX="14.0" layoutY="516.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/image/pcpsLogo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="53.0" fitWidth="105.0" layoutX="681.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/image/bedsLogo.png" />
+                     </image>
+                  </ImageView>
+                  <HBox alignment="CENTER" layoutY="189.0" prefHeight="240.0" prefWidth="800.0" spacing="100.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="#db0f4b" radius="75.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                                    <ImageView fitHeight="76.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/image/menu%20(1).png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="BROWSE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="53.0" prefWidth="125.0" text="Choose from hundreds of restaurant from our restaurant." textAlignment="JUSTIFY" wrapText="true" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="335.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="#db0f4b" radius="75.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                                    <ImageView fitHeight="76.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/image/fast-food.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="SELECT">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="53.0" prefWidth="125.0" text="Choose from hundreds of restaurant from our restaurant." textAlignment="JUSTIFY" wrapText="true" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="435.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="#db0f4b" radius="75.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                                    <ImageView fitHeight="76.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/image/fast-delivery.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="ORDER">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="53.0" prefWidth="125.0" text="Choose from hundreds of restaurant from our restaurant." textAlignment="JUSTIFY" wrapText="true" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children></Pane>
-            <ScrollPane hbarPolicy="ALWAYS" prefHeight="284.0" prefWidth="800.0" vbarPolicy="NEVER">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
          </children>
       </VBox>
    </children>

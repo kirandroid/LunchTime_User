@@ -46,7 +46,7 @@ public class menu_controller implements Initializable {
     private boolean quantityFieldIsEmpty = true;
     private boolean quantityFieldIsValid = false;
 
-    private Integer coins = 500;
+    login_controller login_controller = new login_controller();
 
     @FXML
     private JFXMasonryPane testMasonryPane;
@@ -188,24 +188,6 @@ public class menu_controller implements Initializable {
     }
 
     private void loadDialog(String foodName, Integer foodPrice, Integer foodId) {
-//        JFXSlider priceSlider = new JFXSlider();
-//        priceSlider.setValue(1);
-//        Label message = new Label();
-//
-//        priceSlider.setMin(1);
-//        priceSlider.setMax(100);
-//        priceSlider.setMinorTickCount(0);
-//        priceSlider.setMajorTickUnit(1);
-//        DecimalFormat df = new DecimalFormat("0.##");
-//        priceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//                message.setText("Would you like to order "+ df.format(newValue) + " plate "+ foodName+" for Rs. "+foodPrice);
-//            }
-//        });
-//
-////        message.textProperty().bind(Bindings.concat("Would you like to order ", priceSlider.valueProperty().asString("%.0f"), " plate ", foodName, " for Rs. ",  foodPrice));
-
         VBox vBox = new VBox();
         Label message = new Label();
         message.setText("Please specify the quantity of the order.");
@@ -228,8 +210,8 @@ public class menu_controller implements Initializable {
                 int quantity = Integer.parseInt(quantityField.getText());
                 int totalPrice = quantity * foodPrice;
 
-                if (totalPrice > coins) {
-                    JFXDialogLayout errorContent = new JFXDialogLayout();
+                JFXDialogLayout errorContent = new JFXDialogLayout();
+                if (totalPrice > login_controller.balance) {
                     errorContent.setHeading(new Text("Error"));
                     errorContent.setBody(new Text("Insufficient Coins"));
                     JFXDialog errorDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
@@ -239,13 +221,12 @@ public class menu_controller implements Initializable {
                     errorCancelButton.setOnAction(closeEvent -> errorDialog.close());
                     errorDialog.show();
                 } else {
-                    JFXDialogLayout confirmContent = new JFXDialogLayout();
-                    confirmContent.setHeading(new Text("Place Order"));
-                    confirmContent.setBody(new Text("The total price is Rs. " + totalPrice + " for quantity: " + quantity + ". Place the order?"));
-                    JFXDialog confirmDialog = new JFXDialog(menuPane, confirmContent, JFXDialog.DialogTransition.CENTER);
+                    errorContent.setHeading(new Text("Place Order"));
+                    errorContent.setBody(new Text("The total price is Rs. " + totalPrice + " for quantity: " + quantity + ". Place the order?"));
+                    JFXDialog confirmDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
                     JFXButton confirmOrderButton = new JFXButton("Place Order");
                     JFXButton confirmCancelButton = new JFXButton("Cancel");
-                    confirmContent.setActions(confirmCancelButton, confirmOrderButton);
+                    errorContent.setActions(confirmCancelButton, confirmOrderButton);
 
                     confirmCancelButton.setOnAction(closeEvent -> confirmDialog.close());
                     confirmOrderButton.setOnAction(confirmEvent -> {
