@@ -1,14 +1,16 @@
 package com.lunchtime.controllers;
 
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
+import com.lunchtime.network.UploadAPI;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
+import com.lunchtime.network.apiObjects.models.UploadResponse;
 import com.lunchtime.network.apiObjects.models.User;
+import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,15 +23,26 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class profile_controller implements Initializable {
 
@@ -86,8 +99,122 @@ public class profile_controller implements Initializable {
     }
 
     @FXML
-    void update_button_clicked(ActionEvent event) {
+    void update_button_clicked(ActionEvent event) throws NoSuchAlgorithmException {
 
+        if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !phoneIsEmpty && emailIsValid && phoneIsValid && file != null){
+            long timestamp = System.currentTimeMillis();
+            String apiKey = "588753441842251";
+            String eager = "w_400,h_400,c_pad";
+            String publicId = String.valueOf(UUID.randomUUID());
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            messageDigest.update(("eager=w_400,h_400,c_pad&public_id=" + publicId + "&timestamp=" + timestamp + "oWEOZ2sxuB2cpixDPaa6XhLS23E").getBytes());
+            String signature = DatatypeConverter.printHexBinary(messageDigest.digest());
+
+
+            MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+            builder.addFormDataPart("timestamp", String.valueOf(timestamp))
+                    .addFormDataPart("public_id", publicId)
+                    .addFormDataPart("api_key", apiKey)
+                    .addFormDataPart("eager", eager)
+                    .addFormDataPart("signature", signature)
+                    .addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
+
+            RequestBody requestBody = builder.build();
+
+
+            Call<UploadResponse> call = UploadAPI.apiService.upload(requestBody);
+            call.enqueue(new Callback<UploadResponse>() {
+                @Override
+                public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
+                    login_controller login_controller = new login_controller();
+
+                    UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), login_controller.userId, response.body().getEager().get(0).getSecureUrl());
+
+                    NetworkManager.getInstance().Update(updateProfileRequest, new NetworkResponseListener<ApiBaseResponse>() {
+                        @Override
+                        public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                            Platform.runLater(
+                                    () -> {
+                                        JFXDialogLayout content = new JFXDialogLayout();
+                                        content.setHeading(new Text("Success"));
+                                        content.setBody(new Text("Profile Successfully Updated"));
+                                        JFXButton button = new JFXButton("Okay");
+                                        JFXDialog dialog = new JFXDialog(profilePane, content, JFXDialog.DialogTransition.CENTER);
+
+                                        button.setOnAction(event -> dialog.close());
+                                        content.setActions(button);
+
+                                        dialog.show();
+                                    }
+                            );
+                        }
+
+                        @Override
+                        public void onError() {
+                            Platform.runLater(() -> {
+                                JFXDialogLayout content = new JFXDialogLayout();
+                                content.setHeading(new Text("Error"));
+                                content.setBody(new Text("Email Already Used"));
+                                JFXButton button = new JFXButton("Okay");
+                                JFXDialog dialog = new JFXDialog(profilePane, content, JFXDialog.DialogTransition.CENTER);
+
+                                button.setOnAction(event -> dialog.close());
+                                content.setActions(button);
+
+                                dialog.show();
+                            });
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(Call<UploadResponse> call, Throwable throwable) {
+                    System.out.println(throwable);
+                    System.out.println("Error");
+                }
+            });
+
+        }else{
+            login_controller login_controller = new login_controller();
+
+            UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), login_controller.userId, login_controller.picture);
+
+            NetworkManager.getInstance().Update(updateProfileRequest, new NetworkResponseListener<ApiBaseResponse>() {
+                @Override
+                public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                    Platform.runLater(
+                            () -> {
+                                JFXDialogLayout content = new JFXDialogLayout();
+                                content.setHeading(new Text("Success"));
+                                content.setBody(new Text("Profile Successfully Updated"));
+                                JFXButton button = new JFXButton("Okay");
+                                JFXDialog dialog = new JFXDialog(profilePane, content, JFXDialog.DialogTransition.CENTER);
+
+                                button.setOnAction(event -> dialog.close());
+                                content.setActions(button);
+
+                                dialog.show();
+                            }
+                    );
+                }
+
+                @Override
+                public void onError() {
+                    Platform.runLater(() -> {
+                        JFXDialogLayout content = new JFXDialogLayout();
+                        content.setHeading(new Text("Error"));
+                        content.setBody(new Text("Email Already Used"));
+                        JFXButton button = new JFXButton("Okay");
+                        JFXDialog dialog = new JFXDialog(profilePane, content, JFXDialog.DialogTransition.CENTER);
+
+                        button.setOnAction(event -> dialog.close());
+                        content.setActions(button);
+
+                        dialog.show();
+                    });
+                }
+            });
+        }
     }
 
 
@@ -184,21 +311,21 @@ public class profile_controller implements Initializable {
 
 
         //Field Required validator for password
-        RequiredFieldValidator passwordRequiredFieldValidator = new RequiredFieldValidator();
-        password_field.getValidators().add(passwordRequiredFieldValidator);
-        passwordRequiredFieldValidator.setMessage("Please enter a password!");
-        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                if (password_field.validate()) {
-                    System.out.println("Password not empty");
-                    passwordIsEmpty = false;
-                } else {
-                    System.out.println("Password empty");
-                    passwordIsEmpty = true;
-                }
-            }
-        });
-        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
+//        RequiredFieldValidator passwordRequiredFieldValidator = new RequiredFieldValidator();
+//        password_field.getValidators().add(passwordRequiredFieldValidator);
+//        passwordRequiredFieldValidator.setMessage("Please enter a password!");
+//        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue) {
+//                if (password_field.validate()) {
+//                    System.out.println("Password not empty");
+//                    passwordIsEmpty = false;
+//                } else {
+//                    System.out.println("Password empty");
+//                    passwordIsEmpty = true;
+//                }
+//            }
+//        });
+//        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
 
 //----------------------------------------------------------------------------------------------------------------------------------//
 
@@ -239,22 +366,22 @@ public class profile_controller implements Initializable {
         phone_field.textProperty().addListener((observable, oldValue, newValue) -> phone_field.validate());
 
 //        //Password Validator
-        RegexValidator passwordValidator = new RegexValidator();
-        passwordValidator.setRegexPattern("^.{8,}$");
-        password_field.setValidators(passwordValidator);
-        passwordValidator.setMessage("Password should be atleast 8 characters long!");
-        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                if (password_field.validate()) {
-                    System.out.println("Password valid");
-                    passwordIsValid = true;
-                } else {
-                    System.out.println("Password not valid");
-                    passwordIsValid = false;
-                }
-            }
-        });
-        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
+//        RegexValidator passwordValidator = new RegexValidator();
+//        passwordValidator.setRegexPattern("^.{8,}$");
+//        password_field.setValidators(passwordValidator);
+//        passwordValidator.setMessage("Password should be atleast 8 characters long!");
+//        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue) {
+//                if (password_field.validate()) {
+//                    System.out.println("Password valid");
+//                    passwordIsValid = true;
+//                } else {
+//                    System.out.println("Password not valid");
+//                    passwordIsValid = false;
+//                }
+//            }
+//        });
+//        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
 
 
 //        //Phone length Validator

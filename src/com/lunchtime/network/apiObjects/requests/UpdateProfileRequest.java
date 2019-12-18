@@ -11,18 +11,18 @@ public class UpdateProfileRequest {
     private String phone_number;
     @SerializedName("email")
     private String email;
-    @SerializedName("password")
-    private String password;
     @SerializedName("id")
     private Integer id;
+    @SerializedName("picture")
+    private String picture;
 
-    public UpdateProfileRequest(String first_name, String last_name, String phone_number, String email, String password, Integer id) {
+    public UpdateProfileRequest(String first_name, String last_name, String phone_number, String email, Integer id, String picture) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone_number = phone_number;
         this.email = email;
-        this.password = password;
         this.id = id;
+        this.picture = picture;
     }
 
     public String getFirst_name() {
@@ -57,19 +57,19 @@ public class UpdateProfileRequest {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }
