@@ -61,6 +61,9 @@ public class NetworkManager {
         apiService.myOrderApi(listener, api, id);
     }
 
+    public void UserDetail(int id, NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener){
+        apiService.userDetailApi(listener, api, id);
+    }
 
 
 }

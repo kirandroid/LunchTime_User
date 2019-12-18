@@ -8,8 +8,11 @@ import com.jfoenix.validation.RequiredFieldValidator;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
+import com.lunchtime.network.apiObjects.models.User;
+import com.lunchtime.network.apiObjects.models.UserObservable;
 import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
+import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -211,52 +214,77 @@ public class menu_controller implements Initializable {
                 int totalPrice = quantity * foodPrice;
 
                 JFXDialogLayout errorContent = new JFXDialogLayout();
-                if (totalPrice > login_controller.balance) {
-                    errorContent.setHeading(new Text("Error"));
-                    errorContent.setBody(new Text("Insufficient Coins"));
-                    JFXDialog errorDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
-                    JFXButton errorCancelButton = new JFXButton("Cancel");
-                    errorContent.setActions(errorCancelButton);
 
-                    errorCancelButton.setOnAction(closeEvent -> errorDialog.close());
-                    errorDialog.show();
-                } else {
-                    errorContent.setHeading(new Text("Place Order"));
-                    errorContent.setBody(new Text("The total price is Rs. " + totalPrice + " for quantity: " + quantity + ". Place the order?"));
-                    JFXDialog confirmDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
-                    JFXButton confirmOrderButton = new JFXButton("Place Order");
-                    JFXButton confirmCancelButton = new JFXButton("Cancel");
-                    errorContent.setActions(confirmCancelButton, confirmOrderButton);
+                NetworkManager.getInstance().UserDetail(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
+                    @Override
+                    public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
+                        Platform.runLater(() -> {
+                            User userDetailResponse = userWrapperApiBaseResponse.getData().getUser();
+                            if (totalPrice > userDetailResponse.getBalance()) {
+                                errorContent.setHeading(new Text("Error"));
+                                errorContent.setBody(new Text("Insufficient Coins"));
+                                JFXDialog errorDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
+                                JFXButton errorCancelButton = new JFXButton("Cancel");
+                                errorContent.setActions(errorCancelButton);
 
-                    confirmCancelButton.setOnAction(closeEvent -> confirmDialog.close());
-                    confirmOrderButton.setOnAction(confirmEvent -> {
-                        OrderRequest orderRequest = new OrderRequest(login_controller.userId, foodId, quantity, totalPrice);
-                        NetworkManager.getInstance().Order(orderRequest, new NetworkResponseListener<ApiBaseResponse>() {
-                            @Override
-                            public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
-                                confirmDialog.close();
-                                Platform.runLater(() -> {
-                                    JFXDialogLayout orderContent = new JFXDialogLayout();
-                                    orderContent.setHeading(new Text("Success"));
-                                    orderContent.setBody(new Text("Order Placed!"));
-                                    JFXDialog orderDialog = new JFXDialog(menuPane, orderContent, JFXDialog.DialogTransition.CENTER);
-                                    JFXButton orderCancelButton = new JFXButton("Cancel");
-                                    orderContent.setActions(orderCancelButton);
+                                errorCancelButton.setOnAction(closeEvent -> errorDialog.close());
+                                errorDialog.show();
+                            } else {
+                                errorContent.setHeading(new Text("Place Order"));
+                                errorContent.setBody(new Text("The total price is Rs. " + totalPrice + " for quantity: " + quantity + ". Place the order?"));
+                                JFXDialog confirmDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
+                                JFXButton confirmOrderButton = new JFXButton("Place Order");
+                                JFXButton confirmCancelButton = new JFXButton("Cancel");
+                                errorContent.setActions(confirmCancelButton, confirmOrderButton);
 
-                                    orderCancelButton.setOnAction(closeEvent -> orderDialog.close());
-                                    orderDialog.show();
+                                confirmCancelButton.setOnAction(closeEvent -> confirmDialog.close());
+                                confirmOrderButton.setOnAction(confirmEvent -> {
+                                    OrderRequest orderRequest = new OrderRequest(login_controller.userId, foodId, quantity, totalPrice);
+                                    NetworkManager.getInstance().Order(orderRequest, new NetworkResponseListener<ApiBaseResponse>() {
+                                        @Override
+                                        public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                                            confirmDialog.close();
+                                            Platform.runLater(() -> {
+                                                JFXDialogLayout orderContent = new JFXDialogLayout();
+                                                orderContent.setHeading(new Text("Success"));
+                                                orderContent.setBody(new Text("Order Placed!"));
+                                                JFXDialog orderDialog = new JFXDialog(menuPane, orderContent, JFXDialog.DialogTransition.CENTER);
+                                                JFXButton orderCancelButton = new JFXButton("Cancel");
+                                                orderContent.setActions(orderCancelButton);
+
+                                                orderCancelButton.setOnAction(closeEvent -> {
+
+                                                    List<User> users = new ArrayList<>();
+                                                    users.add(new User(userDetailResponse.getId(), userDetailResponse.getFirst_name(), userDetailResponse.getLast_name(), userDetailResponse.getEmail(), userDetailResponse.getPhone_number(), userDetailResponse.getPicture(), userDetailResponse.getBalance() - totalPrice));
+                                                    UserObservable userObservable = new UserObservable();
+
+                                                    for (User user: users){
+                                                        userObservable.addObserver(user);
+                                                    }
+                                                    userObservable.UserObservable();
+                                                    orderDialog.close();});
+                                                orderDialog.show();
+                                            });
+
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                            System.out.println("Some Error");
+                                        }
+                                    });
                                 });
-
-                            }
-
-                            @Override
-                            public void onError() {
-                                System.out.println("Some Error");
+                                confirmDialog.show();
                             }
                         });
-                    });
-                    confirmDialog.show();
-                }
+                    }
+
+                    @Override
+                    public void onError() {
+                        System.out.println("Error");
+                    }
+                });
+
             }
 
         });

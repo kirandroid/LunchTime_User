@@ -30,4 +30,7 @@ public interface LunchAPI {
 
     @GET("order/{id}")
     Call<ApiBaseResponse<OrderWrapper>> myOrder(@Path("id") int order);
+
+    @GET("user/{id}")
+    Call<ApiBaseResponse<UserWrapper>> userDetail(@Path("id") int id);
 }
