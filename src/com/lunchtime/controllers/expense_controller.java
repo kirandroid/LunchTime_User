@@ -170,10 +170,10 @@ public class expense_controller implements Initializable {
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 for (int i = 0; i < orderWrapperApiBaseResponse.getData().getOrder().size(); i++) {
                     MyOrder myOrder = orderWrapperApiBaseResponse.getData().getOrder().get(i);
-                    Timestamp timestamp = new Timestamp(myOrder.getDate());
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, MMM dd yyyy");
-                    String date = simpleDateFormat.format(timestamp);
-                    orders.add(new Order(date, myOrder.getFood_name(), myOrder.getTotal_price()));
+//                    Timestamp timestamp = new Timestamp(myOrder.getDate());
+//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, MMM dd yyyy");
+//                    String date = simpleDateFormat.format(timestamp);
+                    orders.add(new Order(myOrder.getDate(), myOrder.getFood_name(), myOrder.getTotal_price()));
                     totalFood = orderWrapperApiBaseResponse.getData().getOrder().size();
                     totalMoney = myOrder.getTotal_price() + totalMoney;
                 }

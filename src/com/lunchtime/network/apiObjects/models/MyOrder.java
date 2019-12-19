@@ -5,7 +5,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 public class MyOrder {
     @SerializedName("date")
-    private  long date;
+    private  String date;
     @SerializedName("quantity")
     private Integer quantity;
     @SerializedName("total_price")
@@ -15,7 +15,7 @@ public class MyOrder {
     @SerializedName("picture")
     private String picture;
 
-    public MyOrder(long date, Integer quantity, Integer total_price, String food_name, String picture) {
+    public MyOrder(String date, Integer quantity, Integer total_price, String food_name, String picture) {
         this.date = date;
         this.quantity = quantity;
         this.total_price = total_price;
@@ -23,7 +23,7 @@ public class MyOrder {
         this.picture = picture;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
