@@ -1,3 +1,7 @@
+/**
+ * @author Kiran Pradhan
+ * This class creates a retrofit method which takes a BASE URL of the API. Creates a method that calls the ApiService class methods.
+ * */
 package com.lunchtime.network;
 
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
@@ -59,6 +63,10 @@ public class NetworkManager {
 
     public void MyOrder(int id, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
         apiService.myOrderApi(listener, api, id);
+    }
+
+    public void ExpenseOrder(int id, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
+        apiService.expenseOrderApi(listener, api, id);
     }
 
     public void UserDetail(int id, NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener){

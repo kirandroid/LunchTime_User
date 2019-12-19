@@ -96,14 +96,6 @@
             </VBox>
             <VBox prefHeight="552.0" prefWidth="396.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="396.0" spacing="10.0">
-                     <children>
-                        <JFXButton prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="All Time" />
-                        <JFXButton layoutX="85.0" layoutY="10.0" prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="Today" />
-                        <JFXButton layoutX="167.0" layoutY="10.0" prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="Week" />
-                        <JFXButton layoutX="208.0" layoutY="10.0" prefHeight="33.0" prefWidth="82.0" styleClass="dateSelectButton" text="Month" />
-                     </children>
-                  </HBox>
                   <VBox fx:id="ChartRootView" alignment="CENTER" prefHeight="484.0" prefWidth="396.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="CENTER" prefHeight="63.0" prefWidth="396.0" spacing="10.0">
                      <children>

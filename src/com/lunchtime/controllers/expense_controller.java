@@ -1,3 +1,8 @@
+/**
+ * @author Kiran Pradhan
+ * This controller class fetches the user order whose status is Received and populates the response to a table view. All the Graphs are also updated with the response.
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXTreeTableView;
@@ -160,7 +165,7 @@ public class expense_controller implements Initializable {
         foodNameColumn.setCellValueFactory(param -> param.getValue().getValue().foodName);
         foodPriceColumn.setCellValueFactory(param -> param.getValue().getValue().price.asString());
 
-        NetworkManager.getInstance().MyOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
+        NetworkManager.getInstance().ExpenseOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 for (int i = 0; i < orderWrapperApiBaseResponse.getData().getOrder().size(); i++) {

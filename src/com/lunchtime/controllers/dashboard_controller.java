@@ -1,3 +1,9 @@
+/**
+ * @author Kiran Pradhan
+ * This controller class is for a static dashboard UI. This class handles all the routes for buttons in the side menu.
+ * This controller also Renders the user details
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXButton;

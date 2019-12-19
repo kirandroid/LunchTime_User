@@ -1,3 +1,7 @@
+/**
+ * @author Kiran Pradhan
+ * This interface has the retrofit method for Uploading image which has a callback respective to the response of the api, a request if it has and specify the endpoints.
+ * */
 package com.lunchtime.network;
 
 import com.lunchtime.network.apiObjects.models.UploadResponse;

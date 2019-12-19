@@ -1,3 +1,8 @@
+/**
+ * @author Kiran Pradhan
+ * This controller class creates a dynamic grid view from the fetched user order table. Only the order whose status is pending are fetched.
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXButton;

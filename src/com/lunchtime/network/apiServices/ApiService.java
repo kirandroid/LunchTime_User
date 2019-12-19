@@ -34,6 +34,12 @@ public class ApiService {
         api.myOrder(id).enqueue(new NetworkResponse<>(listener));
     }
 
+
+    public void expenseOrderApi(NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener, LunchAPI api, int id){
+        api.expenseOrder(id).enqueue(new NetworkResponse<>(listener));
+    }
+
+
     public void userDetailApi(NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener, LunchAPI api, int id){
         api.userDetail(id).enqueue(new NetworkResponse<>(listener));
     }

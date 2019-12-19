@@ -1,7 +1,13 @@
+/**
+ * @author Kiran Pradhan
+ * This controller class is used for handling all the UI events and request a Register API with the given user credentials.
+ * All the verification and validation is handled here.
+ * This class also navigates to Login Screen.
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -17,15 +23,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;

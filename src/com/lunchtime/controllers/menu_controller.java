@@ -1,3 +1,9 @@
+/**
+ * @author Kiran Pradhan
+ * This controller class creates a dynamic grid view from the fetched menu table.
+ * This class also handles the order event.
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.*;

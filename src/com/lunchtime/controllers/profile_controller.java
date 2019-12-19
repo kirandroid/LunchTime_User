@@ -1,3 +1,11 @@
+/**
+ * @author Kiran Pradhan
+ * This controller class displays the user detail and image to the form.
+ * A refresh button triggers event that will fetch user detail and updates the user observer.
+ * An update request is called which updates the user table with the given user information.
+ * A image upload api is called when user adds a profile picture.
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.*;
@@ -11,8 +19,10 @@ import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.UploadResponse;
 import com.lunchtime.network.apiObjects.models.User;
 import com.lunchtime.network.apiObjects.models.UserObservable;
+import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
+import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,6 +92,32 @@ public class profile_controller implements Initializable {
 
     @FXML
     private Circle addPictureView;
+
+
+    @FXML
+    void onRefreshClicked(ActionEvent event) {
+        NetworkManager.getInstance().UserDetail(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
+            @Override
+            public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
+                Platform.runLater(() -> {
+                    User userDetailResponse = userWrapperApiBaseResponse.getData().getUser();
+                    List<User> users = new ArrayList<>();
+                    users.add(new User(userDetailResponse.getId(), userDetailResponse.getFirst_name(), userDetailResponse.getLast_name(), userDetailResponse.getEmail(), userDetailResponse.getPhone_number(), userDetailResponse.getPicture(), userDetailResponse.getBalance()));
+                    UserObservable userObservable = new UserObservable();
+
+                    for (User user: users){
+                        userObservable.addObserver(user);
+                    }
+                    userObservable.UserObservable();
+                });
+            }
+
+            @Override
+            public void onError() {
+                System.out.println("Error");
+            }
+        });
+    }
 
     @FXML
     void selectPictureClicked(MouseEvent event) throws MalformedURLException {

@@ -1,3 +1,10 @@
+/**
+ * @author Kiran Pradhan
+ * This controller class is used for handling all the UI events and request a login API with the given user credentials.
+ * All the verification and validation is handled here.
+ * This class also navigates to Dashboard Screen and Register Screen.
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.*;
@@ -15,8 +22,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -96,14 +101,14 @@ public class login_controller implements Initializable {
     @FXML
     void login_button_clicked(ActionEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-//        if (emailIsValid && !emailIsEmpty && passwordIsValid && !passwordIsEmpty) {
+        if (emailIsValid && !emailIsEmpty && passwordIsValid && !passwordIsEmpty) {
 
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             messageDigest.update(password_field.getText().getBytes("UTF-8"), 0, password_field.getText().length());
             String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
 
-//            LoginRequest loginRequest = new LoginRequest(email_field.getText(), encriptedPassword);
-            LoginRequest loginRequest = new LoginRequest("kiran@gmail.com", "936A014FC67E26ABD1BC1405824B74EE958D016B");
+            LoginRequest loginRequest = new LoginRequest(email_field.getText(), encriptedPassword);
+//            LoginRequest loginRequest = new LoginRequest("kiran@gmail.com", "936A014FC67E26ABD1BC1405824B74EE958D016B");
 
             NetworkManager.getInstance().Login(loginRequest, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
                 @Override
@@ -151,7 +156,7 @@ public class login_controller implements Initializable {
             });
         }
 
-//    }
+    }
 
     @FXML
     void register_button_clicked(ActionEvent event) throws IOException {
