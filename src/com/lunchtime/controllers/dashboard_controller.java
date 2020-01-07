@@ -29,8 +29,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ResourceBundle;
 
 public class dashboard_controller implements Initializable {
@@ -61,9 +64,12 @@ public class dashboard_controller implements Initializable {
     @FXML
     private HBox balanceHbox;
 
+    String defaultImageURL = "";
+
     public static Label userNameLabel = new Label(com.lunchtime.controllers.login_controller.firsName + " "+ com.lunchtime.controllers.login_controller.lastName);
     public static Label userBalanceLabel = new Label(String.valueOf("CC: "+com.lunchtime.controllers.login_controller.balance));
-    public static Circle profilePicture = new Circle(45, new ImagePattern(new Image(login_controller.picture)));
+
+    public static Circle profilePicture;
 
     //---------------For making the screen draggable-------------
     private double x, y;
@@ -164,6 +170,19 @@ public class dashboard_controller implements Initializable {
             userBalanceLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #0b941b");
             usernameHbox.getChildren().add(userNameLabel);
             balanceHbox.getChildren().add(userBalanceLabel);
+            Image image = null;
+            try{
+                URL url = new URL(login_controller.picture);
+                URLConnection connection = url.openConnection();
+                InputStream inputStream = connection.getInputStream();
+                image = new Image(inputStream);
+
+            }catch (IOException e){
+                image = new Image(new File("src/com/lunchtime/assets/image/defaultUser.png").toURI().toString());
+                e.printStackTrace();
+            }
+            profilePicture = new Circle(45, new ImagePattern(image));
+
             profilePictureHbox.getChildren().add(profilePicture);
         });
     }

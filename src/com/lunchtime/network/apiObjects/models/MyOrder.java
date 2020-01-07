@@ -12,15 +12,23 @@ public class MyOrder {
     private Integer total_price;
     @SerializedName("food_name")
     private String food_name;
+
+    @SerializedName("status")
+    private String status;
     @SerializedName("picture")
     private String picture;
 
-    public MyOrder(String date, Integer quantity, Integer total_price, String food_name, String picture) {
+    public MyOrder(String date, Integer quantity, Integer total_price, String food_name, String picture, String status) {
         this.date = date;
         this.quantity = quantity;
         this.total_price = total_price;
         this.food_name = food_name;
         this.picture = picture;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String getDate() {

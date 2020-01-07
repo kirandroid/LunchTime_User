@@ -5,15 +5,18 @@
 
 package com.lunchtime.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXMasonryPane;
+import com.jfoenix.controls.*;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.svg.SVGGlyph;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.MyOrder;
+import com.lunchtime.network.apiObjects.models.User;
+import com.lunchtime.network.apiObjects.models.UserObservable;
+import com.lunchtime.network.apiObjects.requests.OrderRequest;
 import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
+import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -33,6 +36,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -74,9 +78,6 @@ public class order_controller implements Initializable{
     private StackPane orderPane;
 
     @FXML
-    private ScrollPane scrollPane;
-
-    @FXML
     private JFXMasonryPane orderMasonryPane;
 
     public void loadOrderData() {
@@ -104,6 +105,7 @@ public class order_controller implements Initializable{
                         Label foodName = new Label();
                         Label foodPrice = new Label();
                         Label foodQuantity = new Label();
+                        Label status = new Label();
                         ImageView imageView = new ImageView(new Image(order.get(i).getPicture(), 230, 209, false, true, true));
                         header.getChildren().add(imageView);
                         String headerColor = "#db0f4b";
@@ -124,7 +126,14 @@ public class order_controller implements Initializable{
                         foodPrice.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
                         foodName.setText(order.get(i).getFood_name());
                         foodPrice.setText("Total : Rs. "+order.get(i).getTotal_price().toString());
-                        bodyContent.getChildren().addAll(foodName, foodQuantity, foodPrice);
+
+                        status.setPadding(new Insets(10,0,0,0));
+                        status.setTextFill(Color.web("#00FFFF"));
+                        status.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
+                        status.setText(order.get(i).getStatus());
+                        status.setText(order.get(i).getStatus());
+
+                        bodyContent.getChildren().addAll(foodName, foodQuantity, status, foodPrice);
                         body.getChildren().add(bodyContent);
                         VBox content = new VBox();
                         content.getChildren().addAll(header, body);
@@ -139,20 +148,16 @@ public class order_controller implements Initializable{
                         button.setRipplerFill(Color.valueOf(headerColor));
                         button.setScaleX(0);
                         button.setScaleY(0);
-                        int finalI = i;
                         button.setOnAction(param -> {
-                            System.out.println("Clicked" + order.get(finalI).getFood_name());
-//                            loadDialog(menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_price(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_id());
+                            loadDialog();
                         });
                         SVGGlyph glyph = new SVGGlyph(-1,
-                                "test",
-                                "M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z",
+                                "CancelIcon",
+                                "M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z",
                                 Color.WHITE);
                         glyph.setSize(20, 20);
                         button.setGraphic(glyph);
-                        button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
-                            return header.getBoundsInParent().getHeight() - button.getHeight() / 2;
-                        }, header.boundsInParentProperty(), button.heightProperty()));
+                        button.translateYProperty().bind(Bindings.createDoubleBinding(() -> header.getBoundsInParent().getHeight() - button.getHeight() / 2, header.boundsInParentProperty(), button.heightProperty()));
                         StackPane.setMargin(button, new Insets(0, 12, 0, 0));
                         StackPane.setAlignment(button, Pos.TOP_RIGHT);
 
@@ -178,6 +183,24 @@ public class order_controller implements Initializable{
                 System.out.println("Error");
             }
         });
+    }
+
+    private void loadDialog() {
+        VBox vBox = new VBox();
+        Label message = new Label();
+        message.setText("Are you sure you want to cancel this order?");
+        vBox.getChildren().add(message);
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Cancel Order?"));
+        content.setBody(vBox);
+        JFXButton cancelButton = new JFXButton("Cancel Order");
+        JFXButton exitButton = new JFXButton("Exit");
+        JFXDialog dialog = new JFXDialog(orderPane, content, JFXDialog.DialogTransition.CENTER);
+        content.setActions(exitButton, cancelButton);
+        exitButton.setOnAction(event -> dialog.close());
+        cancelButton.setOnAction(event -> {
+        });
+        dialog.show();
     }
 
     @Override

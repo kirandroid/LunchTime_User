@@ -46,9 +46,11 @@ import retrofit2.Response;
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -278,7 +280,20 @@ public class profile_controller implements Initializable {
         fieldValidators();
         Platform.runLater(() -> {
             login_controller loginController = new login_controller();
-            profilePictureView.setFill(new ImagePattern(new Image(loginController.picture)));
+
+
+            Image image = null;
+            try{
+                URL url = new URL(login_controller.picture);
+                URLConnection connection = url.openConnection();
+                InputStream inputStream = connection.getInputStream();
+                image = new Image(inputStream);
+
+            }catch (IOException e){
+                image = new Image(new File("src/com/lunchtime/assets/image/defaultUser.png").toURI().toString());
+                e.printStackTrace();
+            }
+            profilePictureView.setFill(new ImagePattern(image));
             first_name_field.setText(loginController.firsName);
             last_name_field.setText(loginController.lastName);
             email_field.setText(loginController.email);
