@@ -1,25 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<StackPane fx:id="orderPane" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="570.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.order_controller">
+<StackPane fx:id="orderRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.order_controller">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <center>
-            <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="557.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
-               <content>
-                  <JFXMasonryPane fx:id="orderMasonryPane" HSpacing="10" VSpacing="10">
-                     <padding>
-                        <Insets bottom="16" left="16" right="16" top="16" />
-                     </padding>
-                  </JFXMasonryPane>
-               </content>
-            </ScrollPane>
-         </center>
-      </BorderPane>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="63.0" prefWidth="396.0" spacing="16.0">
+               <children>
+                  <JFXButton fx:id="allOrderButton" onAction="#allOrderButtonClicked" prefHeight="45.0" prefWidth="116.0" style="-fx-background-color: #84DCC6;" text="ALL ORDER">
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXButton>
+                  <JFXButton fx:id="pendingButton" layoutX="449.0" layoutY="17.0" onAction="#pendingButtonClicked" prefHeight="45.0" prefWidth="108.0" style="-fx-background-color: #84DCC6;" text="PENDING">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="processingButton" layoutX="515.0" layoutY="17.0" onAction="#processingButtonClicked" prefHeight="45.0" prefWidth="116.0" style="-fx-background-color: #84DCC6;" text="PROCESSING">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="readyButton" layoutX="582.0" layoutY="17.0" onAction="#readyButtonClicked" prefHeight="45.0" prefWidth="116.0" style="-fx-background-color: #84DCC6;" text="READY">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="receivedButton" layoutX="648.0" layoutY="17.0" onAction="#receivedButtonClicked" prefHeight="45.0" prefWidth="116.0" style="-fx-background-color: #84DCC6;" text="RECEIVED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="cancelledButton" layoutX="715.0" layoutY="17.0" onAction="#cancelledButtonClicked" prefHeight="45.0" prefWidth="116.0" style="-fx-background-color: #84DCC6;" text="CANCELLED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <AnchorPane VBox.vgrow="ALWAYS">
+               <children>
+                  <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="507.0" prefWidth="800.0">
+                     <content>
+                        <JFXMasonryPane fx:id="orderMasonryPane" HSpacing="10" VSpacing="10">
+                           <padding>
+                              <Insets bottom="16" left="16" right="16" top="16" />
+                           </padding>
+                        </JFXMasonryPane>
+                     </content>
+                  </ScrollPane>
+               </children></AnchorPane>
+         </children>
+      </VBox>
    </children>
 </StackPane>

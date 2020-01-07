@@ -24,8 +24,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -37,6 +35,31 @@ import java.net.URLConnection;
 import java.util.ResourceBundle;
 
 public class dashboard_controller implements Initializable {
+
+    //---------------For making the screen draggable-------------
+    private double x, y;
+
+    @FXML
+    void windowDragged(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+        stage.setOpacity(0.7f);
+    }
+
+    @FXML
+    void windowDraggedDone(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setOpacity(1.0f);
+    }
+
+    @FXML
+    void windowPressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+    //---------------For making the screen draggable-------------
+
     @FXML
     private StackPane dashboardPane;
 
@@ -64,36 +87,11 @@ public class dashboard_controller implements Initializable {
     @FXML
     private HBox balanceHbox;
 
-    String defaultImageURL = "";
 
     public static Label userNameLabel = new Label(com.lunchtime.controllers.login_controller.firsName + " "+ com.lunchtime.controllers.login_controller.lastName);
-    public static Label userBalanceLabel = new Label(String.valueOf("CC: "+com.lunchtime.controllers.login_controller.balance));
+    public static Label userBalanceLabel = new Label("CC: " + login_controller.balance);
 
     public static Circle profilePicture;
-
-    //---------------For making the screen draggable-------------
-    private double x, y;
-
-    @FXML
-    void windowDragged(MouseEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setX(event.getScreenX() - x);
-        stage.setY(event.getScreenY() - y);
-        stage.setOpacity(0.7f);
-    }
-
-    @FXML
-    void windowDraggedDone(MouseEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setOpacity(1.0f);
-    }
-
-    @FXML
-    void windowPressed(MouseEvent event) {
-        x = event.getSceneX();
-        y = event.getSceneY();
-    }
-    //---------------For making the screen draggable-------------
 
 
     //Exits the application
@@ -123,7 +121,7 @@ public class dashboard_controller implements Initializable {
 
     @FXML
     void orderPaneButtonClicked(ActionEvent event) throws IOException {
-        StackPane pane = FXMLLoader.load(getClass().getResource("../views/testOrder_view.fxml"));
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/order_view.fxml"));
         dashboardContentPane.getChildren().setAll(pane);
     }
 
@@ -163,8 +161,6 @@ public class dashboard_controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
-            login_controller loginController = new login_controller();
-//            profilePicture.setFill(new ImagePattern(new Image(loginController.picture)));
             userNameLabel.setFont(new Font(15));
             userBalanceLabel.setFont(new Font(15));
             userBalanceLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #0b941b");
