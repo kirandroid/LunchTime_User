@@ -31,11 +31,7 @@
                   <StackPane layoutX="191.0" layoutY="14.0" onMouseClicked="#selectPictureClicked" prefHeight="90.0" prefWidth="78.0">
                      <children>
                         <Circle fx:id="profilePictureView" fill="#bfbfbf" radius="45.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <StackPane alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="101.0" prefWidth="175.0">
-                           <children>
-                              <Circle fx:id="addPictureView" fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                           </children>
-                        </StackPane>
+                        <StackPane fx:id="circleAddButtonStackPane" alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="101.0" prefWidth="175.0" />
                      </children>
                   </StackPane>
                </children>

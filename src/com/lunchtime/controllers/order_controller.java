@@ -12,11 +12,8 @@ import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.MyOrder;
-import com.lunchtime.network.apiObjects.models.User;
-import com.lunchtime.network.apiObjects.models.UserObservable;
-import com.lunchtime.network.apiObjects.requests.OrderRequest;
+import com.lunchtime.network.apiObjects.requests.UserOrderRequest;
 import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
-import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -28,7 +25,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +35,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +76,9 @@ public class order_controller implements Initializable{
     private JFXMasonryPane orderMasonryPane;
 
     public void loadOrderData() {
-        NetworkManager.getInstance().MyOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
+        UserOrderRequest userOrderRequest = new UserOrderRequest(login_controller.userId, "requestType");
+
+        NetworkManager.getInstance().MyOrder(userOrderRequest, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 System.out.println("order");
@@ -109,7 +106,6 @@ public class order_controller implements Initializable{
                         ImageView imageView = new ImageView(new Image(order.get(i).getPicture(), 230, 209, false, true, true));
                         header.getChildren().add(imageView);
                         String headerColor = "#db0f4b";
-//                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + order.get(i).getPicture() + ");");
                         header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + ";");
 
                         VBox.setVgrow(header, Priority.ALWAYS);
@@ -128,9 +124,8 @@ public class order_controller implements Initializable{
                         foodPrice.setText("Total : Rs. "+order.get(i).getTotal_price().toString());
 
                         status.setPadding(new Insets(10,0,0,0));
-                        status.setTextFill(Color.web("#00FFFF"));
-                        status.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
-                        status.setText(order.get(i).getStatus());
+                        status.setTextFill(Color.web("#DB0F4B"));
+                        status.setStyle("-fx-font: 16 arial; -fx-font-weight: bold");
                         status.setText(order.get(i).getStatus());
 
                         bodyContent.getChildren().addAll(foodName, foodQuantity, status, foodPrice);

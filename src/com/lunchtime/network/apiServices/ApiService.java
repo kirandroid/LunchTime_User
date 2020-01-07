@@ -30,8 +30,8 @@ public class ApiService {
         api.order(orderRequest).enqueue(new NetworkResponse<>(listener));
     }
 
-    public void myOrderApi(NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener, LunchAPI api, int id){
-        api.myOrder(id).enqueue(new NetworkResponse<>(listener));
+    public void myOrderApi(NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener, LunchAPI api, UserOrderRequest userOrderRequest){
+        api.myOrder(userOrderRequest).enqueue(new NetworkResponse<>(listener));
     }
 
 
@@ -42,5 +42,9 @@ public class ApiService {
 
     public void userDetailApi(NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener, LunchAPI api, int id){
         api.userDetail(id).enqueue(new NetworkResponse<>(listener));
+    }
+
+    public void cancelOrderApi(NetworkResponseListener<ApiBaseResponse> listener, LunchAPI api, int id){
+        api.cancelOrder(id).enqueue(new NetworkResponse<>(listener));
     }
 }

@@ -3,11 +3,12 @@
  * This controller class is used for handling all the UI events and request a Register API with the given user credentials.
  * All the verification and validation is handled here.
  * This class also navigates to Login Screen.
- * */
+ */
 
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -18,16 +19,21 @@ import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.UploadResponse;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -60,6 +66,7 @@ public class register_controller implements Initializable {
     private boolean phoneIsValid = false;
     private boolean passwordIsEmpty = true;
     private boolean passwordIsValid = false;
+    AnchorPane loadingHUD;
 
     @FXML
     private StackPane registerPane;
@@ -87,6 +94,9 @@ public class register_controller implements Initializable {
 
     @FXML
     private Circle addPictureView;
+
+    @FXML
+    private StackPane circleAddButtonStackPane;
 
 
     final FileChooser fileChooser = new FileChooser();
@@ -122,92 +132,136 @@ public class register_controller implements Initializable {
     @FXML
     void register_button_clicked(ActionEvent event) throws NoSuchAlgorithmException {
 
-        if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !passwordIsEmpty && !phoneIsEmpty && emailIsValid && passwordIsValid && phoneIsValid){
-            long timestamp = System.currentTimeMillis();
-            String apiKey = "588753441842251";
-            String eager = "w_400,h_400,c_pad";
-            String publicId = String.valueOf(UUID.randomUUID());
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
-            messageDigest.update(("eager=w_400,h_400,c_pad&public_id=" + publicId + "&timestamp=" + timestamp + "oWEOZ2sxuB2cpixDPaa6XhLS23E").getBytes());
-            String signature = DatatypeConverter.printHexBinary(messageDigest.digest());
+        loadingHUD = new AnchorPane();
+        JFXSpinner jfxSpinner = new JFXSpinner();
+        jfxSpinner.setLayoutX(475);
+        jfxSpinner.setLayoutY(275);
+        loadingHUD.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6)");
+        loadingHUD.getChildren().add(jfxSpinner);
+        registerPane.getChildren().add(loadingHUD);
+
+        if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !passwordIsEmpty && !phoneIsEmpty && emailIsValid && passwordIsValid && phoneIsValid) {
+            if (file != null){
+                long timestamp = System.currentTimeMillis();
+                String apiKey = "588753441842251";
+                String eager = "w_400,h_400,c_pad";
+                String publicId = String.valueOf(UUID.randomUUID());
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+                messageDigest.update(("eager=w_400,h_400,c_pad&public_id=" + publicId + "&timestamp=" + timestamp + "oWEOZ2sxuB2cpixDPaa6XhLS23E").getBytes());
+                String signature = DatatypeConverter.printHexBinary(messageDigest.digest());
 
 
-            MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-            builder.addFormDataPart("timestamp", String.valueOf(timestamp))
-                    .addFormDataPart("public_id", publicId)
-                    .addFormDataPart("api_key", apiKey)
-                    .addFormDataPart("eager", eager)
-                    .addFormDataPart("signature", signature)
-                    .addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
+                MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                builder.addFormDataPart("timestamp", String.valueOf(timestamp))
+                        .addFormDataPart("public_id", publicId)
+                        .addFormDataPart("api_key", apiKey)
+                        .addFormDataPart("eager", eager)
+                        .addFormDataPart("signature", signature)
+                        .addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
 
-            RequestBody requestBody = builder.build();
+                RequestBody requestBody = builder.build();
 
 
-            Call<UploadResponse> call = UploadAPI.apiService.upload(requestBody);
-            call.enqueue(new Callback<UploadResponse>() {
-                @Override
-                public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
-                    MessageDigest messageDigest = null;
-                    try {
-                        messageDigest = MessageDigest.getInstance("SHA-1");
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
+                Call<UploadResponse> call = UploadAPI.apiService.upload(requestBody);
+
+                call.enqueue(new Callback<UploadResponse>() {
+                    @Override
+                    public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
+                        register(response.body().getEager().get(0).getSecureUrl());
                     }
-                    try {
-                        messageDigest.update(password_field.getText().getBytes("UTF-8"), 0, password_field.getText().length());
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+
+                    @Override
+                    public void onFailure(Call<UploadResponse> call, Throwable throwable) {
+
+                        registerPane.getChildren().remove(loadingHUD);
+                        System.out.println(throwable);
+                        System.out.println("Error");
                     }
-                    String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
+                });
+            }else{
+                register("https://res.cloudinary.com/kirandroid/image/upload/v1578395816/default_ksx4rb.png");
+            }
 
-                    RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), encriptedPassword, response.body().getEager().get(0).getSecureUrl());
 
-                    NetworkManager.getInstance().Register(registerRequest, new NetworkResponseListener<ApiBaseResponse>() {
-                        @Override
-                        public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
-                            Platform.runLater(
-                                    () -> {
-                                        try {
-                                            StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
-                                            registerPane.getChildren().setAll(pane);
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                            );
-                        }
 
-                        @Override
-                        public void onError() {
-                            Platform.runLater(() -> {
-                                JFXDialogLayout content = new JFXDialogLayout();
-                                content.setHeading(new Text("Error"));
-                                content.setBody(new Text("Email Already Used"));
-                                JFXButton button = new JFXButton("Okay");
-                                JFXDialog dialog = new JFXDialog(registerPane, content, JFXDialog.DialogTransition.CENTER);
+        }else{
 
-                                button.setOnAction(event -> dialog.close());
-                                content.setActions(button);
-
-                                dialog.show();
-                            });
-                        }
-                    });
-                }
-
-                @Override
-                public void onFailure(Call<UploadResponse> call, Throwable throwable) {
-                    System.out.println(throwable);
-                    System.out.println("Error");
-                }
-            });
-
+            registerPane.getChildren().remove(loadingHUD);
         }
 
     }
 
+    public void register(String picture){
+        MessageDigest messageDigest = null;
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        try {
+            messageDigest.update(password_field.getText().getBytes("UTF-8"), 0, password_field.getText().length());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
+
+        RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), encriptedPassword, picture);
+
+        NetworkManager.getInstance().Register(registerRequest, new NetworkResponseListener<ApiBaseResponse>() {
+            @Override
+            public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                Platform.runLater(
+                        () -> {
+
+
+                            registerPane.getChildren().remove(loadingHUD);
+
+                            JFXDialogLayout content = new JFXDialogLayout();
+                            content.setHeading(new Text("Success"));
+                            content.setBody(new Text("Account Registration Successful!"));
+                            JFXButton button = new JFXButton("GoTo Login Page");
+                            JFXDialog dialog = new JFXDialog(registerPane, content, JFXDialog.DialogTransition.CENTER);
+
+                            button.setOnAction(event -> {
+                                try {
+                                    StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
+                                    registerPane.getChildren().setAll(pane);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                            content.setActions(button);
+
+                            dialog.show();
+
+                        }
+                );
+            }
+
+            @Override
+            public void onError() {
+                Platform.runLater(() -> {
+
+                    registerPane.getChildren().remove(loadingHUD);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Error"));
+                    content.setBody(new Text("Email Already Used"));
+                    JFXButton button = new JFXButton("Okay");
+                    JFXDialog dialog = new JFXDialog(registerPane, content, JFXDialog.DialogTransition.CENTER);
+
+                    button.setOnAction(event -> dialog.close());
+                    content.setActions(button);
+
+                    dialog.show();
+                });
+            }
+        });
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        profilePictureView.setFill(new ImagePattern(new Image(new File("src/com/lunchtime/assets/image/defaultUser.png").toURI().toString())));
         fieldValidators();
         final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
         video.setMute(true);
@@ -215,10 +269,41 @@ public class register_controller implements Initializable {
         video.play();
         registerVideoPlayer.setMediaPlayer(video);
 
+        // create button
+        JFXButton addButton = new JFXButton("");
+        addButton.setButtonType(JFXButton.ButtonType.RAISED);
+        addButton.setStyle("-fx-background-radius: 40;-fx-background-color: #db0f4b");
+        addButton.setPrefSize(26, 26);
+        addButton.setOnAction(param -> {
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files",
+                            "*.png", "*.jpg"));
+            file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                String imagePath = null;
+                try {
+                    imagePath = file.toURI().toURL().toString();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                profilePictureView.setFill(new ImagePattern(new Image(imagePath)));
+
+            } else {
+                System.out.println("Error");
+            }
+        });
+        SVGGlyph glyph = new SVGGlyph(-1,
+                "CancelIcon",
+                "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
+                Color.WHITE);
+        glyph.setSize(10, 10);
+        addButton.setGraphic(glyph);
+        circleAddButtonStackPane.setAlignment(Pos.BOTTOM_RIGHT);
+        circleAddButtonStackPane.getChildren().addAll(addButton);
     }
 
 
-    private void fieldValidators(){
+    private void fieldValidators() {
 
         //Field Required validator for firstName
         RequiredFieldValidator firstNameRequiredFieldValidator = new RequiredFieldValidator();

@@ -123,7 +123,7 @@ public class dashboard_controller implements Initializable {
 
     @FXML
     void orderPaneButtonClicked(ActionEvent event) throws IOException {
-        StackPane pane = FXMLLoader.load(getClass().getResource("../views/order_view.fxml"));
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/testOrder_view.fxml"));
         dashboardContentPane.getChildren().setAll(pane);
     }
 

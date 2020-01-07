@@ -5,10 +5,7 @@
 package com.lunchtime.network;
 
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
-import com.lunchtime.network.apiObjects.requests.LoginRequest;
-import com.lunchtime.network.apiObjects.requests.OrderRequest;
-import com.lunchtime.network.apiObjects.requests.RegisterRequest;
-import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
+import com.lunchtime.network.apiObjects.requests.*;
 import com.lunchtime.network.apiObjects.wrappers.MenuWrapper;
 import com.lunchtime.network.apiObjects.wrappers.OrderWrapper;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
@@ -61,8 +58,8 @@ public class NetworkManager {
         apiService.orderApi(listener, api, orderRequest);
     }
 
-    public void MyOrder(int id, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
-        apiService.myOrderApi(listener, api, id);
+    public void MyOrder(UserOrderRequest userOrderRequest, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
+        apiService.myOrderApi(listener, api, userOrderRequest);
     }
 
     public void ExpenseOrder(int id, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
@@ -71,6 +68,11 @@ public class NetworkManager {
 
     public void UserDetail(int id, NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener){
         apiService.userDetailApi(listener, api, id);
+    }
+
+
+    public void CancelOrder(int id, NetworkResponseListener<ApiBaseResponse> listener){
+        apiService.cancelOrderApi(listener, api, id);
     }
 
 
