@@ -33,7 +33,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class expense_controller implements Initializable {
+public class ExpenseController implements Initializable {
 
     @FXML
     private VBox ChartRootView;
@@ -160,7 +160,7 @@ public class expense_controller implements Initializable {
         foodNameColumn.setCellValueFactory(param -> param.getValue().getValue().foodName);
         foodPriceColumn.setCellValueFactory(param -> param.getValue().getValue().price.asString());
 
-        NetworkManager.getInstance().ExpenseOrder(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
+        NetworkManager.getInstance().ExpenseOrder(LoginController.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 for (int i = 0; i < orderWrapperApiBaseResponse.getData().getOrder().size(); i++) {

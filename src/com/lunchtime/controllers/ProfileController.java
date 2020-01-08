@@ -19,18 +19,14 @@ import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.UploadResponse;
 import com.lunchtime.network.apiObjects.models.User;
 import com.lunchtime.network.apiObjects.models.UserObservable;
-import com.lunchtime.network.apiObjects.requests.OrderRequest;
-import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import com.lunchtime.network.apiObjects.requests.UpdateProfileRequest;
 import com.lunchtime.network.apiObjects.wrappers.UserWrapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -47,7 +43,6 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -58,7 +53,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class profile_controller implements Initializable {
+public class ProfileController implements Initializable {
 
     private boolean firstNameIsEmpty = false;
     private boolean lastNameIsEmpty = false;
@@ -98,7 +93,7 @@ public class profile_controller implements Initializable {
 
     @FXML
     void onRefreshClicked(ActionEvent event) {
-        NetworkManager.getInstance().UserDetail(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
+        NetworkManager.getInstance().UserDetail(LoginController.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
                 Platform.runLater(() -> {
@@ -164,9 +159,8 @@ public class profile_controller implements Initializable {
             call.enqueue(new Callback<UploadResponse>() {
                 @Override
                 public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
-                    login_controller login_controller = new login_controller();
 
-                    UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), login_controller.userId, response.body().getEager().get(0).getSecureUrl());
+                    UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), LoginController.userId, response.body().getEager().get(0).getSecureUrl());
 
                     NetworkManager.getInstance().Update(updateProfileRequest, new NetworkResponseListener<ApiBaseResponse>() {
                         @Override
@@ -186,7 +180,7 @@ public class profile_controller implements Initializable {
 
 
                                         List<User> users = new ArrayList<>();
-                                        users.add(new User(login_controller.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), response.body().getEager().get(0).getSecureUrl(), login_controller.balance));
+                                        users.add(new User(LoginController.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), response.body().getEager().get(0).getSecureUrl(), LoginController.balance));
                                         UserObservable userObservable = new UserObservable();
 
                                         for (User user: users){
@@ -223,9 +217,8 @@ public class profile_controller implements Initializable {
             });
 
         }else{
-            login_controller login_controller = new login_controller();
 
-            UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), login_controller.userId, login_controller.picture);
+            UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), LoginController.userId, LoginController.picture);
 
             NetworkManager.getInstance().Update(updateProfileRequest, new NetworkResponseListener<ApiBaseResponse>() {
                 @Override
@@ -244,7 +237,7 @@ public class profile_controller implements Initializable {
                                 dialog.show();
 
                                 List<User> users = new ArrayList<>();
-                                users.add(new User(login_controller.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), login_controller.picture, login_controller.balance));
+                                users.add(new User(LoginController.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), LoginController.picture, LoginController.balance));
                                 UserObservable userObservable = new UserObservable();
 
                                 for (User user: users){
@@ -279,12 +272,9 @@ public class profile_controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         fieldValidators();
         Platform.runLater(() -> {
-            login_controller loginController = new login_controller();
-
-
             Image image = null;
             try{
-                URL url = new URL(login_controller.picture);
+                URL url = new URL(LoginController.picture);
                 URLConnection connection = url.openConnection();
                 InputStream inputStream = connection.getInputStream();
                 image = new Image(inputStream);
@@ -294,10 +284,10 @@ public class profile_controller implements Initializable {
                 e.printStackTrace();
             }
             profilePictureView.setFill(new ImagePattern(image));
-            first_name_field.setText(loginController.firsName);
-            last_name_field.setText(loginController.lastName);
-            email_field.setText(loginController.email);
-            phone_field.setText(loginController.phoneNumber);
+            first_name_field.setText(LoginController.firsName);
+            last_name_field.setText(LoginController.lastName);
+            email_field.setText(LoginController.email);
+            phone_field.setText(LoginController.phoneNumber);
         });
     }
 

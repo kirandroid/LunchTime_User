@@ -1,8 +1,8 @@
 package com.lunchtime.network.apiObjects.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.lunchtime.controllers.dashboard_controller;
-import com.lunchtime.controllers.login_controller;
+import com.lunchtime.controllers.LoginController;
+import com.lunchtime.controllers.DashboardController;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -69,17 +69,17 @@ public class User implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        dashboard_controller.userNameLabel.setText(getFirst_name()+" "+getLast_name());
-        dashboard_controller.userBalanceLabel.setText("CC: " + getBalance());
-        dashboard_controller.profilePicture.setFill(new ImagePattern(new Image(getPicture())));
+        DashboardController.userNameLabel.setText(getFirst_name()+" "+getLast_name());
+        DashboardController.userBalanceLabel.setText("CC: " + getBalance());
+        DashboardController.profilePicture.setFill(new ImagePattern(new Image(getPicture())));
 
-        login_controller.userId = getId();
-        login_controller.firsName = getFirst_name();
-        login_controller.lastName = getLast_name();
-        login_controller.phoneNumber = getPhone_number();
-        login_controller.email = getEmail();
-        login_controller.picture = getPicture();
-        login_controller.balance = getBalance();
+        LoginController.userId = getId();
+        LoginController.firsName = getFirst_name();
+        LoginController.lastName = getLast_name();
+        LoginController.phoneNumber = getPhone_number();
+        LoginController.email = getEmail();
+        LoginController.picture = getPicture();
+        LoginController.balance = getBalance();
 
         System.out.println("new value "+getFirst_name());
         System.out.println("new value "+getLast_name());

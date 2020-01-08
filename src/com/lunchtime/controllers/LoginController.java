@@ -38,7 +38,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
-public class login_controller implements Initializable {
+public class LoginController implements Initializable {
 
     private boolean emailIsValid = false;
     private boolean emailIsEmpty = true;

@@ -17,9 +17,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +27,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -46,7 +42,7 @@ import java.util.ResourceBundle;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
-public class order_controller implements Initializable {
+public class OrderController implements Initializable {
 
     //---------------For making the screen draggable-------------
     double x, y;
@@ -167,7 +163,7 @@ public class order_controller implements Initializable {
     }
 
     public void loadOrderData(String requestType) {
-        UserOrderRequest userOrderRequest = new UserOrderRequest(login_controller.userId, requestType);
+        UserOrderRequest userOrderRequest = new UserOrderRequest(LoginController.userId, requestType);
         NetworkManager.getInstance().MyOrder(userOrderRequest, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {

@@ -56,7 +56,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class register_controller implements Initializable {
+public class RegisterController implements Initializable {
 
     private boolean firstNameIsEmpty = true;
     private boolean lastNameIsEmpty = true;

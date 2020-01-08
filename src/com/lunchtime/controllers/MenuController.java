@@ -24,7 +24,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -43,7 +42,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +49,9 @@ import java.util.ResourceBundle;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
-public class menu_controller implements Initializable {
+public class MenuController implements Initializable {
     private boolean quantityFieldIsEmpty = true;
     private boolean quantityFieldIsValid = false;
-
-    login_controller login_controller = new login_controller();
 
     @FXML
     private JFXMasonryPane testMasonryPane;
@@ -221,7 +217,7 @@ public class menu_controller implements Initializable {
 
                 JFXDialogLayout errorContent = new JFXDialogLayout();
 
-                NetworkManager.getInstance().UserDetail(login_controller.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
+                NetworkManager.getInstance().UserDetail(LoginController.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
                     @Override
                     public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
                         Platform.runLater(() -> {
@@ -245,7 +241,7 @@ public class menu_controller implements Initializable {
 
                                 confirmCancelButton.setOnAction(closeEvent -> confirmDialog.close());
                                 confirmOrderButton.setOnAction(confirmEvent -> {
-                                    OrderRequest orderRequest = new OrderRequest(login_controller.userId, foodId, quantity, totalPrice);
+                                    OrderRequest orderRequest = new OrderRequest(LoginController.userId, foodId, quantity, totalPrice);
                                     NetworkManager.getInstance().Order(orderRequest, new NetworkResponseListener<ApiBaseResponse>() {
                                         @Override
                                         public void onResponseReceived(ApiBaseResponse apiBaseResponse) {

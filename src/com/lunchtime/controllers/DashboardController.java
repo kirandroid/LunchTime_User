@@ -9,7 +9,6 @@ package com.lunchtime.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
@@ -36,7 +34,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ResourceBundle;
 
-public class dashboard_controller implements Initializable {
+public class DashboardController implements Initializable {
 
     //---------------For making the screen draggable-------------
     private double x, y;
@@ -78,8 +76,8 @@ public class dashboard_controller implements Initializable {
     private HBox balanceHbox;
 
 
-    public static Label userNameLabel = new Label(com.lunchtime.controllers.login_controller.firsName + " "+ com.lunchtime.controllers.login_controller.lastName);
-    public static Label userBalanceLabel = new Label("CC: " + login_controller.balance);
+    public static Label userNameLabel = new Label(LoginController.firsName + " "+ LoginController.lastName);
+    public static Label userBalanceLabel = new Label("CC: " + LoginController.balance);
 
     public static Circle profilePicture;
 
@@ -288,7 +286,7 @@ public class dashboard_controller implements Initializable {
             balanceHbox.getChildren().add(userBalanceLabel);
             Image image = null;
             try{
-                URL url = new URL(login_controller.picture);
+                URL url = new URL(LoginController.picture);
                 URLConnection connection = url.openConnection();
                 InputStream inputStream = connection.getInputStream();
                 image = new Image(inputStream);
