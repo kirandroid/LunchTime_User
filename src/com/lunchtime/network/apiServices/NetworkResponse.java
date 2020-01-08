@@ -1,3 +1,7 @@
+/**
+ * @Author Kiran Pradhananga
+ * This class helps reduce a lot of API call boiler plate codes by returning a response call back on the listener
+ */
 package com.lunchtime.network.apiServices;
 
 import com.lunchtime.network.NetworkResponseListener;
@@ -10,15 +14,16 @@ import java.lang.ref.WeakReference;
 public class NetworkResponse<ResponseType> implements Callback<ResponseType> {
     private WeakReference<NetworkResponseListener<ResponseType>> listener;
 
-    NetworkResponse(NetworkResponseListener<ResponseType> listener){
+    NetworkResponse(NetworkResponseListener<ResponseType> listener) {
         this.listener = new WeakReference<>(listener);
     }
+
     @Override
     public void onResponse(Call<ResponseType> call, Response<ResponseType> response) {
         if (listener.get() != null && listener != null) {
-            if (response.code() == 400){
+            if (response.code() == 400) {
                 listener.get().onError();
-            }else{
+            } else {
                 listener.get().onResponseReceived(response.body());
             }
             System.out.println(response);

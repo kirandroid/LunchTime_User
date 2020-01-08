@@ -10,6 +10,7 @@ package com.lunchtime.controllers;
 import com.jfoenix.controls.*;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
+import com.lunchtime.Main;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
@@ -97,6 +98,13 @@ public class LoginController implements Initializable {
     void closeButtonClicked(ActionEvent event) {
         System.exit(0);
     }
+
+    //Minimize the window
+    @FXML
+    void minimizeButtonClicked(ActionEvent event) {
+        Main.primaryStage.setIconified(true);
+    }
+
 
     //Run on Login Button Clicked
     @FXML
@@ -267,7 +275,7 @@ public class LoginController implements Initializable {
         fieldValidators(); //Call the field validator method for running all the validators when the screen starts
 
         //Set the video to play on the login screen
-        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/loginVideo.mp4").toURI().toString()));
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
         video.setMute(true);
         video.setCycleCount(MediaPlayer.INDEFINITE);
         video.play();

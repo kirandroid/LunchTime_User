@@ -1,3 +1,9 @@
+/**
+ * @Author Kiran Pradhananga
+ * This screen shows all the user orders respective to their status.
+ * Only the orders with the status of pending are allowed to cancel the order
+ * */
+
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.JFXButton;
@@ -34,7 +40,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,81 +103,112 @@ public class OrderController implements Initializable {
 
 
     public void allOrderButtonClicked() {
+        //--------------Button Style----------------//
         allOrderButton.setStyle(clickedStyle);
         pendingButton.setStyle(unclickedStyle);
         processingButton.setStyle(unclickedStyle);
         readyButton.setStyle(unclickedStyle);
         receivedButton.setStyle(unclickedStyle);
         cancelledButton.setStyle(unclickedStyle);
+        //--------------Button Style----------------//
+
+        //Load all the user order data
         loadOrderData("All");
     }
 
     @FXML
     void cancelledButtonClicked(ActionEvent event) {
+        //--------------Button Style----------------//
         allOrderButton.setStyle(unclickedStyle);
         pendingButton.setStyle(unclickedStyle);
         processingButton.setStyle(unclickedStyle);
         readyButton.setStyle(unclickedStyle);
         receivedButton.setStyle(unclickedStyle);
         cancelledButton.setStyle(clickedStyle);
+        //--------------Button Style----------------//
+
+        //Load only the user order of status cancelled
         loadOrderData("Cancelled");
     }
 
     @FXML
     void pendingButtonClicked(ActionEvent event) {
+        //--------------Button Style----------------//
         allOrderButton.setStyle(unclickedStyle);
         pendingButton.setStyle(clickedStyle);
         processingButton.setStyle(unclickedStyle);
         readyButton.setStyle(unclickedStyle);
         receivedButton.setStyle(unclickedStyle);
         cancelledButton.setStyle(unclickedStyle);
+        //--------------Button Style----------------//
+
+        //Load only the user order of status pending
         loadOrderData("Pending");
     }
 
     @FXML
     void processingButtonClicked(ActionEvent event) {
+        //--------------Button Style----------------//
         allOrderButton.setStyle(unclickedStyle);
         pendingButton.setStyle(unclickedStyle);
         processingButton.setStyle(clickedStyle);
         readyButton.setStyle(unclickedStyle);
         receivedButton.setStyle(unclickedStyle);
         cancelledButton.setStyle(unclickedStyle);
+        //--------------Button Style----------------//
+
+        //Load only the user order of status processing
         loadOrderData("Processing");
     }
 
     @FXML
     void readyButtonClicked(ActionEvent event) {
+        //--------------Button Style----------------//
         allOrderButton.setStyle(unclickedStyle);
         pendingButton.setStyle(unclickedStyle);
         processingButton.setStyle(unclickedStyle);
         readyButton.setStyle(clickedStyle);
         receivedButton.setStyle(unclickedStyle);
         cancelledButton.setStyle(unclickedStyle);
+        //--------------Button Style----------------//
+
+        //Load only the user order of status ready
         loadOrderData("Ready");
     }
 
     @FXML
     void receivedButtonClicked(ActionEvent event) {
+        //--------------Button Style----------------//
         allOrderButton.setStyle(unclickedStyle);
         pendingButton.setStyle(unclickedStyle);
         processingButton.setStyle(unclickedStyle);
         readyButton.setStyle(unclickedStyle);
         receivedButton.setStyle(clickedStyle);
         cancelledButton.setStyle(unclickedStyle);
+        //--------------Button Style----------------//
+
+        //Load only the user order of status received
         loadOrderData("Received");
     }
 
+    //Method to retrieve the user orders
     public void loadOrderData(String requestType) {
+        //Create a request with the user id and request type
         UserOrderRequest userOrderRequest = new UserOrderRequest(LoginController.userId, requestType);
         NetworkManager.getInstance().MyOrder(userOrderRequest, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 Platform.runLater(() -> {
                     List<MyOrder> order = orderWrapperApiBaseResponse.getData().getOrder();
+
+                    //Clear any existing order item
                     children.clear();
+
+                    //Loop through the total order response
                     for (int i = 0; i<order.size(); i++){
                         orderItem(order.get(i), requestType);
                     }
+                    //clear and add all the order item in the masonry layout
                     orderMasonryPane.getChildren().clear();
                     orderMasonryPane.getChildren().addAll(children);
                 });
@@ -186,6 +222,7 @@ public class OrderController implements Initializable {
     }
 
     public void orderItem(MyOrder order, String buttonType){
+        //------------------------Order item design code--------------------------------------------//
         StackPane stackPane = new StackPane();
         double width = 200;
         stackPane.setPrefWidth(width);
@@ -232,6 +269,7 @@ public class OrderController implements Initializable {
         body.setStyle("-fx-background-radius: 0 0 5 5; -fx-background-color: rgb(255,255,255,0.87);");
 
 
+        //Check if the order status is Pending or not. If it is pending, show a cancel button
         if (order.getStatus().equals("Pending")){
             // create button
             JFXButton button = new JFXButton("");
@@ -242,6 +280,7 @@ public class OrderController implements Initializable {
             button.setScaleX(0);
             button.setScaleY(0);
             button.setOnAction(param -> {
+                //Load cancel dialog
                 loadDialog(order.getOrder_id(), buttonType);
             });
             SVGGlyph glyph = new SVGGlyph(-1,
@@ -265,13 +304,13 @@ public class OrderController implements Initializable {
             stackPane.getChildren().addAll(content, button);
         }else{
             stackPane.getChildren().addAll(content);
-
         }
+        //------------------------Order item design code--------------------------------------------//
 
     }
 
 
-
+    //Cancel order dialog Method
     private void loadDialog(int orderId, String buttonType) {
         VBox vBox = new VBox();
         Label message = new Label();
@@ -286,9 +325,11 @@ public class OrderController implements Initializable {
         content.setActions(exitButton, cancelButton);
         exitButton.setOnAction(event -> dialog.close());
         cancelButton.setOnAction(event -> {
+            //Cancel order request with the orderid
             NetworkManager.getInstance().CancelOrder(orderId, new NetworkResponseListener<ApiBaseResponse>() {
                 @Override
                 public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                    //on successful response close the dialog and reload the order data according to the request type
                     dialog.close();
                     if (buttonType.equals("Pending")) {
                         loadOrderData("Pending");
@@ -310,15 +351,19 @@ public class OrderController implements Initializable {
         dialog.show();
     }
 
+    //Initial method to run on screen start
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //---------------------Button Style--------------------------//
         allOrderButton.setStyle(clickedStyle);
         pendingButton.setStyle(unclickedStyle);
         processingButton.setStyle(unclickedStyle);
         readyButton.setStyle(unclickedStyle);
         receivedButton.setStyle(unclickedStyle);
         cancelledButton.setStyle(unclickedStyle);
-        loadOrderData("All");
+        //---------------------Button Style--------------------------//
+
+        //Load all the user order
         allOrderButtonClicked();
     }
 }

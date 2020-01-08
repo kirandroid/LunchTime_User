@@ -1,3 +1,8 @@
+/**
+ * @Author Kiran Pradhananga
+ * A User data response model which implements an observer to update the necessary fields after the data is changed
+ * */
+
 package com.lunchtime.network.apiObjects.models;
 
 import com.google.gson.annotations.SerializedName;

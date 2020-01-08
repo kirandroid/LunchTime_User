@@ -1,7 +1,7 @@
 /**
  * @author Kiran Pradhan
  * A Base Model which helps reduce repeating codes. This base response is what the root response of every API calls.
- * */
+ */
 
 package com.lunchtime.network.apiObjects;
 

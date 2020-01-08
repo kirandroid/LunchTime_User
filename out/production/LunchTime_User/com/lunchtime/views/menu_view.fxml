@@ -10,7 +10,7 @@
    <BorderPane prefHeight="200.0" prefWidth="200.0">
       <center>
          <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="557.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
-            <JFXMasonryPane fx:id="testMasonryPane" HSpacing="10" VSpacing="10">
+            <JFXMasonryPane fx:id="testMasonryPane" HSpacing="10.0" VSpacing="10.0">
                <padding>
                   <Insets bottom="16" left="16" right="16" top="16" />
                </padding>

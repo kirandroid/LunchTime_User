@@ -4,11 +4,12 @@
  * A refresh button triggers event that will fetch user detail and updates the user observer.
  * An update request is called which updates the user table with the given user information.
  * A image upload api is called when user adds a profile picture.
- * */
+ */
 
 package com.lunchtime.controllers;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -25,9 +26,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -61,6 +65,7 @@ public class ProfileController implements Initializable {
     private boolean emailIsValid = true;
     private boolean phoneIsEmpty = false;
     private boolean phoneIsValid = true;
+    AnchorPane loadingHUD;
 
 
     final FileChooser fileChooser = new FileChooser();
@@ -79,43 +84,15 @@ public class ProfileController implements Initializable {
     private JFXTextField email_field;
 
     @FXML
-    private JFXPasswordField password_field;
-
-    @FXML
     private JFXTextField phone_field;
 
     @FXML
     private Circle profilePictureView;
 
     @FXML
-    private Circle addPictureView;
+    private StackPane circleAddButtonStackPane;
 
-
-    @FXML
-    void onRefreshClicked(ActionEvent event) {
-        NetworkManager.getInstance().UserDetail(LoginController.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
-            @Override
-            public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
-                Platform.runLater(() -> {
-                    User userDetailResponse = userWrapperApiBaseResponse.getData().getUser();
-                    List<User> users = new ArrayList<>();
-                    users.add(new User(userDetailResponse.getId(), userDetailResponse.getFirst_name(), userDetailResponse.getLast_name(), userDetailResponse.getEmail(), userDetailResponse.getPhone_number(), userDetailResponse.getPicture(), userDetailResponse.getBalance()));
-                    UserObservable userObservable = new UserObservable();
-
-                    for (User user: users){
-                        userObservable.addObserver(user);
-                    }
-                    userObservable.UserObservable();
-                });
-            }
-
-            @Override
-            public void onError() {
-                System.out.println("Error");
-            }
-        });
-    }
-
+    //Open File chooser with picture format filter
     @FXML
     void selectPictureClicked(MouseEvent event) throws MalformedURLException {
         fileChooser.getExtensionFilters().addAll(
@@ -131,10 +108,21 @@ public class ProfileController implements Initializable {
         }
     }
 
+    //Update profile method
     @FXML
     void update_button_clicked(ActionEvent event) throws NoSuchAlgorithmException {
+        //Create a loading HUD when this fuction runs.
+        loadingHUD = new AnchorPane();
+        JFXSpinner jfxSpinner = new JFXSpinner();
+        jfxSpinner.setLayoutX(375);
+        jfxSpinner.setLayoutY(260);
+        loadingHUD.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6)");
+        loadingHUD.getChildren().add(jfxSpinner);
+        profilePane.getChildren().add(loadingHUD);
 
-        if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !phoneIsEmpty && emailIsValid && phoneIsValid && file != null){
+        //Check the validators
+        if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !phoneIsEmpty && emailIsValid && phoneIsValid && file != null) {
+            //------------------For creating the signature for using in api---------------------//
             long timestamp = System.currentTimeMillis();
             String apiKey = "588753441842251";
             String eager = "w_400,h_400,c_pad";
@@ -142,31 +130,36 @@ public class ProfileController implements Initializable {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             messageDigest.update(("eager=w_400,h_400,c_pad&public_id=" + publicId + "&timestamp=" + timestamp + "oWEOZ2sxuB2cpixDPaa6XhLS23E").getBytes());
             String signature = DatatypeConverter.printHexBinary(messageDigest.digest());
+            //------------------For creating the signature for using in api---------------------//
 
-
+            //Create a multipart builder for the request body
             MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-            builder.addFormDataPart("timestamp", String.valueOf(timestamp))
-                    .addFormDataPart("public_id", publicId)
-                    .addFormDataPart("api_key", apiKey)
-                    .addFormDataPart("eager", eager)
-                    .addFormDataPart("signature", signature)
-                    .addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
+            builder.addFormDataPart("timestamp", String.valueOf(timestamp))//Timestamp used when creating the signature
+                    .addFormDataPart("public_id", publicId)//Unique name for the upload file so that it will not override the existing file in the server
+                    .addFormDataPart("api_key", apiKey)//Unique API Key provided by the API provider.
+                    .addFormDataPart("eager", eager) //Custom Dimension file the request in the response for smaller file sizes
+                    .addFormDataPart("signature", signature) //Unique signature for upload
+                    .addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file)); //Picture file
 
             RequestBody requestBody = builder.build();
 
-
+            //Run the Upload Api with the request body
             Call<UploadResponse> call = UploadAPI.apiService.upload(requestBody);
             call.enqueue(new Callback<UploadResponse>() {
                 @Override
                 public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
-
+                    //if the picture upload is successful run the update method with the picture parameter which is the response gotten from the upload API
                     UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), LoginController.userId, response.body().getEager().get(0).getSecureUrl());
 
                     NetworkManager.getInstance().Update(updateProfileRequest, new NetworkResponseListener<ApiBaseResponse>() {
                         @Override
                         public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                            //if update is successful
                             Platform.runLater(
                                     () -> {
+                                        //remove loading HUD
+                                        profilePane.getChildren().remove(loadingHUD);
+                                        //show success dialog
                                         JFXDialogLayout content = new JFXDialogLayout();
                                         content.setHeading(new Text("Success"));
                                         content.setBody(new Text("Profile Successfully Updated"));
@@ -175,15 +168,14 @@ public class ProfileController implements Initializable {
 
                                         button.setOnAction(event -> dialog.close());
                                         content.setActions(button);
-
                                         dialog.show();
 
-
+                                        //Feed the new data to the user observable
                                         List<User> users = new ArrayList<>();
                                         users.add(new User(LoginController.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), response.body().getEager().get(0).getSecureUrl(), LoginController.balance));
                                         UserObservable userObservable = new UserObservable();
 
-                                        for (User user: users){
+                                        for (User user : users) {
                                             userObservable.addObserver(user);
                                         }
                                         userObservable.UserObservable();
@@ -194,6 +186,9 @@ public class ProfileController implements Initializable {
                         @Override
                         public void onError() {
                             Platform.runLater(() -> {
+                                //remove loading HUD
+                                profilePane.getChildren().remove(loadingHUD);
+                                //show error dialog
                                 JFXDialogLayout content = new JFXDialogLayout();
                                 content.setHeading(new Text("Error"));
                                 content.setBody(new Text("Email Already Used"));
@@ -211,13 +206,15 @@ public class ProfileController implements Initializable {
 
                 @Override
                 public void onFailure(Call<UploadResponse> call, Throwable throwable) {
+                    //remove loading HUD
+                    profilePane.getChildren().remove(loadingHUD);
                     System.out.println(throwable);
                     System.out.println("Error");
                 }
             });
 
-        }else{
-
+        } else {
+            //if file is null update as it is with the existing data
             UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), LoginController.userId, LoginController.picture);
 
             NetworkManager.getInstance().Update(updateProfileRequest, new NetworkResponseListener<ApiBaseResponse>() {
@@ -225,6 +222,7 @@ public class ProfileController implements Initializable {
                 public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
                     Platform.runLater(
                             () -> {
+                                profilePane.getChildren().remove(loadingHUD);
                                 JFXDialogLayout content = new JFXDialogLayout();
                                 content.setHeading(new Text("Success"));
                                 content.setBody(new Text("Profile Successfully Updated"));
@@ -240,7 +238,7 @@ public class ProfileController implements Initializable {
                                 users.add(new User(LoginController.userId, first_name_field.getText(), last_name_field.getText(), email_field.getText(), phone_field.getText(), LoginController.picture, LoginController.balance));
                                 UserObservable userObservable = new UserObservable();
 
-                                for (User user: users){
+                                for (User user : users) {
                                     userObservable.addObserver(user);
                                 }
                                 userObservable.UserObservable();
@@ -251,6 +249,7 @@ public class ProfileController implements Initializable {
                 @Override
                 public void onError() {
                     Platform.runLater(() -> {
+                        profilePane.getChildren().remove(loadingHUD);
                         JFXDialogLayout content = new JFXDialogLayout();
                         content.setHeading(new Text("Error"));
                         content.setBody(new Text("Email Already Used"));
@@ -270,16 +269,55 @@ public class ProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // create a Add picure button in the picture field
+        JFXButton addButton = new JFXButton("");
+        addButton.setButtonType(JFXButton.ButtonType.RAISED);
+        addButton.setStyle("-fx-background-radius: 40;-fx-background-color: #db0f4b");
+        addButton.setPrefSize(26, 26);
+
+        // Add an SVG for a select button
+        SVGGlyph glyph = new SVGGlyph(-1,
+                "AddIcon",
+                "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
+                Color.WHITE);
+        glyph.setSize(10, 10);
+        addButton.setGraphic(glyph);
+        circleAddButtonStackPane.setAlignment(Pos.BOTTOM_RIGHT);
+        circleAddButtonStackPane.getChildren().addAll(addButton);
+
+        addButton.setOnAction(param -> {
+            //Open a file chooser window with picture filter
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files",
+                            "*.png", "*.jpg"));
+            file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                //save the file in a variable
+                String imagePath = null;
+                try {
+                    imagePath = file.toURI().toURL().toString();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                //Update the picture view with the file path
+                profilePictureView.setFill(new ImagePattern(new Image(imagePath)));
+
+            } else {
+                System.out.println("Error");
+            }
+        });
+
         fieldValidators();
         Platform.runLater(() -> {
             Image image = null;
-            try{
+            try {
                 URL url = new URL(LoginController.picture);
                 URLConnection connection = url.openConnection();
                 InputStream inputStream = connection.getInputStream();
                 image = new Image(inputStream);
 
-            }catch (IOException e){
+            } catch (IOException e) {
                 image = new Image(new File("src/com/lunchtime/assets/image/defaultUser.png").toURI().toString());
                 e.printStackTrace();
             }
@@ -292,7 +330,7 @@ public class ProfileController implements Initializable {
     }
 
 
-    private void fieldValidators(){
+    private void fieldValidators() {
 
         //Field Required validator for firstName
         RequiredFieldValidator firstNameRequiredFieldValidator = new RequiredFieldValidator();
@@ -369,26 +407,6 @@ public class ProfileController implements Initializable {
         });
         phone_field.textProperty().addListener((observable, oldValue, newValue) -> phone_field.validate());
 
-
-        //Field Required validator for password
-//        RequiredFieldValidator passwordRequiredFieldValidator = new RequiredFieldValidator();
-//        password_field.getValidators().add(passwordRequiredFieldValidator);
-//        passwordRequiredFieldValidator.setMessage("Please enter a password!");
-//        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (!newValue) {
-//                if (password_field.validate()) {
-//                    System.out.println("Password not empty");
-//                    passwordIsEmpty = false;
-//                } else {
-//                    System.out.println("Password empty");
-//                    passwordIsEmpty = true;
-//                }
-//            }
-//        });
-//        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
-
-//----------------------------------------------------------------------------------------------------------------------------------//
-
 //        //Email Validator
         RegexValidator emailValidator = new RegexValidator();
         emailValidator.setRegexPattern("^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -424,25 +442,6 @@ public class ProfileController implements Initializable {
             }
         });
         phone_field.textProperty().addListener((observable, oldValue, newValue) -> phone_field.validate());
-
-//        //Password Validator
-//        RegexValidator passwordValidator = new RegexValidator();
-//        passwordValidator.setRegexPattern("^.{8,}$");
-//        password_field.setValidators(passwordValidator);
-//        passwordValidator.setMessage("Password should be atleast 8 characters long!");
-//        password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (!newValue) {
-//                if (password_field.validate()) {
-//                    System.out.println("Password valid");
-//                    passwordIsValid = true;
-//                } else {
-//                    System.out.println("Password not valid");
-//                    passwordIsValid = false;
-//                }
-//            }
-//        });
-//        password_field.textProperty().addListener((observable, oldValue, newValue) -> password_field.validate());
-
 
 //        //Phone length Validator
         RegexValidator phoneLengthValidator = new RegexValidator();

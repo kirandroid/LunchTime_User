@@ -1,6 +1,5 @@
 package com.lunchtime.network.apiObjects.wrappers;
 
-import com.lunchtime.network.apiObjects.models.Menu;
 import com.lunchtime.network.apiObjects.models.MyOrder;
 
 import java.util.List;

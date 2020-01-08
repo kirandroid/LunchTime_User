@@ -97,6 +97,29 @@
 }
 
 
+.minimizeButton{
+    -fx-background-color: #84DCC6;
+    -fx-text-fill: black;
+}
+
+
+.minimizeButton:hover{
+    -fx-background-color: #A5FFD6;
+}
+
+
+.refreshButton{
+    -fx-background-color: #52AA5E;
+    -fx-text-fill: white;
+}
+
+
+.refreshButton:hover{
+    -fx-background-color: #325E41;
+}
+
+
+
 .dateSelectButton{
     -fx-background-color: #E33D6C;
     -fx-text-fill: white;

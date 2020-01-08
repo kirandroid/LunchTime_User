@@ -1,3 +1,8 @@
+/**
+ * @Author Kiran Pradhananga
+ * Request model for user registration
+ */
+
 package com.lunchtime.network.apiObjects.requests;
 
 import com.google.gson.annotations.SerializedName;

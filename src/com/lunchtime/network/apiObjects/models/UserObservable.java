@@ -1,3 +1,8 @@
+/**
+ * @Author Kiran Pradhananga
+ * Observable for the User data to notify observers and setting any changes
+ * */
+
 package com.lunchtime.network.apiObjects.models;
 
 import java.util.Observable;

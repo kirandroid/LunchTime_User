@@ -14,34 +14,35 @@
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="login_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.LoginController">
-   <children>
-      <MediaView fx:id="loginVideoPlayer" fitHeight="600.0" fitWidth="500.0" preserveRatio="false" StackPane.alignment="CENTER_LEFT" />
-      <AnchorPane prefHeight="600.0" prefWidth="1000.0">
-         <children>
-            <Pane layoutX="572.0" layoutY="164.0" prefHeight="367.0" prefWidth="357.0" style="-fx-background-color: white; -fx-background-radius: 10;">
-               <children>
-                  <JFXButton cancelButton="true" layoutX="191.0" layoutY="305.0" onAction="#register_button_clicked" prefHeight="42.0" prefWidth="129.0" ripplerFill="#e7d400" style="-fx-background-color: #db0f4b;" text="REGISTER" textFill="WHITE" />
-                  <JFXTextField fx:id="email_field" focusColor="#b8a900" focusTraversable="false" labelFloat="true" layoutX="37.0" layoutY="87.0" prefHeight="33.0" prefWidth="283.0" promptText="Email" unFocusColor="BLACK" />
-                  <JFXPasswordField fx:id="password_field" focusColor="#b8a900" labelFloat="true" layoutX="37.0" layoutY="172.0" prefHeight="33.0" prefWidth="283.0" promptText="Password" unFocusColor="BLACK" />
-                  <JFXButton cancelButton="true" layoutX="37.0" layoutY="242.0" onAction="#login_button_clicked" prefHeight="42.0" prefWidth="283.0" ripplerFill="#d03f3f" style="-fx-background-color: transparent; -fx-border-width: 0.5; -fx-border-color: black;" text="LOGIN" />
-                  <Label layoutX="37.0" layoutY="318.0" text="Don't have an account?" />
-               </children>
-               <effect>
-                  <DropShadow color="#ddddddcc" height="38.55" radius="21.0" spread="0.63" width="47.45" />
-               </effect>
-            </Pane>
-            <JFXButton layoutX="949.0" onAction="#closeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="logoutButton" text="CLOSE" textFill="WHITE" />
-            <ImageView fitHeight="101.0" fitWidth="98.0" layoutX="578.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/image/logo.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="667.0" layoutY="47.0" text="LunchTime">
-               <font>
-                  <Font name="System Bold" size="46.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-   </children>
+    <children>
+        <MediaView fx:id="loginVideoPlayer" fitHeight="600.0" fitWidth="500.0" preserveRatio="false" StackPane.alignment="CENTER_LEFT" />
+        <AnchorPane prefHeight="600.0" prefWidth="1000.0">
+            <children>
+                <Pane layoutX="572.0" layoutY="164.0" prefHeight="367.0" prefWidth="357.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                    <children>
+                        <JFXButton cancelButton="true" layoutX="191.0" layoutY="305.0" onAction="#register_button_clicked" prefHeight="42.0" prefWidth="129.0" ripplerFill="#e7d400" style="-fx-background-color: #db0f4b;" text="REGISTER" textFill="WHITE" />
+                        <JFXTextField fx:id="email_field" focusColor="#b8a900" focusTraversable="false" labelFloat="true" layoutX="37.0" layoutY="87.0" prefHeight="33.0" prefWidth="283.0" promptText="Email" unFocusColor="BLACK" />
+                        <JFXPasswordField fx:id="password_field" focusColor="#b8a900" labelFloat="true" layoutX="37.0" layoutY="172.0" prefHeight="33.0" prefWidth="283.0" promptText="Password" unFocusColor="BLACK" />
+                        <JFXButton cancelButton="true" layoutX="37.0" layoutY="242.0" onAction="#login_button_clicked" prefHeight="42.0" prefWidth="283.0" ripplerFill="#d03f3f" style="-fx-background-color: transparent; -fx-border-width: 0.5; -fx-border-color: black;" text="LOGIN" />
+                        <Label layoutX="37.0" layoutY="318.0" text="Don't have an account?" />
+                    </children>
+                    <effect>
+                        <DropShadow color="#ddddddcc" height="38.55" radius="21.0" spread="0.63" width="47.45" />
+                    </effect>
+                </Pane>
+                <JFXButton layoutX="949.0" onAction="#closeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="logoutButton" text="CLOSE" textFill="WHITE" />
+                <ImageView fitHeight="101.0" fitWidth="98.0" layoutX="578.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/image/logo.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="667.0" layoutY="47.0" text="LunchTime">
+                    <font>
+                        <Font name="System Bold" size="46.0" />
+                    </font>
+                </Label>
+            <JFXButton layoutX="879.0" onAction="#minimizeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="minimizeButton" text="MINIMIZE" textFill="WHITE" />
+            </children>
+        </AnchorPane>
+    </children>
 </StackPane>

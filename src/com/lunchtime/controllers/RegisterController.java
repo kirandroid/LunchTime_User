@@ -12,6 +12,7 @@ import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
+import com.lunchtime.Main;
 import com.lunchtime.network.NetworkManager;
 import com.lunchtime.network.NetworkResponseListener;
 import com.lunchtime.network.UploadAPI;
@@ -118,6 +119,13 @@ public class RegisterController implements Initializable {
     void closeButtonClicked(ActionEvent event) {
         System.exit(0);
     }
+
+    //Minimize the window
+    @FXML
+    void minimizeButtonClicked(ActionEvent event) {
+        Main.primaryStage.setIconified(true);
+    }
+
 
     /**
      * Change the scene to login view on login button clicked.
@@ -319,7 +327,7 @@ public class RegisterController implements Initializable {
         fieldValidators();  //initialize the validators
 
         //add and play a video in the register pane
-        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/loginVideo.mp4").toURI().toString()));
         video.setMute(true);
         video.setCycleCount(MediaPlayer.INDEFINITE);
         video.play();

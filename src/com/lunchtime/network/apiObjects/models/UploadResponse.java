@@ -1,3 +1,8 @@
+/**
+ * @Author Kiran Pradhananga
+ * Picture Upload Response model
+ * */
+
 package com.lunchtime.network.apiObjects.models;
 
 import java.util.List;

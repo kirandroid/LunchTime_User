@@ -1,3 +1,8 @@
+/**
+ * @Author Kiran Pradhananga
+ * An order request model
+ * */
+
 package com.lunchtime.network.apiObjects.requests;
 
 import com.google.gson.annotations.SerializedName;

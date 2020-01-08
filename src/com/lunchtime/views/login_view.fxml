@@ -60,6 +60,9 @@
                         <Font name="System Bold" size="46.0"/>
                     </font>
                 </Label>
+                <JFXButton layoutX="879.0" onAction="#minimizeButtonClicked" prefHeight="30.0"
+                           style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="minimizeButton"
+                           text="MINIMIZE" textFill="WHITE"/>
             </children>
         </AnchorPane>
     </children>

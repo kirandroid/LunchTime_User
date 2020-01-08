@@ -1,4 +1,10 @@
+/**
+ * @Author Kiran Pradhananga
+ * This is a part of the Photo upload response model which provides all the dimentions and url of the picture
+ * requested in the API request.
+ */
 package com.lunchtime.network.apiObjects.models;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

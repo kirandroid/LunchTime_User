@@ -1,7 +1,7 @@
 /**
  * @author Kiran Pradhan
  * This class creates a retrofit method which takes a BASE URL of the API. Creates a method that calls the ApiService class methods.
- * */
+ */
 package com.lunchtime.network;
 
 import com.lunchtime.network.apiObjects.ApiBaseResponse;
@@ -33,45 +33,44 @@ public class NetworkManager {
         apiService = new ApiService();
     }
 
-    public static NetworkManager getInstance(){
+    public static NetworkManager getInstance() {
         return instance;
     }
 
-    //Api Call methods
-    public void Login( LoginRequest loginRequest, NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener){
+    //Cleaner Api Call methods
+    public void Login(LoginRequest loginRequest, NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener) {
         apiService.loginApi(listener, api, loginRequest);
     }
 
-    public void Register(RegisterRequest registerRequest, NetworkResponseListener<ApiBaseResponse> listener){
+    public void Register(RegisterRequest registerRequest, NetworkResponseListener<ApiBaseResponse> listener) {
         apiService.registerApi(listener, api, registerRequest);
     }
 
-    public void GetMenu(NetworkResponseListener<ApiBaseResponse<MenuWrapper>> listener){
+    public void GetMenu(NetworkResponseListener<ApiBaseResponse<MenuWrapper>> listener) {
         apiService.fetchMenuApi(listener, api);
     }
 
-    public void Update(UpdateProfileRequest updateProfileRequest, NetworkResponseListener<ApiBaseResponse> listener){
+    public void Update(UpdateProfileRequest updateProfileRequest, NetworkResponseListener<ApiBaseResponse> listener) {
         apiService.updateApi(listener, api, updateProfileRequest);
     }
 
-    public void Order(OrderRequest orderRequest, NetworkResponseListener<ApiBaseResponse> listener){
+    public void Order(OrderRequest orderRequest, NetworkResponseListener<ApiBaseResponse> listener) {
         apiService.orderApi(listener, api, orderRequest);
     }
 
-    public void MyOrder(UserOrderRequest userOrderRequest, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
+    public void MyOrder(UserOrderRequest userOrderRequest, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener) {
         apiService.myOrderApi(listener, api, userOrderRequest);
     }
 
-    public void ExpenseOrder(int id, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener){
+    public void ExpenseOrder(int id, NetworkResponseListener<ApiBaseResponse<OrderWrapper>> listener) {
         apiService.expenseOrderApi(listener, api, id);
     }
 
-    public void UserDetail(int id, NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener){
+    public void UserDetail(int id, NetworkResponseListener<ApiBaseResponse<UserWrapper>> listener) {
         apiService.userDetailApi(listener, api, id);
     }
 
-
-    public void CancelOrder(int id, NetworkResponseListener<ApiBaseResponse> listener){
+    public void CancelOrder(int id, NetworkResponseListener<ApiBaseResponse> listener) {
         apiService.cancelOrderApi(listener, api, id);
     }
 

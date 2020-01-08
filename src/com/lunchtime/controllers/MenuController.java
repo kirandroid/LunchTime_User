@@ -2,7 +2,7 @@
  * @author Kiran Pradhan
  * This controller class creates a dynamic grid view from the fetched menu table.
  * This class also handles the order event.
- * */
+ */
 
 package com.lunchtime.controllers;
 
@@ -57,10 +57,6 @@ public class MenuController implements Initializable {
     private JFXMasonryPane testMasonryPane;
 
     @FXML
-    private ScrollPane scrollPane;
-
-
-    @FXML
     private StackPane menuPane;
 
     //---------------For making the screen draggable-------------
@@ -88,22 +84,18 @@ public class MenuController implements Initializable {
     //---------------For making the screen draggable-------------
 
 
-    @FXML
-    private JFXButton searchButton;
-
-    @FXML
-    private JFXButton refreshButton;
-
-
+    //Method for loading the food menu data
     public void loadData() {
         NetworkManager.getInstance().GetMenu(new NetworkResponseListener<ApiBaseResponse<MenuWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<MenuWrapper> menuWrapperApiBaseResponse) {
-                System.out.println("menu");
+                //If the response is successful
                 Platform.runLater(() -> {
                     final List menu = menuWrapperApiBaseResponse.getData().getMenu();
                     ArrayList<Node> children = new ArrayList<>();
+                    //run a loop with all the response data
                     for (int i = 0; i < menu.size(); i++) {
+                        //----------------------------Menu Item Design Code----------------------------------//
                         StackPane stackPane = new StackPane();
                         double width = 200;
                         stackPane.setPrefWidth(width);
@@ -120,7 +112,6 @@ public class MenuController implements Initializable {
 
                         header.getChildren().add(imageView);
                         String headerColor = "#db0f4b";
-//                        header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + "; -fx-background-image: url( " + menuWrapperApiBaseResponse.getData().getMenu().get(i).getPicture() + ");");
                         header.setStyle("-fx-background-size: cover; -fx-background-radius: 5 5 0 0;" + " -fx-background-color:  " + headerColor + ";");
 
                         VBox.setVgrow(header, Priority.ALWAYS);
@@ -128,13 +119,13 @@ public class MenuController implements Initializable {
 
                         StackPane body = new StackPane();
                         body.setPrefHeight(100);
-                        bodyContent.setPadding(new Insets(20,10,10,10));
+                        bodyContent.setPadding(new Insets(20, 10, 10, 10));
                         foodName.setStyle("-fx-font: 24 arial;");
-                        foodPrice.setPadding(new Insets(10,0,0,0));
+                        foodPrice.setPadding(new Insets(10, 0, 0, 0));
                         foodPrice.setTextFill(Color.web("#85bb65"));
                         foodPrice.setStyle("-fx-font: 24 arial; -fx-font-weight: bold");
                         foodName.setText(menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_name());
-                        foodPrice.setText("Rs. "+menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_price().toString());
+                        foodPrice.setText("Rs. " + menuWrapperApiBaseResponse.getData().getMenu().get(i).getFood_price().toString());
                         bodyContent.getChildren().addAll(foodName, foodPrice);
                         body.getChildren().add(bodyContent);
                         VBox content = new VBox();
@@ -152,7 +143,7 @@ public class MenuController implements Initializable {
                         button.setScaleY(0);
                         int finalI = i;
                         button.setOnAction(param -> {
-                            System.out.println("Clicked" + menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name());
+                            //Load an order dialog
                             loadDialog(menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_name(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_price(), menuWrapperApiBaseResponse.getData().getMenu().get(finalI).getFood_id());
                         });
                         SVGGlyph glyph = new SVGGlyph(-1,
@@ -177,9 +168,9 @@ public class MenuController implements Initializable {
                         animation.setDelay(Duration.millis(100 * i + 1000));
                         animation.play();
                         stackPane.getChildren().addAll(content, button);
-
-
+                        //----------------------------Menu Item Design Code----------------------------------//
                     }
+                    //Add all the menu item in a masonry layout
                     testMasonryPane.getChildren().addAll(children);
                 });
             }
@@ -192,6 +183,7 @@ public class MenuController implements Initializable {
 
     }
 
+    //Order dialog method
     private void loadDialog(String foodName, Integer foodPrice, Integer foodId) {
         VBox vBox = new VBox();
         Label message = new Label();
@@ -210,19 +202,24 @@ public class MenuController implements Initializable {
         content.setActions(cancelButton, orderButton);
         cancelButton.setOnAction(event -> dialog.close());
         orderButton.setOnAction(event -> {
-            if (quantityFieldIsValid && !quantityFieldIsEmpty){
+            //check if the quantity fields are empty and validate
+            if (quantityFieldIsValid && !quantityFieldIsEmpty) {
                 dialog.close();
                 int quantity = Integer.parseInt(quantityField.getText());
                 int totalPrice = quantity * foodPrice;
 
                 JFXDialogLayout errorContent = new JFXDialogLayout();
 
+                //Run a query for the getting the up-to-date user coin amount so that there will be no futher error
                 NetworkManager.getInstance().UserDetail(LoginController.userId, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
                     @Override
                     public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
                         Platform.runLater(() -> {
                             User userDetailResponse = userWrapperApiBaseResponse.getData().getUser();
+
+                            //On response check if the total price is greater that the user coin amount
                             if (totalPrice > userDetailResponse.getBalance()) {
+                                //show an error dialog
                                 errorContent.setHeading(new Text("Error"));
                                 errorContent.setBody(new Text("Insufficient Coins"));
                                 JFXDialog errorDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
@@ -232,6 +229,7 @@ public class MenuController implements Initializable {
                                 errorCancelButton.setOnAction(closeEvent -> errorDialog.close());
                                 errorDialog.show();
                             } else {
+                                //Confirm dialog
                                 errorContent.setHeading(new Text("Place Order"));
                                 errorContent.setBody(new Text("The total price is Rs. " + totalPrice + " for quantity: " + quantity + ". Place the order?"));
                                 JFXDialog confirmDialog = new JFXDialog(menuPane, errorContent, JFXDialog.DialogTransition.CENTER);
@@ -241,12 +239,14 @@ public class MenuController implements Initializable {
 
                                 confirmCancelButton.setOnAction(closeEvent -> confirmDialog.close());
                                 confirmOrderButton.setOnAction(confirmEvent -> {
+                                    //Post an order request
                                     OrderRequest orderRequest = new OrderRequest(LoginController.userId, foodId, quantity, totalPrice);
                                     NetworkManager.getInstance().Order(orderRequest, new NetworkResponseListener<ApiBaseResponse>() {
                                         @Override
                                         public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
                                             confirmDialog.close();
                                             Platform.runLater(() -> {
+                                                //show a success dialog
                                                 JFXDialogLayout orderContent = new JFXDialogLayout();
                                                 orderContent.setHeading(new Text("Success"));
                                                 orderContent.setBody(new Text("Order Placed!"));
@@ -256,15 +256,17 @@ public class MenuController implements Initializable {
 
                                                 orderCancelButton.setOnAction(closeEvent -> {
 
+                                                    //Update the user data observable to show the changes, so that we don't have to manually refresh
                                                     List<User> users = new ArrayList<>();
                                                     users.add(new User(userDetailResponse.getId(), userDetailResponse.getFirst_name(), userDetailResponse.getLast_name(), userDetailResponse.getEmail(), userDetailResponse.getPhone_number(), userDetailResponse.getPicture(), userDetailResponse.getBalance() - totalPrice));
                                                     UserObservable userObservable = new UserObservable();
 
-                                                    for (User user: users){
+                                                    for (User user : users) {
                                                         userObservable.addObserver(user);
                                                     }
                                                     userObservable.UserObservable();
-                                                    orderDialog.close();});
+                                                    orderDialog.close();
+                                                });
                                                 orderDialog.show();
                                             });
 
@@ -293,7 +295,6 @@ public class MenuController implements Initializable {
         dialog.show();
 
 
-        //-----------------------------------------------------------------------------------------------------------------//
         //--------Validators-----------//
 
         //Field Required validator for quantity
@@ -335,6 +336,7 @@ public class MenuController implements Initializable {
 
     }
 
+    //Runs at the start of the screen
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadData();

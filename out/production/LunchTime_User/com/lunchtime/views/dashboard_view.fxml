@@ -8,8 +8,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.Label?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Label?>
 <StackPane fx:id="dashboardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.DashboardController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
@@ -111,7 +111,17 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0">
                            <children>
-                              <JFXButton onAction="#closeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="logoutButton" text="CLOSE" textFill="WHITE" />
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXButton fx:id="refreshButton" onAction="#refreshButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="refreshButton" textFill="WHITE" text="REFRESH" />
+                                 </children>
+                              </AnchorPane>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <JFXButton onAction="#minimizeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="minimizeButton" text="MINIMIZE" textFill="WHITE" />
+                                    <JFXButton onAction="#closeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="logoutButton" text="CLOSE" textFill="WHITE" />
+                                 </children>
+                              </HBox>
                            </children>
                         </HBox>
                         <StackPane fx:id="dashboardContentPane" prefHeight="570.0" prefWidth="800.0">

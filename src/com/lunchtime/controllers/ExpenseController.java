@@ -1,7 +1,7 @@
 /**
  * @author Kiran Pradhan
  * This controller class fetches the user order whose status is Received and populates the response to a table view. All the Graphs are also updated with the response.
- * */
+ */
 
 package com.lunchtime.controllers;
 
@@ -44,7 +44,6 @@ public class ExpenseController implements Initializable {
     int totalMoney = 0;
     int totalFood = 0;
 
-
     @FXML
     private Label totalFoodOrderLabel;
 
@@ -63,21 +62,26 @@ public class ExpenseController implements Initializable {
     ObservableList<Order> orders = FXCollections.observableArrayList();
 
 
+    //Button method to Load Area chart
     @FXML
     void areaChartButtonClicked(ActionEvent event) {
         loadChart("Area");
     }
 
+    //Button method to Load Bar chart
     @FXML
     void barChartButtonClicked(ActionEvent event) {
         loadChart("Bar");
     }
 
+    //Button method to Load Pie chart
     @FXML
     void pieChartButtonClicked(ActionEvent event) {
         loadChart("Pie");
     }
 
+
+    //Load chart method according to the chart type
     public void loadChart(String chart) {
 
         if (chart == "Area") {
@@ -91,7 +95,6 @@ public class ExpenseController implements Initializable {
             //Creating the Area chart
             AreaChart<String, Integer> areaChart = new AreaChart(xAxis, yAxis);
             areaChart.setAnimated(true);
-//            areaChart.setTitle(duration.equals("All") ? "All Time Expenses" : duration.equals("Week") ? "Expenses During One Week" : "Expenses During One Month");
 
             //Prepare XYChart.Series objects by setting data
             XYChart.Series series1 = new XYChart.Series();
@@ -147,28 +150,32 @@ public class ExpenseController implements Initializable {
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             for (Order order : orders) {
-                pieChartData.addAll(new PieChart.Data(order.getFoodName() , order.getPrice()));
+                pieChartData.addAll(new PieChart.Data(order.getFoodName(), order.getPrice()));
             }
             pieChart.setData(pieChartData);
             pieChart.setPrefWidth(396);
         }
     }
 
+    //Initial Method
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Setup the table view columns
         dateColumn.setCellValueFactory(param -> param.getValue().getValue().date);
         foodNameColumn.setCellValueFactory(param -> param.getValue().getValue().foodName);
         foodPriceColumn.setCellValueFactory(param -> param.getValue().getValue().price.asString());
 
+        //Request all the expense data of the user
         NetworkManager.getInstance().ExpenseOrder(LoginController.userId, new NetworkResponseListener<ApiBaseResponse<OrderWrapper>>() {
             @Override
             public void onResponseReceived(ApiBaseResponse<OrderWrapper> orderWrapperApiBaseResponse) {
                 for (int i = 0; i < orderWrapperApiBaseResponse.getData().getOrder().size(); i++) {
                     MyOrder myOrder = orderWrapperApiBaseResponse.getData().getOrder().get(i);
-//                    Timestamp timestamp = new Timestamp(myOrder.getDate());
-//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, MMM dd yyyy");
-//                    String date = simpleDateFormat.format(timestamp);
+
+                    //Add all the user orders in a local list
                     orders.add(new Order(myOrder.getDate(), myOrder.getFood_name(), myOrder.getTotal_price()));
+
+                    //setup other information for showing in a label later
                     totalFood = orderWrapperApiBaseResponse.getData().getOrder().size();
                     totalMoney = myOrder.getTotal_price() + totalMoney;
                 }
@@ -181,11 +188,16 @@ public class ExpenseController implements Initializable {
         });
 
         Platform.runLater(() -> {
+            //Setup the table from the local order list
             final TreeItem<Order> root = new RecursiveTreeItem<>(orders, RecursiveTreeObject::getChildren);
             expenseTableView.setRoot(root);
             expenseTableView.setShowRoot(false);
+
+            //Setup the texts to show the total expenses and total order
             totalMoneyLabel.setText(String.valueOf(totalMoney));
             totalFoodOrderLabel.setText(String.valueOf(totalFood));
+
+            //Load initial chart
             loadChart("Area");
         });
 

@@ -51,14 +51,17 @@
                         </StackPane>
                     </children>
                 </AnchorPane>
-                <StackPane alignment="TOP_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <MediaView fx:id="registerVideoPlayer" fitHeight="600.0" fitWidth="500.0"/>
-                        <JFXButton onAction="#closeButtonClicked" prefHeight="30.0"
+                        <JFXButton layoutX="450.0" onAction="#closeButtonClicked" prefHeight="30.0"
                                    style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="logoutButton"
                                    text="CLOSE" textFill="WHITE"/>
+                        <JFXButton layoutX="380.0" onAction="#minimizeButtonClicked" prefHeight="30.0"
+                                   style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="minimizeButton"
+                                   text="MINIMIZE" textFill="WHITE"/>
                     </children>
-                </StackPane>
+                </AnchorPane>
             </children>
         </HBox>
     </children>

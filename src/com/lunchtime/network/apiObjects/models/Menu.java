@@ -1,3 +1,8 @@
+/**
+ * @Author Kiran Pradhananga
+ * Food Menu Response Model
+ * */
+
 package com.lunchtime.network.apiObjects.models;
 
 import com.google.gson.annotations.SerializedName;

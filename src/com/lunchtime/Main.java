@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Main extends Application {
+    public static Stage primaryStage = null;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("views/login_view.fxml"));
@@ -16,6 +18,7 @@ public class Main extends Application {
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED); //Borderless window
+        Main.primaryStage = primaryStage;
         primaryStage.show();
     }
 
