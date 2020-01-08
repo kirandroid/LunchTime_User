@@ -16,5 +16,6 @@
     <orderEntry type="library" name="fontawesomefx-8.9" level="project" />
     <orderEntry type="library" name="java-uuid-generator-3.1.4" level="project" />
     <orderEntry type="library" name="com.cloudinary:cloudinary:1.0.14" level="project" />
+    <orderEntry type="library" name="de.jensd:fontawesomefx:8.9" level="project" />
   </component>
 </module>

@@ -9,6 +9,8 @@ package com.lunchtime.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,18 +66,6 @@ public class dashboard_controller implements Initializable {
     private StackPane dashboardPane;
 
     @FXML
-    private AnchorPane homePaneButton;
-
-    @FXML
-    private AnchorPane menuPaneButton;
-
-    @FXML
-    private AnchorPane orderPaneButton;
-
-    @FXML
-    private AnchorPane expensePaneButton;
-
-    @FXML
     private StackPane dashboardContentPane;
 
     @FXML
@@ -94,40 +84,152 @@ public class dashboard_controller implements Initializable {
     public static Circle profilePicture;
 
 
+    //-------------------------------------------------
+
+    String activeBtnBG = "-fx-background-color: #db0f4b;";
+    String activeBtnIcon = "-fx-fill: #FFF";
+    String activeBtntxt = "-fx-text-fill: #FFF";
+
+    String inactiveBtnBG = "-fx-background-color: #FFF;";
+    String inactiveBtntxt = "-fx-text-fill: #000";
+    String inactiveBtnIcon = "-fx-fill: #000";
+
+    @FXML
+    private HBox homePaneButtonPane;
+
+    @FXML
+    private MaterialDesignIconView homePaneButtonIcon;
+
+    @FXML
+    private Label homePaneButtonText;
+
+    @FXML
+    private HBox menuPaneButtonPane;
+
+    @FXML
+    private MaterialDesignIconView menuPaneButtonIcon;
+
+    @FXML
+    private Label menuPaneButtonText;
+
+    @FXML
+    private HBox orderPaneButtonPane;
+
+    @FXML
+    private MaterialDesignIconView orderPaneButtonIcon;
+
+    @FXML
+    private Label orderPaneButtonText;
+
+    @FXML
+    private HBox expensePaneButtonPane;
+
+    @FXML
+    private MaterialDesignIconView expensePaneButtonIcon;
+
+    @FXML
+    private Label expensePaneButtonText;
+
+
+    @FXML
+    void homePaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/home_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
+
+        homePaneButtonPane.setStyle(activeBtnBG);
+        homePaneButtonIcon.setStyle(activeBtnIcon);
+        homePaneButtonText.setStyle(activeBtntxt);
+
+        menuPaneButtonPane.setStyle(inactiveBtnBG);
+        menuPaneButtonIcon.setStyle(inactiveBtnIcon);
+        menuPaneButtonText.setStyle(inactiveBtntxt);
+
+        orderPaneButtonPane.setStyle(inactiveBtnBG);
+        orderPaneButtonIcon.setStyle(inactiveBtnIcon);
+        orderPaneButtonText.setStyle(inactiveBtntxt);
+
+        expensePaneButtonPane.setStyle(inactiveBtnBG);
+        expensePaneButtonIcon.setStyle(inactiveBtnIcon);
+        expensePaneButtonText.setStyle(inactiveBtntxt);
+    }
+
+    @FXML
+    void menuPaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/menu_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
+        homePaneButtonPane.setStyle(inactiveBtnBG);
+        homePaneButtonIcon.setStyle(inactiveBtnIcon);
+        homePaneButtonText.setStyle(inactiveBtntxt);
+
+        menuPaneButtonPane.setStyle(activeBtnBG);
+        menuPaneButtonIcon.setStyle(activeBtnIcon);
+        menuPaneButtonText.setStyle(activeBtntxt);
+
+        orderPaneButtonPane.setStyle(inactiveBtnBG);
+        orderPaneButtonIcon.setStyle(inactiveBtnIcon);
+        orderPaneButtonText.setStyle(inactiveBtntxt);
+
+        expensePaneButtonPane.setStyle(inactiveBtnBG);
+        expensePaneButtonIcon.setStyle(inactiveBtnIcon);
+        expensePaneButtonText.setStyle(inactiveBtntxt);
+    }
+
+    @FXML
+    void orderPaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/order_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
+
+        homePaneButtonPane.setStyle(inactiveBtnBG);
+        homePaneButtonIcon.setStyle(inactiveBtnIcon);
+        homePaneButtonText.setStyle(inactiveBtntxt);
+
+        menuPaneButtonPane.setStyle(inactiveBtnBG);
+        menuPaneButtonIcon.setStyle(inactiveBtnIcon);
+        menuPaneButtonText.setStyle(inactiveBtntxt);
+
+        orderPaneButtonPane.setStyle(activeBtnBG);
+        orderPaneButtonIcon.setStyle(activeBtnIcon);
+        orderPaneButtonText.setStyle(activeBtntxt);
+
+        expensePaneButtonPane.setStyle(inactiveBtnBG);
+        expensePaneButtonIcon.setStyle(inactiveBtnIcon);
+        expensePaneButtonText.setStyle(inactiveBtntxt);
+    }
+
+    @FXML
+    void expensePaneButtonClicked(MouseEvent event) throws IOException {
+        StackPane pane = FXMLLoader.load(getClass().getResource("../views/expense_view.fxml"));
+        dashboardContentPane.getChildren().setAll(pane);
+        homePaneButtonPane.setStyle(inactiveBtnBG);
+        homePaneButtonIcon.setStyle(inactiveBtnIcon);
+        homePaneButtonText.setStyle(inactiveBtntxt);
+
+        menuPaneButtonPane.setStyle(inactiveBtnBG);
+        menuPaneButtonIcon.setStyle(inactiveBtnIcon);
+        menuPaneButtonText.setStyle(inactiveBtntxt);
+
+        orderPaneButtonPane.setStyle(inactiveBtnBG);
+        orderPaneButtonIcon.setStyle(inactiveBtnIcon);
+        orderPaneButtonText.setStyle(inactiveBtntxt);
+
+        expensePaneButtonPane.setStyle(activeBtnBG);
+        expensePaneButtonIcon.setStyle(activeBtnIcon);
+        expensePaneButtonText.setStyle(activeBtntxt);
+    }
+
+//---------------------------------------------------------
+
+
     //Exits the application
     @FXML
     void closeButtonClicked(ActionEvent event) {
         System.exit(0);
     }
 
-    @FXML
-    void expensePaneButtonClicked(ActionEvent event) throws IOException {
-        StackPane pane = FXMLLoader.load(getClass().getResource("../views/expense_view.fxml"));
-        dashboardContentPane.getChildren().setAll(pane);
-    }
-
-    @FXML
-    void homePaneButtonClicked(ActionEvent event) throws IOException {
-        StackPane pane = FXMLLoader.load(getClass().getResource("../views/home_view.fxml"));
-        dashboardContentPane.getChildren().setAll(pane);
-    }
-
-
-    @FXML
-    void menuPaneButtonClicked(ActionEvent event) throws IOException {
-        StackPane pane = FXMLLoader.load(getClass().getResource("../views/menu_view.fxml"));
-        dashboardContentPane.getChildren().setAll(pane);
-    }
-
-    @FXML
-    void orderPaneButtonClicked(ActionEvent event) throws IOException {
-        StackPane pane = FXMLLoader.load(getClass().getResource("../views/order_view.fxml"));
-        dashboardContentPane.getChildren().setAll(pane);
-    }
-
     //Shows confirmation dialog and Logout the user and change view to login screen.
     @FXML
     void logOutPaneButtonClicked(ActionEvent event) throws IOException {
+//        MaterialDesignIcon.CASH
         Platform.runLater(() -> {
             JFXDialogLayout logoutContent = new JFXDialogLayout();
             logoutContent.setHeading(new Text("Logout from the system?"));
@@ -160,6 +262,24 @@ public class dashboard_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        homePaneButtonPane.setStyle(activeBtnBG);
+        homePaneButtonIcon.setStyle(activeBtnIcon);
+        homePaneButtonText.setStyle(activeBtntxt);
+
+        menuPaneButtonPane.setStyle(inactiveBtnBG);
+        menuPaneButtonIcon.setStyle(inactiveBtnIcon);
+        menuPaneButtonText.setStyle(inactiveBtntxt);
+
+        orderPaneButtonPane.setStyle(inactiveBtnBG);
+        orderPaneButtonIcon.setStyle(inactiveBtnIcon);
+        orderPaneButtonText.setStyle(inactiveBtntxt);
+
+        expensePaneButtonPane.setStyle(inactiveBtnBG);
+        expensePaneButtonIcon.setStyle(inactiveBtnIcon);
+        expensePaneButtonText.setStyle(inactiveBtntxt);
+
+
         Platform.runLater(() -> {
             userNameLabel.setFont(new Font(15));
             userBalanceLabel.setFont(new Font(15));
