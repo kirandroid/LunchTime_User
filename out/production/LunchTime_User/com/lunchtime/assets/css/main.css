@@ -1,172 +1,172 @@
 .jfx-snackbar-content {
     -fx-background-color: #323232;
 }
+
 .jfx-snackbar-toast {
     -fx-text-fill: WHITE;
 }
+
 .jfx-snackbar-action {
     -fx-text-fill: #ff4081;
 }
 
-.jfx-list-cell:selected{
+.jfx-list-cell:selected {
     -fx-background-color: #3d8c91;
 }
 
-.jfx-list-cell{
+.jfx-list-cell {
     -fx-background-insets: 0.0;
 }
 
-.jfx-list-cell .jfx-rippler{
+.jfx-list-cell .jfx-rippler {
     -fx-rippler-fill: BLUE;
 }
 
-.jfx-list-cell:hover{
+.jfx-list-cell:hover {
     -fx-background-color: #1bd79c;
 }
 
-.jfx-list-view{
+.jfx-list-view {
     -fx-background-insets: 0;
-    -fx-cell-vertical-margin:50px;
-    -fx-vertical-gap:50px;
-    -fx-pref-width:600;
+    -fx-cell-vertical-margin: 50px;
+    -fx-vertical-gap: 50px;
+    -fx-pref-width: 600;
 }
 
 
 /*TablPane styling*/
-.tab{
+.tab {
     -fx-background-color: orange;
 }
 
-.tab-header-background{
+.tab-header-background {
     -fx-background-color: orange;
 }
 
-.tab-label{
+.tab-label {
     -fx-text-fill: white;
     -fx-font-size: 16pt;
 }
 
 
-.tab-main{
-    -fx-pref-height : 80;
-    -fx-max-height : 80;
+.tab-main {
+    -fx-pref-height: 80;
+    -fx-max-height: 80;
 }
-.menuButton{
+
+.menuButton {
     -fx-background-color: #fff;
 }
 
-.menuButton:hover{
+.menuButton:hover {
     -fx-background-color: #DB0F4B;
     -fx-text-fill: white;
 }
 
-.menuButton:focused{
+.menuButton:focused {
     -fx-background-color: #DB0F4B;
     -fx-text-fill: white;
 }
 
 
-.menuIconButton{
+.menuIconButton {
     -fx-background-color: #A5FFD6;
 }
 
-.menuIconButton:hover{
+.menuIconButton:hover {
     -fx-background-color: #FFF;
 }
 
-.menuIconButton:focused{
+.menuIconButton:focused {
     -fx-background-color: #FFF;
 }
 
-.closeButton{
+.closeButton {
     -fx-background-color: #84DCC6;
 }
 
-.closeButton:hover{
+.closeButton:hover {
     -fx-background-color: #FF686B;
 }
 
-.logoutButton{
+.logoutButton {
     -fx-background-color: #DB0F4B;
     -fx-text-fill: white;
 }
 
 
-.logoutButton:hover{
+.logoutButton:hover {
     -fx-background-color: #FF686B;
 }
 
 
-.minimizeButton{
+.minimizeButton {
     -fx-background-color: #84DCC6;
     -fx-text-fill: black;
 }
 
 
-.minimizeButton:hover{
+.minimizeButton:hover {
     -fx-background-color: #A5FFD6;
 }
 
 
-.refreshButton{
+.refreshButton {
     -fx-background-color: #52AA5E;
     -fx-text-fill: white;
 }
 
 
-.refreshButton:hover{
+.refreshButton:hover {
     -fx-background-color: #325E41;
 }
 
 
-
-.dateSelectButton{
+.dateSelectButton {
     -fx-background-color: #E33D6C;
     -fx-text-fill: white;
 }
 
-.dateSelectButton:hover{
+.dateSelectButton:hover {
     -fx-background-color: #DB0F4B;
     -fx-text-fill: white;
 }
 
-.dateSelectButton:focused{
+.dateSelectButton:focused {
     -fx-background-color: #DB0F4B;
     -fx-text-fill: white;
 }
 
 
-.chartSelectButton{
+.chartSelectButton {
     -fx-background-color: #E33D6C;
     -fx-text-fill: white;
 }
 
-.chartSelectButton:hover{
+.chartSelectButton:hover {
     -fx-background-color: #DB0F4B;
     -fx-text-fill: white;
 }
 
-.chartSelectButton:focused{
+.chartSelectButton:focused {
     -fx-background-color: #DB0F4B;
     -fx-text-fill: white;
 }
-
-
-
 
 
 /*Table View CSS*/
 
-.tree-table-view{
+.tree-table-view {
     -fx-tree-table-color: rgba(0, 150, 0, 0.8);
-    -fx-tree-table-rippler-color : rgba(255, 0, 0, 0.9);
+    -fx-tree-table-rippler-color: rgba(255, 0, 0, 0.9);
 }
+
 .tree-table-view:focused .tree-table-row-cell:selected {
-    -fx-background-color: -fx-tree-table-color  ;
+    -fx-background-color: -fx-tree-table-color;
     -fx-table-cell-border-color: -fx-tree-table-color;
 }
 
-.tree-table-view:focused .tree-table-row-cell:selected .tree-table-cell{
+.tree-table-view:focused .tree-table-row-cell:selected .tree-table-cell {
     -fx-text-fill: white;
 }
 
@@ -174,50 +174,50 @@
     -fx-rippler-fill: -fx-tree-table-rippler-color;
 }
 
-.tree-table-view .column-header ,
+.tree-table-view .column-header,
 .tree-table-view .column-header-background,
-.tree-table-view .column-header-background .filler{
-    -fx-background-color:TRANSPARENT;
+.tree-table-view .column-header-background .filler {
+    -fx-background-color: TRANSPARENT;
 }
 
-.tree-table-view .column-header{
-    -fx-border-width : 0 1 0 1;
+.tree-table-view .column-header {
+    -fx-border-width: 0 1 0 1;
     -fx-border-color: #F3F3F3;
 }
 
 .tree-table-view .column-header .label {
-    -fx-text-fill : #949494;
-    -fx-padding : 16 0 16 0 ;
+    -fx-text-fill: #949494;
+    -fx-padding: 16 0 16 0;
 }
 
-.tree-table-view .column-header .arrow, .tree-table-view .column-header .sort-order-dot{
-    -fx-background-color : #949494;
+.tree-table-view .column-header .arrow, .tree-table-view .column-header .sort-order-dot {
+    -fx-background-color: #949494;
 }
 
 .tree-table-view .column-header:last-visible {
     -fx-border-width: 0 2 0 1;
 }
 
-.tree-table-view .column-header-background{
-    -fx-border-width : 0 0.0 1 0;
-    -fx-border-color:#F3F3F3;
+.tree-table-view .column-header-background {
+    -fx-border-width: 0 0.0 1 0;
+    -fx-border-color: #F3F3F3;
 }
 
-.tree-table-view .tree-table-cell{
-    -fx-border-width:0 0 0 0;
-    -fx-padding : 16 0 16 0 ;
+.tree-table-view .tree-table-cell {
+    -fx-border-width: 0 0 0 0;
+    -fx-padding: 16 0 16 0;
 }
 
-.tree-table-view .column-overlay{
+.tree-table-view .column-overlay {
     -fx-background-color: -fx-tree-table-color;
 }
 
-.tree-table-view .column-resize-line, .tree-table-view .column-drag-header{
+.tree-table-view .column-resize-line, .tree-table-view .column-drag-header {
     -fx-background-color: -fx-tree-table-rippler-color;
 }
 
 .tree-table-view:focused {
-    -fx-background-color: -fx-tree-table-color,-fx-box-border,-fx-control-inner-background;
+    -fx-background-color: -fx-tree-table-color, -fx-box-border, -fx-control-inner-background;
     -fx-background-insets: -1.4, 0, 1;
     -fx-background-radius: 1.4, 0, 0;
     /*....*/
@@ -229,6 +229,7 @@
     -fx-padding: 0.333333em 0.229em 0.333333em 0.229em; /* 4 */
     -fx-shape: "M 0 -3.5 L 4 0 L 0 3.5 z";
 }
-.tree-table-row-cell .jfx-text-field{
-    -fx-focus-color: rgba(240,40,40);
+
+.tree-table-row-cell .jfx-text-field {
+    -fx-focus-color: rgba(240, 40, 40);
 }

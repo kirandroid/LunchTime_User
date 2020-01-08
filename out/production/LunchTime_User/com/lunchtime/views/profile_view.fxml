@@ -6,22 +6,33 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 
-<StackPane fx:id="profilePane" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.ProfileController">
-   <children>
-      <AnchorPane prefHeight="600.0" prefWidth="639.0" StackPane.alignment="CENTER">
-         <children>
-            <JFXTextField fx:id="first_name_field" labelFloat="true" layoutX="93.0" layoutY="245.0" prefHeight="39.0" prefWidth="262.0" promptText="First Name" />
-            <JFXTextField fx:id="last_name_field" labelFloat="true" layoutX="434.0" layoutY="245.0" prefHeight="39.0" prefWidth="270.0" promptText="Last Name" />
-            <JFXTextField fx:id="email_field" labelFloat="true" layoutX="97.0" layoutY="350.0" prefHeight="39.0" prefWidth="262.0" promptText="Email" />
-            <JFXTextField fx:id="phone_field" labelFloat="true" layoutX="434.0" layoutY="350.0" prefHeight="39.0" prefWidth="270.0" promptText="Phone" />
-            <JFXButton buttonType="RAISED" layoutX="269.0" layoutY="470.0" onAction="#update_button_clicked" prefHeight="59.0" prefWidth="262.0" ripplerFill="#4932b9" style="-fx-background-color: #db0f4b;" text="UPDATE" textFill="WHITE" />
-            <StackPane layoutX="318.0" layoutY="32.0" onMouseClicked="#selectPictureClicked" prefHeight="90.0" prefWidth="78.0">
-               <children>
-                  <Circle fx:id="profilePictureView" fill="#bfbfbf" radius="82.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                  <StackPane fx:id="circleAddButtonStackPane" alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="130.0" prefWidth="125.0" />
-               </children>
-            </StackPane>
-         </children>
-      </AnchorPane>
-   </children>
+<StackPane fx:id="profilePane" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.ProfileController">
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="639.0" StackPane.alignment="CENTER">
+            <children>
+                <JFXTextField fx:id="first_name_field" labelFloat="true" layoutX="93.0" layoutY="245.0"
+                              prefHeight="39.0" prefWidth="262.0" promptText="First Name"/>
+                <JFXTextField fx:id="last_name_field" labelFloat="true" layoutX="434.0" layoutY="245.0"
+                              prefHeight="39.0" prefWidth="270.0" promptText="Last Name"/>
+                <JFXTextField fx:id="email_field" labelFloat="true" layoutX="97.0" layoutY="350.0" prefHeight="39.0"
+                              prefWidth="262.0" promptText="Email"/>
+                <JFXTextField fx:id="phone_field" labelFloat="true" layoutX="434.0" layoutY="350.0" prefHeight="39.0"
+                              prefWidth="270.0" promptText="Phone"/>
+                <JFXButton buttonType="RAISED" layoutX="269.0" layoutY="470.0" onAction="#update_button_clicked"
+                           prefHeight="59.0" prefWidth="262.0" ripplerFill="#4932b9"
+                           style="-fx-background-color: #db0f4b;" text="UPDATE" textFill="WHITE"/>
+                <StackPane layoutX="318.0" layoutY="32.0" onMouseClicked="#selectPictureClicked" prefHeight="90.0"
+                           prefWidth="78.0">
+                    <children>
+                        <Circle fx:id="profilePictureView" fill="#bfbfbf" radius="82.0" stroke="BLACK"
+                                strokeType="INSIDE" strokeWidth="0.0"/>
+                        <StackPane fx:id="circleAddButtonStackPane" alignment="BOTTOM_RIGHT"
+                                   nodeOrientation="LEFT_TO_RIGHT" prefHeight="130.0" prefWidth="125.0"/>
+                    </children>
+                </StackPane>
+            </children>
+        </AnchorPane>
+    </children>
 </StackPane>

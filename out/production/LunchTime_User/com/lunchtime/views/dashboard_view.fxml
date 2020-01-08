@@ -10,129 +10,169 @@
 
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.scene.control.Label?>
-<StackPane fx:id="dashboardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lunchtime.controllers.DashboardController">
-   <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
-               <children>
-                  <VBox layoutX="66.0" layoutY="86.0" prefHeight="525.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane onMouseClicked="#profileClicked" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DB0F4B;">
-                           <children>
-                              <Pane layoutY="140.0" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0;">
-                                 <children>
-                                    <HBox fx:id="dashboardUserDetailBox" alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
-                                       <children>
-                                          <HBox fx:id="usernameHbox" alignment="CENTER" prefHeight="60.0" prefWidth="250.0" />
-                                          <HBox fx:id="balanceHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </Pane>
-                              <HBox fx:id="profilePictureHbox" alignment="CENTER" prefHeight="140.0" prefWidth="200.0" />
-                           </children></AnchorPane>
-                        <HBox fx:id="homePaneButtonPane" alignment="CENTER" onMouseClicked="#homePaneButtonClicked" prefHeight="60.0"
-                              prefWidth="203.0" spacing="20.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
-                                 <children>
-                                    <MaterialDesignIconView fx:id="homePaneButtonIcon" glyphName="HOME" size="20" textAlignment="CENTER" />
-                                 </children>
-                              </HBox>
-                              <AnchorPane prefHeight="60.0" prefWidth="140.0">
-                                 <children>
-                                    <Label fx:id="homePaneButtonText" layoutX="14.0" layoutY="22.0" text="HOME" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </HBox>
+<StackPane fx:id="dashboardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           onMouseDragged="#windowDragged" onMousePressed="#windowPressed" onMouseReleased="#windowDraggedDone"
+           prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/css/main.css"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.lunchtime.controllers.DashboardController">
+    <children>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
+                    <children>
+                        <VBox layoutX="66.0" layoutY="86.0" prefHeight="525.0" prefWidth="200.0"
+                              AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane onMouseClicked="#profileClicked" prefHeight="200.0" prefWidth="200.0"
+                                            style="-fx-background-color: #DB0F4B;">
+                                    <children>
+                                        <Pane layoutY="140.0" prefHeight="60.0" prefWidth="200.0"
+                                              style="-fx-background-color: white; -fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0;">
+                                            <children>
+                                                <HBox fx:id="dashboardUserDetailBox" alignment="CENTER"
+                                                      prefHeight="60.0" prefWidth="200.0">
+                                                    <children>
+                                                        <HBox fx:id="usernameHbox" alignment="CENTER" prefHeight="60.0"
+                                                              prefWidth="250.0"/>
+                                                        <HBox fx:id="balanceHbox" alignment="CENTER" prefHeight="100.0"
+                                                              prefWidth="200.0"/>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </Pane>
+                                        <HBox fx:id="profilePictureHbox" alignment="CENTER" prefHeight="140.0"
+                                              prefWidth="200.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <HBox fx:id="homePaneButtonPane" alignment="CENTER"
+                                      onMouseClicked="#homePaneButtonClicked" prefHeight="60.0"
+                                      prefWidth="203.0" spacing="20.0">
+                                    <children>
+                                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
+                                            <children>
+                                                <MaterialDesignIconView fx:id="homePaneButtonIcon" glyphName="HOME"
+                                                                        size="20" textAlignment="CENTER"/>
+                                            </children>
+                                        </HBox>
+                                        <AnchorPane prefHeight="60.0" prefWidth="140.0">
+                                            <children>
+                                                <Label fx:id="homePaneButtonText" layoutX="14.0" layoutY="22.0"
+                                                       text="HOME"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </HBox>
 
 
-                        <HBox fx:id="menuPaneButtonPane" alignment="CENTER" onMouseClicked="#menuPaneButtonClicked" prefHeight="60.0"
-                              prefWidth="203.0" spacing="20.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
-                                 <children>
-                                    <MaterialDesignIconView fx:id="menuPaneButtonIcon" glyphName="MENU" size="20" textAlignment="CENTER" />
-                                 </children>
-                              </HBox>
-                              <AnchorPane prefHeight="60.0" prefWidth="140.0">
-                                 <children>
-                                    <Label fx:id="menuPaneButtonText" layoutX="14.0" layoutY="22.0" text="Food Menu" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </HBox>
+                                <HBox fx:id="menuPaneButtonPane" alignment="CENTER"
+                                      onMouseClicked="#menuPaneButtonClicked" prefHeight="60.0"
+                                      prefWidth="203.0" spacing="20.0">
+                                    <children>
+                                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
+                                            <children>
+                                                <MaterialDesignIconView fx:id="menuPaneButtonIcon" glyphName="MENU"
+                                                                        size="20" textAlignment="CENTER"/>
+                                            </children>
+                                        </HBox>
+                                        <AnchorPane prefHeight="60.0" prefWidth="140.0">
+                                            <children>
+                                                <Label fx:id="menuPaneButtonText" layoutX="14.0" layoutY="22.0"
+                                                       text="Food Menu"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </HBox>
 
-                        <HBox fx:id="orderPaneButtonPane" alignment="CENTER" onMouseClicked="#orderPaneButtonClicked" prefHeight="60.0"
-                              prefWidth="203.0" spacing="20.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
-                                 <children>
-                                    <MaterialDesignIconView fx:id="orderPaneButtonIcon" glyphName="CART_PLUS" size="20" textAlignment="CENTER" />
-                                 </children>
-                              </HBox>
-                              <AnchorPane prefHeight="60.0" prefWidth="140.0">
-                                 <children>
-                                    <Label fx:id="orderPaneButtonText" layoutX="14.0" layoutY="22.0" text="My Orders" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </HBox>
+                                <HBox fx:id="orderPaneButtonPane" alignment="CENTER"
+                                      onMouseClicked="#orderPaneButtonClicked" prefHeight="60.0"
+                                      prefWidth="203.0" spacing="20.0">
+                                    <children>
+                                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
+                                            <children>
+                                                <MaterialDesignIconView fx:id="orderPaneButtonIcon"
+                                                                        glyphName="CART_PLUS" size="20"
+                                                                        textAlignment="CENTER"/>
+                                            </children>
+                                        </HBox>
+                                        <AnchorPane prefHeight="60.0" prefWidth="140.0">
+                                            <children>
+                                                <Label fx:id="orderPaneButtonText" layoutX="14.0" layoutY="22.0"
+                                                       text="My Orders"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </HBox>
 
-                        <HBox fx:id="expensePaneButtonPane" alignment="CENTER" onMouseClicked="#expensePaneButtonClicked" prefHeight="60.0"
-                              prefWidth="203.0" spacing="20.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
-                                 <children>
-                                    <MaterialDesignIconView fx:id="expensePaneButtonIcon" glyphName="CASH_USD" size="20" textAlignment="CENTER" />
-                                 </children>
-                              </HBox>
-                              <AnchorPane prefHeight="60.0" prefWidth="140.0">
-                                 <children>
-                                    <Label fx:id="expensePaneButtonText" layoutX="14.0" layoutY="22.0" text="Expenses" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <JFXButton layoutY="541.0" onAction="#logOutPaneButtonClicked" prefHeight="60.0" prefWidth="200.0" styleClass="logoutButton" text="Log Out" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <VBox layoutX="110.0" layoutY="171.0" prefHeight="601.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0">
-                           <children>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <JFXButton fx:id="refreshButton" onAction="#refreshButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="refreshButton" textFill="WHITE" text="REFRESH" />
-                                 </children>
-                              </AnchorPane>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <JFXButton onAction="#minimizeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="minimizeButton" text="MINIMIZE" textFill="WHITE" />
-                                    <JFXButton onAction="#closeButtonClicked" prefHeight="30.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" styleClass="logoutButton" text="CLOSE" textFill="WHITE" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <StackPane fx:id="dashboardContentPane" prefHeight="570.0" prefWidth="800.0">
-                           <children>
-                              <fx:include fx:id="test1" source="./home_view.fxml" />
-                           </children>
-                        </StackPane>
-                     </children>
-                  </VBox>
-               </children></AnchorPane>
-         </children>
-      </HBox>
-   </children>
+                                <HBox fx:id="expensePaneButtonPane" alignment="CENTER"
+                                      onMouseClicked="#expensePaneButtonClicked" prefHeight="60.0"
+                                      prefWidth="203.0" spacing="20.0">
+                                    <children>
+                                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="69.0">
+                                            <children>
+                                                <MaterialDesignIconView fx:id="expensePaneButtonIcon"
+                                                                        glyphName="CASH_USD" size="20"
+                                                                        textAlignment="CENTER"/>
+                                            </children>
+                                        </HBox>
+                                        <AnchorPane prefHeight="60.0" prefWidth="140.0">
+                                            <children>
+                                                <Label fx:id="expensePaneButtonText" layoutX="14.0" layoutY="22.0"
+                                                       text="Expenses"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <JFXButton layoutY="541.0" onAction="#logOutPaneButtonClicked" prefHeight="60.0"
+                                   prefWidth="200.0" styleClass="logoutButton" text="Log Out" textFill="WHITE">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </JFXButton>
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <VBox layoutX="110.0" layoutY="171.0" prefHeight="601.0" prefWidth="800.0"
+                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="0.0">
+                            <children>
+                                <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0">
+                                    <children>
+                                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                            <children>
+                                                <JFXButton fx:id="refreshButton" onAction="#refreshButtonClicked"
+                                                           prefHeight="30.0"
+                                                           style="-fx-border-radius: 0; -fx-background-radius: 0;"
+                                                           styleClass="refreshButton" textFill="WHITE" text="REFRESH"/>
+                                            </children>
+                                        </AnchorPane>
+                                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0"
+                                              HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <JFXButton onAction="#minimizeButtonClicked" prefHeight="30.0"
+                                                           style="-fx-border-radius: 0; -fx-background-radius: 0;"
+                                                           styleClass="minimizeButton" text="MINIMIZE"
+                                                           textFill="WHITE"/>
+                                                <JFXButton onAction="#closeButtonClicked" prefHeight="30.0"
+                                                           style="-fx-border-radius: 0; -fx-background-radius: 0;"
+                                                           styleClass="logoutButton" text="CLOSE" textFill="WHITE"/>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <StackPane fx:id="dashboardContentPane" prefHeight="570.0" prefWidth="800.0">
+                                    <children>
+                                        <fx:include fx:id="test1" source="./home_view.fxml"/>
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </children>
+        </HBox>
+    </children>
 </StackPane>

@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -55,6 +56,7 @@ public class LoginController implements Initializable {
     public static String email;
     public static int balance;
     public static String picture;
+    AnchorPane loadingHUD;
 
 
     //---------------For making the screen draggable-------------
@@ -109,6 +111,14 @@ public class LoginController implements Initializable {
     //Run on Login Button Clicked
     @FXML
     void login_button_clicked(ActionEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        //Create a loading HUD when this fuction runs.
+        loadingHUD = new AnchorPane();
+        JFXSpinner jfxSpinner = new JFXSpinner();
+        jfxSpinner.setLayoutX(475);
+        jfxSpinner.setLayoutY(275);
+        loadingHUD.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6)");
+        loadingHUD.getChildren().add(jfxSpinner);
+        login_pane.getChildren().add(loadingHUD);
 
         //Check the validation from the field validator method.
         if (emailIsValid && !emailIsEmpty && passwordIsValid && !passwordIsEmpty) {
@@ -128,6 +138,9 @@ public class LoginController implements Initializable {
                     User user = userWrapperApiBaseResponse.getData().getUser();
                     Platform.runLater(
                             () -> {
+                                //Remove loading HUD
+                                login_pane.getChildren().remove(loadingHUD);
+
                                 try {
                                     //for global variable
                                     userId = user.getId();
@@ -152,6 +165,9 @@ public class LoginController implements Initializable {
                 @Override
                 public void onError() {
                     Platform.runLater(() -> {
+                        //Remove loading HUD
+                        login_pane.getChildren().remove(loadingHUD);
+
                         //If login is failed show an error dialog.
                         JFXDialogLayout content = new JFXDialogLayout();
                         content.setHeading(new Text("Error"));
@@ -167,6 +183,9 @@ public class LoginController implements Initializable {
 
                 }
             });
+        }else{
+            //Remove loading HUD
+            login_pane.getChildren().remove(loadingHUD);
         }
 
     }
