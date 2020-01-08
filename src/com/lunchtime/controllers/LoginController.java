@@ -3,7 +3,7 @@
  * This controller class is used for handling all the UI events and request a login API with the given user credentials.
  * All the verification and validation is handled here.
  * This class also navigates to Dashboard Screen and Register Screen.
- * */
+ */
 
 package com.lunchtime.controllers;
 
@@ -29,6 +29,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +54,6 @@ public class LoginController implements Initializable {
     public static String email;
     public static int balance;
     public static String picture;
-
 
 
     //---------------For making the screen draggable-------------
@@ -92,25 +92,29 @@ public class LoginController implements Initializable {
     @FXML
     private MediaView loginVideoPlayer;
 
-
+    //Window close function for the close button
     @FXML
     void closeButtonClicked(ActionEvent event) {
         System.exit(0);
     }
 
+    //Run on Login Button Clicked
     @FXML
     void login_button_clicked(ActionEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-//        if (emailIsValid && !emailIsEmpty && passwordIsValid && !passwordIsEmpty) {
-
+        //Check the validation from the field validator method.
+        if (emailIsValid && !emailIsEmpty && passwordIsValid && !passwordIsEmpty) {
+            //Hash the user password with SHA1 encryption
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             messageDigest.update(password_field.getText().getBytes("UTF-8"), 0, password_field.getText().length());
             String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
 
-//            LoginRequest loginRequest = new LoginRequest(email_field.getText(), encriptedPassword);
-            LoginRequest loginRequest = new LoginRequest("kiran@gmail.com", "936A014FC67E26ABD1BC1405824B74EE958D016B");
+            //Make a login request body with email and sha1 encrypted password
+            LoginRequest loginRequest = new LoginRequest(email_field.getText(), encriptedPassword);
 
+            //Post a login request and listen for response and failure
             NetworkManager.getInstance().Login(loginRequest, new NetworkResponseListener<ApiBaseResponse<UserWrapper>>() {
+                //If login is successful response is fetched
                 @Override
                 public void onResponseReceived(ApiBaseResponse<UserWrapper> userWrapperApiBaseResponse) {
                     User user = userWrapperApiBaseResponse.getData().getUser();
@@ -126,8 +130,8 @@ public class LoginController implements Initializable {
                                     balance = user.getBalance();
                                     picture = user.getPicture();
 
+                                    //Change the scene to Dashboard view
                                     StackPane pane = FXMLLoader.load(getClass().getResource("../views/dashboard_view.fxml"));
-
                                     login_pane.getChildren().setAll(pane);
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -140,6 +144,7 @@ public class LoginController implements Initializable {
                 @Override
                 public void onError() {
                     Platform.runLater(() -> {
+                        //If login is failed show an error dialog.
                         JFXDialogLayout content = new JFXDialogLayout();
                         content.setHeading(new Text("Error"));
                         content.setBody(new Text("Email or Password is Invalid!"));
@@ -154,17 +159,23 @@ public class LoginController implements Initializable {
 
                 }
             });
-//        }
+        }
 
     }
 
+    /**
+     * Changes the current scene to register view when register button is clicked
+     */
     @FXML
     void register_button_clicked(ActionEvent event) throws IOException {
         StackPane pane = FXMLLoader.load(getClass().getResource("../views/register_view.fxml"));
         login_pane.getChildren().setAll(pane);
     }
 
-    private void fieldValidators(){
+    /**
+     * Validators for login fields, checks if the fields are empty and validates email format
+     */
+    private void fieldValidators() {
         //Field Required validator for email
         RequiredFieldValidator emailRequiredFieldValidator = new RequiredFieldValidator();
         email_field.getValidators().add(emailRequiredFieldValidator);
@@ -205,7 +216,7 @@ public class LoginController implements Initializable {
         //Email Validator
         RegexValidator emailValidator = new RegexValidator();
         emailValidator.setRegexPattern("^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"); //Email Regex format
         email_field.setValidators(emailValidator);
         emailValidator.setMessage("Email is invalid!");
         email_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -224,7 +235,7 @@ public class LoginController implements Initializable {
 
         //Password Validator
         RegexValidator passwordValidator = new RegexValidator();
-        passwordValidator.setRegexPattern("^.{8,}$");
+        passwordValidator.setRegexPattern("^.{8,}$"); //Regex Pattern for limiting character to be atleast 8 characters long.
         password_field.setValidators(passwordValidator);
         passwordValidator.setMessage("Password should be atleast 8 characters long!");
         password_field.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -243,12 +254,19 @@ public class LoginController implements Initializable {
     }
 
 
+    /**
+     * Runs when the screen initializes
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
-            email_field.requestFocus();
+            email_field.requestFocus(); //Give focus in the email field to show early warning of empty field
         });
-        fieldValidators();
+
+
+        fieldValidators(); //Call the field validator method for running all the validators when the screen starts
+
+        //Set the video to play on the login screen
         final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/loginVideo.mp4").toURI().toString()));
         video.setMute(true);
         video.setCycleCount(MediaPlayer.INDEFINITE);

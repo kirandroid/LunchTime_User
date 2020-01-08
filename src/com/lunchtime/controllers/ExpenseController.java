@@ -147,7 +147,7 @@ public class ExpenseController implements Initializable {
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             for (Order order : orders) {
-                pieChartData.addAll(new PieChart.Data(order.getFoodName(), order.getPrice()));
+                pieChartData.addAll(new PieChart.Data(order.getFoodName() , order.getPrice()));
             }
             pieChart.setData(pieChartData);
             pieChart.setPrefWidth(396);

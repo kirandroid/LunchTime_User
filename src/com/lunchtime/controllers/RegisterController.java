@@ -19,13 +19,11 @@ import com.lunchtime.network.apiObjects.ApiBaseResponse;
 import com.lunchtime.network.apiObjects.models.UploadResponse;
 import com.lunchtime.network.apiObjects.requests.RegisterRequest;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -93,15 +91,13 @@ public class RegisterController implements Initializable {
     private Circle profilePictureView;
 
     @FXML
-    private Circle addPictureView;
-
-    @FXML
     private StackPane circleAddButtonStackPane;
 
 
     final FileChooser fileChooser = new FileChooser();
     File file;
 
+    // Select picture window with picture filter
     @FXML
     void selectPictureClicked(MouseEvent event) throws MalformedURLException {
         fileChooser.getExtensionFilters().addAll(
@@ -117,21 +113,28 @@ public class RegisterController implements Initializable {
         }
     }
 
+    //Close the window
     @FXML
     void closeButtonClicked(ActionEvent event) {
         System.exit(0);
     }
 
-
+    /**
+     * Change the scene to login view on login button clicked.
+     */
     @FXML
     void login_button_clicked(ActionEvent event) throws IOException {
         StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
         registerPane.getChildren().setAll(pane);
     }
 
+    /**
+     * Run this when register button is clicked
+     */
     @FXML
     void register_button_clicked(ActionEvent event) throws NoSuchAlgorithmException {
 
+        //Create a loading HUD when this fuction runs.
         loadingHUD = new AnchorPane();
         JFXSpinner jfxSpinner = new JFXSpinner();
         jfxSpinner.setLayoutX(475);
@@ -140,8 +143,13 @@ public class RegisterController implements Initializable {
         loadingHUD.getChildren().add(jfxSpinner);
         registerPane.getChildren().add(loadingHUD);
 
+        //Check the validations
         if (!firstNameIsEmpty && !lastNameIsEmpty && !emailIsEmpty && !passwordIsEmpty && !phoneIsEmpty && emailIsValid && passwordIsValid && phoneIsValid) {
-            if (file != null){
+            //check if the profile picture is null
+            if (file != null) {
+                //if the file is not null upload the picture in an external API (Cloudinary)
+
+                //------------------For creating the signature for using in api---------------------//
                 long timestamp = System.currentTimeMillis();
                 String apiKey = "588753441842251";
                 String eager = "w_400,h_400,c_pad";
@@ -149,49 +157,52 @@ public class RegisterController implements Initializable {
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
                 messageDigest.update(("eager=w_400,h_400,c_pad&public_id=" + publicId + "&timestamp=" + timestamp + "oWEOZ2sxuB2cpixDPaa6XhLS23E").getBytes());
                 String signature = DatatypeConverter.printHexBinary(messageDigest.digest());
+                //------------------For creating the signature for using in api---------------------//
 
-
+                //Create a multipart builder for the request body
                 MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-                builder.addFormDataPart("timestamp", String.valueOf(timestamp))
-                        .addFormDataPart("public_id", publicId)
-                        .addFormDataPart("api_key", apiKey)
-                        .addFormDataPart("eager", eager)
-                        .addFormDataPart("signature", signature)
-                        .addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
+                builder.addFormDataPart("timestamp", String.valueOf(timestamp)) //Timestamp used when creating the signature
+                        .addFormDataPart("public_id", publicId) //Unique name for the upload file so that it will not override the existing file in the server
+                        .addFormDataPart("api_key", apiKey) //Unique API Key provided by the API provider.
+                        .addFormDataPart("eager", eager) //Custom Dimension file the request in the response for smaller file sizes
+                        .addFormDataPart("signature", signature) //Unique signature for upload
+                        .addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file)); //Picture file
 
                 RequestBody requestBody = builder.build();
 
-
+                //Run the Upload Api with the request body
                 Call<UploadResponse> call = UploadAPI.apiService.upload(requestBody);
 
                 call.enqueue(new Callback<UploadResponse>() {
                     @Override
                     public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
+                        //if the picture upload is successful run the register method with the picture parameter which is the response gotten from the upload API
                         register(response.body().getEager().get(0).getSecureUrl());
                     }
 
                     @Override
                     public void onFailure(Call<UploadResponse> call, Throwable throwable) {
-
+                        //if the upload is failed remove the loading HUD
                         registerPane.getChildren().remove(loadingHUD);
                         System.out.println(throwable);
                         System.out.println("Error");
                     }
                 });
-            }else{
+            } else {
+                //if the picture file is null, directly run register method with a default picture
                 register("https://res.cloudinary.com/kirandroid/image/upload/v1578395816/default_ksx4rb.png");
             }
-
-
-
-        }else{
-
+        } else {
+            //if validation is incorrect remove the loading HUD.
             registerPane.getChildren().remove(loadingHUD);
         }
-
     }
 
-    public void register(String picture){
+    /**
+     * Method for registering an account
+     */
+    public void register(String picture) {
+        //Encrypt the entered password with an SHA1 hash
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("SHA-1");
@@ -205,17 +216,20 @@ public class RegisterController implements Initializable {
         }
         String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
 
+
+        //Create a register request with all the entered fields and an encrypted password rather than plan text password
         RegisterRequest registerRequest = new RegisterRequest(first_name_field.getText(), last_name_field.getText(), phone_field.getText(), email_field.getText(), encriptedPassword, picture);
 
         NetworkManager.getInstance().Register(registerRequest, new NetworkResponseListener<ApiBaseResponse>() {
             @Override
             public void onResponseReceived(ApiBaseResponse apiBaseResponse) {
+                //If the registration is successful
                 Platform.runLater(
                         () -> {
-
-
+                            //Remove the loading HUD
                             registerPane.getChildren().remove(loadingHUD);
 
+                            //Show a Success Dialog
                             JFXDialogLayout content = new JFXDialogLayout();
                             content.setHeading(new Text("Success"));
                             content.setBody(new Text("Account Registration Successful!"));
@@ -224,6 +238,7 @@ public class RegisterController implements Initializable {
 
                             button.setOnAction(event -> {
                                 try {
+                                    //Change the scene to login view on dialog button clicked
                                     StackPane pane = FXMLLoader.load(getClass().getResource("../views/login_view.fxml"));
                                     registerPane.getChildren().setAll(pane);
                                 } catch (IOException e) {
@@ -231,9 +246,7 @@ public class RegisterController implements Initializable {
                                 }
                             });
                             content.setActions(button);
-
                             dialog.show();
-
                         }
                 );
             }
@@ -241,7 +254,7 @@ public class RegisterController implements Initializable {
             @Override
             public void onError() {
                 Platform.runLater(() -> {
-
+                    //If registration failed remove the loading HUD and show an error dialog
                     registerPane.getChildren().remove(loadingHUD);
                     JFXDialogLayout content = new JFXDialogLayout();
                     content.setHeading(new Text("Error"));
@@ -258,48 +271,59 @@ public class RegisterController implements Initializable {
         });
     }
 
+    //Run this on the screen initialization
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // fill the picture field with a default picture
         profilePictureView.setFill(new ImagePattern(new Image(new File("src/com/lunchtime/assets/image/defaultUser.png").toURI().toString())));
-        fieldValidators();
-        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
-        video.setMute(true);
-        video.setCycleCount(MediaPlayer.INDEFINITE);
-        video.play();
-        registerVideoPlayer.setMediaPlayer(video);
 
-        // create button
+        // create a Add picure button in the picture field
         JFXButton addButton = new JFXButton("");
         addButton.setButtonType(JFXButton.ButtonType.RAISED);
         addButton.setStyle("-fx-background-radius: 40;-fx-background-color: #db0f4b");
         addButton.setPrefSize(26, 26);
-        addButton.setOnAction(param -> {
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Image Files",
-                            "*.png", "*.jpg"));
-            file = fileChooser.showOpenDialog(new Stage());
-            if (file != null) {
-                String imagePath = null;
-                try {
-                    imagePath = file.toURI().toURL().toString();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                profilePictureView.setFill(new ImagePattern(new Image(imagePath)));
 
-            } else {
-                System.out.println("Error");
-            }
-        });
+        // Add an SVG for a select button
         SVGGlyph glyph = new SVGGlyph(-1,
-                "CancelIcon",
+                "AddIcon",
                 "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
                 Color.WHITE);
         glyph.setSize(10, 10);
         addButton.setGraphic(glyph);
         circleAddButtonStackPane.setAlignment(Pos.BOTTOM_RIGHT);
         circleAddButtonStackPane.getChildren().addAll(addButton);
+
+        addButton.setOnAction(param -> {
+            //Open a file chooser window with picture filter
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files",
+                            "*.png", "*.jpg"));
+            file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                //save the file in a variable
+                String imagePath = null;
+                try {
+                    imagePath = file.toURI().toURL().toString();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                //Update the picture view with the file path
+                profilePictureView.setFill(new ImagePattern(new Image(imagePath)));
+
+            } else {
+                System.out.println("Error");
+            }
+        });
+        //------------------------------------------------------------------------
+
+        fieldValidators();  //initialize the validators
+
+        //add and play a video in the register pane
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
+        video.setMute(true);
+        video.setCycleCount(MediaPlayer.INDEFINITE);
+        video.play();
+        registerVideoPlayer.setMediaPlayer(video);
     }
 
 
@@ -419,7 +443,7 @@ public class RegisterController implements Initializable {
         });
         email_field.textProperty().addListener((observable, oldValue, newValue) -> email_field.validate());
 
-//        //Field Required validator for phone
+//        //Number validator for phone
         NumberValidator phoneFieldValidator = new NumberValidator();
         phone_field.getValidators().add(phoneFieldValidator);
         phoneFieldValidator.setMessage("Only numbers accepted!");
