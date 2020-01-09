@@ -111,7 +111,7 @@ public class LoginController implements Initializable {
     //Run on Login Button Clicked
     @FXML
     void login_button_clicked(ActionEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        //Create a loading HUD when this fuction runs.
+        //Create a loading HUD when this function runs.
         loadingHUD = new AnchorPane();
         JFXSpinner jfxSpinner = new JFXSpinner();
         jfxSpinner.setLayoutX(475);
@@ -294,7 +294,7 @@ public class LoginController implements Initializable {
         fieldValidators(); //Call the field validator method for running all the validators when the screen starts
 
         //Set the video to play on the login screen
-        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/startVideo.mp4").toURI().toString()));
         video.setMute(true);
         video.setCycleCount(MediaPlayer.INDEFINITE);
         video.play();

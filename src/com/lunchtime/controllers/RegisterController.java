@@ -327,7 +327,7 @@ public class RegisterController implements Initializable {
         fieldValidators();  //initialize the validators
 
         //add and play a video in the register pane
-        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/loginVideo.mp4").toURI().toString()));
+        final MediaPlayer video = new MediaPlayer(new Media(new File("src/com/lunchtime/assets/video/registerVideo.mp4").toURI().toString()));
         video.setMute(true);
         video.setCycleCount(MediaPlayer.INDEFINITE);
         video.play();
