@@ -1,7 +1,0 @@
-//------------------For Snackbar--------------------------------//
-        Label testLabel = new Label();
-        testLabel.setText("Welcome to LunchTime!");
-        testLabel.setTextFill(Color.web("#0076a3"));
-        JFXSnackbar bar = new JFXSnackbar(dashboardPane);
-        bar.enqueue(new JFXSnackbar.SnackbarEvent(testLabel, Duration.seconds(5), PseudoClass.getPseudoClass("negative")));
-//---------------------------------------------------------------//

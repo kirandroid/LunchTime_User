@@ -1,0 +1,8 @@
+com.lunchtime
+com.lunchtime.controllers
+com.lunchtime.network
+com.lunchtime.network.apiObjects
+com.lunchtime.network.apiObjects.models
+com.lunchtime.network.apiObjects.requests
+com.lunchtime.network.apiObjects.wrappers
+com.lunchtime.network.apiServices
