@@ -1,4 +1,4 @@
-# LuncTime - A Canteen Food Ordering System
+# LunchTime - A Canteen Food Ordering System
 
 This is the application for the student part. Made using Javafx
 
